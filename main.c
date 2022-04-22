@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Posix Headers
+// p_osix Headers
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -22,8 +22,6 @@
 
 
 
-
-
 int main(void)
 {
     
@@ -33,9 +31,11 @@ int main(void)
     puts("Start");
     puts("Testing: dataio_SetOutputDataName");
     
-    config_get_out_dir_label(output_dir_label);
+    //config_get_out_dir_label(output_dir_label);
+    config_set_event_packet_vars(&packet_size, &packet_overlap);
     
-    printf("Data Output Label is: %s\n", output_dir_label);
+    
+    printf("Packet size: %d\tPacket Overlap: %d\n", packet_size, packet_overlap);
     
     
     
@@ -43,9 +43,6 @@ int main(void)
     
     return 0;
 }
-
-
-
 
 
 
