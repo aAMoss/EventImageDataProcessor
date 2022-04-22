@@ -5,9 +5,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 // Program Specific Headers
 #include "config.h"
 
+
+// Variables
+char output_dir_label[DATA_OUT_NAME_MAX];
+int packet_size = 0;
+int packet_overlap = 0;
 
 
 // Allows the user to set the name of the output data (data that has been processed and booleanized)
