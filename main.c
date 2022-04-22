@@ -17,10 +17,10 @@
 #define EVENT_BUFF_SIZE 5
 
 
-char output_dir_label[MAXNAME];
+char output_dir_label[DATA_OUT_NAME_MAX];
 
 // Function to create the new output directories
-void dataio_get_out_dir_label(char *output_dir_label);
+void config_get_out_dir_label(char *output_dir_label);
 
 int main(void)
 {
@@ -31,12 +31,9 @@ int main(void)
     puts("Start");
     puts("Testing: dataio_SetOutputDataName");
     
-    dataio_get_out_dir_label(output_dir_label);
+    config_get_out_dir_label(output_dir_label);
     
     printf("Data Output Label is: %s\n", output_dir_label);
-    
-    
-    
     
     
     
@@ -48,15 +45,15 @@ int main(void)
 
 
 // Allows the user to set the name of the output data (data that has been processed and booleanized)
-void dataio_get_out_dir_name(char *output_dir_name)
+void config_get_out_dir_label(char *output_dir_label)
 {
     char user_input[(DATA_OUT_NAME_MAX/4)];
     
     puts("Please enter a name for the data output directory.");
-    printf("The name must be no more than %d characters.\n", (MAXDATAOUTNAME/4));
+    printf("The name must be no more than %d characters.\n", (DATA_OUT_NAME_MAX/4));
 
-    fgets(UserInput, MAXDATAOUTNAME, stdin);
-    strcpy(OutputDataName, UserInput);
+    fgets(user_input, DATA_OUT_NAME_MAX, stdin);
+    strcpy(output_dir_label, user_input);
 }
 
 
