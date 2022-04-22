@@ -4,14 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <time.h>
 
 // Program Specific Headers
 #include "config.h"
 
 
 // Variables
-char output_dir_label[DATA_OUT_NAME_MAX];
+char output_dir_label[(DATA_OUT_NAME_MAX /2)];
+
+
 int packet_size = 0;
 int packet_overlap = 0;
 
@@ -24,11 +26,32 @@ void config_get_out_dir_label(char *output_dir_label)
     puts("Please enter a name for the data output directory.");
     printf("The name must be no more than %d characters.\n", (DATA_OUT_NAME_MAX/4));
 
-    fgets(user_input, DATA_OUT_NAME_MAX, stdin);
-    strcpy(output_dir_label, user_input);
+    fgets(user_input, (DATA_OUT_NAME_MAX/4), stdin);
+    user_input[strcspn(user_input, "\n")] = '\0'; // removes the return key
+    
+    
+    time_t t = time(NULL);
+    
+    //struct tm time_buf;
+    char time_string[100] = "";
+    
+    //asctime_s(str,sizeof str,localtime_s(&t, &buf));
+    strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
+    printf("local: %s\n", time_string);
+   // Time???
+    
+    
+    strcat(output_dir_label, time_string);
+    
+    strcat(output_dir_label, user_input);
+    
+    
+    
+    
+    
+    
+    
 }
-
-
 
 
 // Allows the user to set the number of events in each packet to be processed, and the overlap of the event packets (in number of events)
@@ -79,4 +102,6 @@ void config_set_event_packet_vars(int *packet_size, int *packet_overlap)
         }
     }
 }
+
+
 
