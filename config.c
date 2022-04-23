@@ -11,8 +11,8 @@
 
 
 // Variables
-char output_dir_label[(DATA_OUT_NAME_MAX /2)];
-
+char output_dir_label[(DATA_OUT_NAME_MAX /2)] = "";
+char output_dir_name[DATA_OUT_NAME_MAX] = "";
 
 int packet_size = 0;
 int packet_overlap = 0;
@@ -22,35 +22,18 @@ int packet_overlap = 0;
 void config_get_out_dir_label(char *output_dir_label)
 {
     char user_input[(DATA_OUT_NAME_MAX/4)];
+    char time_string[100] = "";
+    
+    time_t t = time(NULL);
+    strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
+    strcat(output_dir_label, time_string);
     
     puts("Please enter a name for the data output directory.");
     printf("The name must be no more than %d characters.\n", (DATA_OUT_NAME_MAX/4));
 
     fgets(user_input, (DATA_OUT_NAME_MAX/4), stdin);
     user_input[strcspn(user_input, "\n")] = '\0'; // removes the return key
-    
-    
-    time_t t = time(NULL);
-    
-    //struct tm time_buf;
-    char time_string[100] = "";
-    
-    //asctime_s(str,sizeof str,localtime_s(&t, &buf));
-    strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
-    printf("local: %s\n", time_string);
-   // Time???
-    
-    
-    strcat(output_dir_label, time_string);
-    
     strcat(output_dir_label, user_input);
-    
-    
-    
-    
-    
-    
-    
 }
 
 
@@ -105,3 +88,46 @@ void config_set_event_packet_vars(int *packet_size, int *packet_overlap)
 
 
 
+// Function to create the new output directories
+void config_create_output_dir(char *output_dir_label, char *output_dir_name)
+{
+    // Static Strings
+    char *s0 = "./";
+    char *s1 = "/Test/";
+    char *s2 = "/Train/";
+    
+    // Strings
+    char s3[10] = "";
+    char local_dir_name1[DATA_OUT_NAME_MAX] = "mkdir -p ";
+    char local_dir_name2[DATA_OUT_NAME_MAX] = "mkdir -p ";
+    
+    // create directory path ./output_dir_name/
+    strcat(output_dir_name, s0);
+    strcat(output_dir_name, output_dir_label);
+
+
+    // create directory ./output_dir_name/Test/
+    strcat(local_dir_name1, output_dir_name);
+    strcat(local_dir_name1, s1);
+    system(local_dir_name1);
+
+    // create directory ./output_dir_name/Train/
+    strcat(local_dir_name2, output_dir_name);
+    strcat(local_dir_name2, s2);
+    system(local_dir_name2);
+
+    // create directory ./output_dir_name/Test/CLASSES .. 0 1 2 3 ... 9
+    // create directory ./output_dir_name/Train/CLASSES .. 0 1 2 3 ... 9
+    for(int i = 0; i<CLASSES; i++)
+    {
+        sprintf(s3, "%d", i);
+        strcat(local_dir_name1, s3);
+        strcat(local_dir_name2, s3);
+
+        system(local_dir_name1);
+        system(local_dir_name2);
+
+        local_dir_name1[strlen(local_dir_name1)-1] = '\0'; // removing the last character, the class number
+        local_dir_name2[strlen(local_dir_name2)-1] = '\0';
+    }
+}
