@@ -19,69 +19,66 @@
 
 #define EVENTS_PER_SAMPLE_MAX 10000
 
-#define EVENT_BUFF_SIZE 5
-
-
-// Directory paths for the input data
-#define TEST_IN_DIR "./N-MNIST_test/Test/"
-#define TRAIN_IN_DIR "./N-MNIST_test/Train/"
-
-// Input Directory and File Structures
-DIR *DataInputTargetDir;
-struct dirent *DataInEntrySample;
-FILE *EventSampleIn;
-
-
+#define DATA_IN_NAME_MAX 200
 
 
 
 
 int main(void)
 {
-
-
     
-    
-    puts("\nStart Test\n\n\n");
-    
+    // Sets the name for the output data
     config_get_out_dir_label(output_dir_label);
     
-    
-    config_set_event_packet_vars(&packet_size, &packet_overlap);
-    printf("Packet size: %d\tPacket Overlap: %d\n", packet_size, packet_overlap);
-    
+    // Creates the output data directories
     config_create_output_dir(output_dir_label, output_dir_name);
     
+    // Sets the packet variables: size and overlap
+    config_set_event_packet_vars(&packet_size, &packet_overlap);
+    
+    // Runs for everyone of the test data classes
+    for(int c = 0; c < CLASSES; c++)
+    {
+        
+        // Opens the input directory of the N-MNIST Dataset
+        Data_Input_Dir = dataio_open_data_input_dir(Data_Input_Dir, c);
+
+        while(  (Data_Input_Dir_Entry = readdir(Data_Input_Dir)) )
+        {
+
+            if(strcmp(Data_Input_Dir_Entry->d_name, ".") != 0 && strcmp(Data_Input_Dir_Entry->d_name, "..") != 0 &&
+               strcmp(Data_Input_Dir_Entry->d_name, ".DS_Store"))
+            {
+        
+                printf("%s\n",Data_Input_Dir_Entry->d_name);
+                
+                
+                Sample_Input_File = dataio_open_data_input_file(Data_Input_Dir, Sample_Input_File, c);
+                
+                
+                puts("Input and output files opened!");
+                
+                dataio_get_input_sample_var(Sample_Input_File, &sample_bytes, &sample_events);
+                
+                datio_set_secondary_event_packet_vars(sample_events, packet_size, packet_overlap, &packets_req,
+                                                      &packet_events_overshoot, &last_packet_zeros, &last_packet_size);
+
+                printf("Bytes\tEvents\tpacket_size\tpacket_overlap\tpackets_req\tOverShoot\tlast_packet_zeros\tlast_packet_size\n");
+                printf("%ld\t%ld\t%d\t\t%d\t\t%d\t\t",sample_bytes, sample_events, packet_size, packet_overlap, packets_req);
+                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
+                
+                
+                fclose(Sample_Input_File);
+                
+            }
+        
+        }
+        
+        
+    }
    
     
     return 0;
 }
 
 
-//
-//DIR *OpenDataInDirectory(DIR *DataInputTargetDir, int c)
-//{
-//    char dirclassnum[10] = "";
-//    char dirpathname[250] = "";
-//    
-//    // Creates the full directory path using strcat
-//    sprintf(dirclassnum, "%d", c);
-//    strcat(dirpathname, TESTINDIR);
-//    strcat(dirpathname, dirclassnum);
-//    
-//    
-//    // Opens the directory specificied by the directory path
-//    DataInputTargetDir = opendir(dirpathname);
-//    
-//    
-//    if(DataInputTargetDir == NULL)
-//    {
-//        puts("ERROR: Unable to read directory!");
-//        exit(EXIT_FAILURE);
-//    }
-//    
-//    
-//    printf("%s\n", dirpathname);
-//    
-//    return DataInputTargetDir;
-//}
