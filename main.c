@@ -58,30 +58,30 @@ int main(void)
 }
 
 
-
-DIR *OpenDataInDirectory(DIR *DataInputTargetDir, int c)
-{
-    char dirclassnum[10] = "";
-    char dirpathname[250] = "";
-    
-    // Creates the full directory path using strcat
-    sprintf(dirclassnum, "%d", c);
-    strcat(dirpathname, TESTINDIR);
-    strcat(dirpathname, dirclassnum);
-    
-    
-    // Opens the directory specificied by the directory path
-    DataInputTargetDir = opendir(dirpathname);
-    
-    
-    if(DataInputTargetDir == NULL)
-    {
-        puts("ERROR: Unable to read directory!");
-        exit(EXIT_FAILURE);
-    }
-    
-    
-    printf("%s\n", dirpathname);
-    
-    return DataInputTargetDir;
-}
+//
+//DIR *OpenDataInDirectory(DIR *DataInputTargetDir, int c)
+//{
+//    char dirclassnum[10] = "";
+//    char dirpathname[250] = "";
+//    
+//    // Creates the full directory path using strcat
+//    sprintf(dirclassnum, "%d", c);
+//    strcat(dirpathname, TESTINDIR);
+//    strcat(dirpathname, dirclassnum);
+//    
+//    
+//    // Opens the directory specificied by the directory path
+//    DataInputTargetDir = opendir(dirpathname);
+//    
+//    
+//    if(DataInputTargetDir == NULL)
+//    {
+//        puts("ERROR: Unable to read directory!");
+//        exit(EXIT_FAILURE);
+//    }
+//    
+//    
+//    printf("%s\n", dirpathname);
+//    
+//    return DataInputTargetDir;
+//}
