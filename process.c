@@ -20,6 +20,13 @@
 #define RAW_C_BOOL 4
 #define RAW_BOOL_MAX 41
 
+
+int literals_raw[RAW_BOOL_MAX][*packet_size];
+
+
+void literals_raw_event_data(long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
+                             int f_packet_size, int c, int literals_raw[RAW_BOOL_MAX][*packet_size] );
+
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
 {
@@ -65,6 +72,9 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
         
         
+        literals_raw_event_data(EventPacketX[], EventPacketY[], EventPacketP[], EventPacketT[],
+                                     f_packet_size, c, literals_raw[RAW_BOOL_MAX][&packet_size] )
+        
 //        // print event packets
 //        for(int i = 0; i < f_packet_size; i++)
 //        {
@@ -75,7 +85,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 //        }
 //
         
-
+        
         
         for(int a = 0; a < f_packet_size; a++)
         {
@@ -95,7 +105,6 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
 }
 
-int literals_raw[RAW_BOOL_MAX][*packet_size];
 
 void literals_raw_event_data(long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
                              int f_packet_size, int c, int literals_raw[RAW_BOOL_MAX][*packet_size] )
