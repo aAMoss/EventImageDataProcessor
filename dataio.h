@@ -4,7 +4,8 @@
 #define TEST_IN_DIR "./N-MNIST_test/Test/"
 #define TRAIN_IN_DIR "./N-MNIST_test/Train/"
 
-
+#define EVENTS_PER_SAMPLE_MAX 10000
+#define DATA_IN_NAME_MAX 200
 #define EVENT_BUFF_SIZE 5
 
 // Directory Objects and Structures
@@ -23,7 +24,8 @@ FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, 
 void dataio_get_input_sample_var(FILE *Sample_Input_File, long int *sample_bytes, long int *sample_events);
 void datio_set_secondary_event_packet_vars(long int sample_events, int packet_size, int packet_overlap, int *packets_req,
                                            int *packet_events_overshoot, int *last_packet_zeros, int *last_packet_size);
-
+void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacketY[],long int EventPacketP[],long int EventPacketT[]);
+void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no);
 
 long int sample_bytes;
 long int sample_events;
@@ -31,3 +33,10 @@ int packets_req;
 int packet_events_overshoot;
 int last_packet_zeros;
 int last_packet_size;
+
+
+// Event Packet Arrays
+long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
+long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
+long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
+long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values

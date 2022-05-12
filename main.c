@@ -17,70 +17,16 @@
 #include "main.h"
 
 
-#define EVENTS_PER_SAMPLE_MAX 10000
-
-#define DATA_IN_NAME_MAX 200
 
 
 
 
 
-// Event Packet Arrays
-long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
-long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
-long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
-long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
 
 
-void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no)
-{
-
-    for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
-    {
-
-        unsigned char buffer[EVENT_BUFF_SIZE];
-        //Set file position
-        fseek(Sample_Input_File, byte_no_offset, SEEK_SET);
-
-        // read 5 bytes to buffer
-        fread(buffer,sizeof *buffer, EVENT_BUFF_SIZE, Sample_Input_File);
-
-        //for debug
-        //printf("%u\t%u\t%u\t%u\t%u\t\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
 
 
-        int event_no = byte_no_offset / 5;
 
-
-        EventPacketX[*packet_event_no] = buffer[0] + 1; // will store the event packet x values
-        EventPacketY[*packet_event_no] = buffer[1] + 1; // will store the event packet y values
-        EventPacketP[*packet_event_no] = buffer[2] >> 7; // will store the event packet p values
-        EventPacketT[*packet_event_no] = ((buffer[2] & 127) << 16) + (buffer[3] << 8) + buffer[4] ; // will store the event packet t values
-
-        printf("Event number %d --> \t%lu\t%lu", *packet_event_no, EventPacketX[*packet_event_no],EventPacketY[*packet_event_no]);
-        printf("\t%lu\t%lu\n",EventPacketP[*packet_event_no],EventPacketT[*packet_event_no]);
-
-
-        *packet_event_no = *packet_event_no + 1;
-
-
-    }
-
-    
-}
-
-void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacketY[],long int EventPacketP[],long int EventPacketT[])
-{
-    
-    for(int i = 0; i < EVENTS_PER_SAMPLE_MAX; i++)
-    {
-        EventPacketX[i] = 0;
-        EventPacketY[i] = 0;
-        EventPacketP[i] = 0;
-        EventPacketT[i] = 0;
-    }
-
-}
 
 
 

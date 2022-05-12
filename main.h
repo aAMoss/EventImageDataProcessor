@@ -3,6 +3,7 @@
 // Program Specific Headers
 #include "config.h"
 #include "dataio.h"
+#include "process.h"
 
 
 // External Variables - Stops compiler eating itself!
