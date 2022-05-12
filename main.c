@@ -32,7 +32,7 @@ long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p v
 long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
 
 
-void dataio_extract_event_data_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no)
+void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no)
 {
 
     for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
@@ -74,9 +74,8 @@ void dataio_extract_event_data_packets(FILE *Sample_Input_File, int byte_no, int
     
 }
 
-void process_event_data(FILE *Sample_Input_File, int sample_events,
-                               int packet_size, int packet_overlap, int packets_req, int last_packet_size,
-                               long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
+void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size,
+                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
 {
 
     int byte_no = 0;
@@ -110,7 +109,7 @@ void process_event_data(FILE *Sample_Input_File, int sample_events,
         printf("byte_no %d\t", byte_no);
         printf("f_packet_size %d\n", f_packet_size);
     
-        dataio_extract_event_data_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no);
+        dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no);
         
 //        for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
 //        {
@@ -201,10 +200,8 @@ int main(void)
                 printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
                 
                 
-                process_event_data(Sample_Input_File, sample_events,
-                                          packet_size, packet_overlap,
-                                          packets_req, last_packet_size,
-                                          EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size,
+                                   EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
                 
                 
