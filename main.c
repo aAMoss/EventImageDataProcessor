@@ -32,6 +32,48 @@ long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p v
 long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
 
 
+void dataio_extract_event_data_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no)
+{
+
+    for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
+    {
+
+        unsigned char buffer[EVENT_BUFF_SIZE];
+        //Set file position
+        fseek(Sample_Input_File, byte_no_offset, SEEK_SET);
+
+        // read 5 bytes to buffer
+        fread(buffer,sizeof *buffer, EVENT_BUFF_SIZE, Sample_Input_File);
+
+        //for debug
+        //printf("%u\t%u\t%u\t%u\t%u\t\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
+
+
+        int event_no = byte_no_offset / 5;
+
+
+        EventPacketX[*packet_event_no] = buffer[0] + 1; // will store the event packet x values
+        EventPacketY[*packet_event_no] = buffer[1] + 1; // will store the event packet y values
+        EventPacketP[*packet_event_no] = buffer[2] >> 7; // will store the event packet p values
+        EventPacketT[*packet_event_no] = ((buffer[2] & 127) << 16) + (buffer[3] << 8) + buffer[4] ; // will store the event packet t values
+
+        printf("Event number %d --> \t%lu\t%lu", *packet_event_no, EventPacketX[*packet_event_no],EventPacketY[*packet_event_no]);
+        printf("\t%lu\t%lu\n",EventPacketP[*packet_event_no],EventPacketT[*packet_event_no]);
+
+
+        *packet_event_no = *packet_event_no + 1;
+
+
+    }
+
+
+    
+    
+    
+    
+    
+}
+
 void process_event_data(FILE *Sample_Input_File, int sample_events,
                                int packet_size, int packet_overlap, int packets_req, int last_packet_size,
                                long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
@@ -68,44 +110,41 @@ void process_event_data(FILE *Sample_Input_File, int sample_events,
         printf("byte_no %d\t", byte_no);
         printf("f_packet_size %d\n", f_packet_size);
     
+        dataio_extract_event_data_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no);
         
-        
-        for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
-        {
-            
-            unsigned char buffer[EVENT_BUFF_SIZE];
-            //Set file position
-            fseek(Sample_Input_File, byte_no_offset, SEEK_SET);
+//        for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
+//        {
+//
+//            unsigned char buffer[EVENT_BUFF_SIZE];
+//            //Set file position
+//            fseek(Sample_Input_File, byte_no_offset, SEEK_SET);
+//
+//            // read 5 bytes to buffer
+//            fread(buffer,sizeof *buffer, EVENT_BUFF_SIZE, Sample_Input_File);
+//
+//            //for debug
+//            //printf("%u\t%u\t%u\t%u\t%u\t\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
+//
+//
+//            event_no = byte_no_offset / 5;
+//
+//
+//            EventPacketX[packet_event_no] = buffer[0] + 1; // will store the event packet x values
+//            EventPacketY[packet_event_no] = buffer[1] + 1; // will store the event packet y values
+//            EventPacketP[packet_event_no] = buffer[2] >> 7; // will store the event packet p values
+//            EventPacketT[packet_event_no] = ((buffer[2] & 127) << 16) + (buffer[3] << 8) + buffer[4] ; // will store the event packet t values
+//
+//            printf("Event number %d --> \t%lu\t%lu", packet_event_no, EventPacketX[packet_event_no],EventPacketY[packet_event_no]);
+//            printf("\t%lu\t%lu\n",EventPacketP[packet_event_no],EventPacketT[packet_event_no]);
+//
+//
+//            packet_event_no++;
+//
+//
+//        }
 
-            // read 5 bytes to buffer
-            fread(buffer,sizeof *buffer, EVENT_BUFF_SIZE, Sample_Input_File);
-
-            //for debug
-            //printf("%u\t%u\t%u\t%u\t%u\t\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4]);
-
-            
-            event_no = byte_no_offset / 5;
-            
-            
-            EventPacketX[packet_event_no] = buffer[0] + 1; // will store the event packet x values
-            EventPacketY[packet_event_no] = buffer[1] + 1; // will store the event packet y values
-            EventPacketP[packet_event_no] = buffer[2] >> 7; // will store the event packet p values
-            EventPacketT[packet_event_no] = ((buffer[2] & 127) << 16) + (buffer[3] << 8) + buffer[4] ; // will store the event packet t values
-            
-            printf("Event number %d --> \t%lu\t%lu", packet_event_no, EventPacketX[packet_event_no],EventPacketY[packet_event_no]);
-            printf("\t%lu\t%lu\n",EventPacketP[packet_event_no],EventPacketT[packet_event_no]);
-
-            
-            packet_event_no++;
-            
         
-        }
-        
-        //printf("Packet %d Complete!\n", packet_no);
-        
-        
- 
-        
+        // Data Functions to print data to file and booleanize go here!
         
     }
     
@@ -167,8 +206,6 @@ int main(void)
                                           packets_req, last_packet_size,
                                           EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
-                
-                //print_sample_data(sample_events, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
                 
                 
                 fclose(Sample_Input_File);
