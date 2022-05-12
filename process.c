@@ -75,22 +75,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 //        }
 //
         
-        // process
-        
-        // booleans
-        
-        
-        // minimize
-        
-        
-        // print to file
 
-        // boolean literals
-
-        //literals_raw per event
-
-
-        
         
         for(int a = 0; a < f_packet_size; a++)
         {
