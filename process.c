@@ -87,8 +87,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
         // boolean literals
 
-        //literals per event
-        int literals[RAW_BOOL_MAX][f_packet_size];
+        //literals_raw per event
+        int literals_raw[RAW_BOOL_MAX][f_packet_size];
         
         
         for(int a = 0; a < f_packet_size; a++)
@@ -96,7 +96,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             for(int b = 0; b < RAW_BOOL_MAX; b++)
             {
 
-                literals[b][a] = 0;
+                literals_raw[b][a] = 0;
 
             }
 
@@ -129,7 +129,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             //CREATE X BOOLS - counts from place 5 to place 0
             while (EventInX >= 1)
             {
-                literals[countX][e] = EventInX % 2;
+                literals_raw[countX][e] = EventInX % 2;
                 EventInX = EventInX / 2;
                 countX--;
             }
@@ -137,18 +137,18 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             // CREATE Y BOOLS - counts from place 11 to place 6
             while (EventInY >= 1)
             {
-                literals[countY][e] = EventInY % 2;
+                literals_raw[countY][e] = EventInY % 2;
                 EventInY = EventInY / 2;
                 countY--;
             }
 
             // CREATE P BOOLS - writes to place 12
-            literals[countP][e] = EventInP;
+            literals_raw[countP][e] = EventInP;
 
             // CREATE T BOOLS - counts from place 36 to place 13
             while (EventInT >= 1)
             {
-                literals[countT][e] = EventInT % 2;
+                literals_raw[countT][e] = EventInT % 2;
                 EventInT = EventInT / 2;
                 countT--;
             }
@@ -156,7 +156,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
            //CREATE C BOOLS - counts from place 40 to place 37
             while (class >= 1)
             {
-                literals[countC][e] = class % 2;
+                literals_raw[countC][e] = class % 2;
                 class = class / 2;
                 countC--;
             }
@@ -171,7 +171,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             for(int b = 0; b < RAW_BOOL_MAX; b++)
             {
 
-                printf("%d", literals[b][a]);
+                printf("%d", literals_raw[b][a]);
 
             }
 
