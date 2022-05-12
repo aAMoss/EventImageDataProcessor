@@ -66,13 +66,22 @@ void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_pa
 
     }
 
-
-    
-    
-    
-    
     
 }
+
+void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacketY[],long int EventPacketP[],long int EventPacketT[])
+{
+    
+    for(int i = 0; i < EVENTS_PER_SAMPLE_MAX; i++)
+    {
+        EventPacketX[i] = 0;
+        EventPacketY[i] = 0;
+        EventPacketP[i] = 0;
+        EventPacketT[i] = 0;
+    }
+
+}
+
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size,
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
@@ -85,10 +94,16 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
     
     
-    
+    // Run for N number of packets to extract all data
     for(int packet_no = 0; packet_no < packets_req; packet_no++)
     {
         
+        
+        // Zero the packet arrays
+        dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+        
+        
+        // Select variables for first N-1 packets, and last Nth packet
         if(packet_no < (packets_req - 1))
         {
             byte_no = packet_no * (packet_size - packet_overlap) * EVENT_BUFF_SIZE;
@@ -108,8 +123,14 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         printf("packet_no %d\t", packet_no);
         printf("byte_no %d\t", byte_no);
         printf("f_packet_size %d\n", f_packet_size);
-    
+        
+        // Extract a packets worth of event data
         dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no);
+        
+        
+        // process to booleans
+        // write to file
+        
         
 //        for(int byte_no_offset = byte_no; byte_no_offset < (byte_no + (f_packet_size * EVENT_BUFF_SIZE)); byte_no_offset += EVENT_BUFF_SIZE)
 //        {
@@ -141,7 +162,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 //
 //
 //        }
-
+        
         
         // Data Functions to print data to file and booleanize go here!
         

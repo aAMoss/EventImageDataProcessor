@@ -55,7 +55,8 @@ void config_set_event_packet_vars(int *packet_size, int *packet_overlap)
         {
             printf("ERROR: Event Packet Size must be between 1 and 1000!\n");
         }
-        else if (p_s >= 1 && p_s <= 1000)
+        else
+        if (p_s >= 1 && p_s <= 1000)
         {
             *packet_size = p_s;
             p_s_flag++;
