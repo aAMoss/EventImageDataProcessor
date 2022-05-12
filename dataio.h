@@ -25,7 +25,7 @@ void dataio_get_input_sample_var(FILE *Sample_Input_File, long int *sample_bytes
 void datio_set_secondary_event_packet_vars(long int sample_events, int packet_size, int packet_overlap, int *packets_req,
                                            int *packet_events_overshoot, int *last_packet_zeros, int *last_packet_size);
 void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacketY[],long int EventPacketP[],long int EventPacketT[]);
-void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no);
+void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no,long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 
 long int sample_bytes;
 long int sample_events;

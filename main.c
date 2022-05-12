@@ -61,7 +61,7 @@ int main(void)
                 printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
                 
                 
-                process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size,
+                process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
                 
