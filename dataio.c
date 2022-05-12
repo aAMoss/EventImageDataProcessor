@@ -149,8 +149,8 @@ void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_pa
         EventPacketP[*packet_event_no] = buffer[2] >> 7; // will store the event packet p values
         EventPacketT[*packet_event_no] = ((buffer[2] & 127) << 16) + (buffer[3] << 8) + buffer[4] ; // will store the event packet t values
 
-        printf("Event number %d --> \t%lu\t%lu", *packet_event_no, EventPacketX[*packet_event_no],EventPacketY[*packet_event_no]);
-        printf("\t%lu\t%lu\n",EventPacketP[*packet_event_no],EventPacketT[*packet_event_no]);
+        //printf("Event number %d --> \t%lu\t%lu", *packet_event_no, EventPacketX[*packet_event_no],EventPacketY[*packet_event_no]);
+        //printf("\t%lu\t%lu\n",EventPacketP[*packet_event_no],EventPacketT[*packet_event_no]);
 
 
         *packet_event_no = *packet_event_no + 1;
