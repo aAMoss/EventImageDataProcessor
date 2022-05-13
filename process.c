@@ -13,12 +13,6 @@
 #include "process.h"
 #include "dataio.h"
 
-// VARIABLES
-#define RAW_XY_BOOL 6
-#define RAW_P_BOOL 1
-#define RAW_T_BOOL 24
-#define RAW_C_BOOL 4
-#define RAW_BOOL_MAX 41
 
 
 //extern int literals_raw[RAW_BOOL_MAX][packet_size];
