@@ -159,6 +159,36 @@ DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c)
 
 }
 
+// Opens data input directory
+DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_name, int c)
+{
+    char *s = "/";
+    char class_num[2] = "";
+    char out_dir_name[200] = "";
+    char *test = "/Test/";
+    char *train = "/Train/";
+    
+    sprintf(class_num, "%d", c);
+    strcat(out_dir_name, output_dir_name);
+    strcat(out_dir_name, test);
+    strcat(out_dir_name, class_num);
+    strcat(out_dir_name, s);
+    printf("%s\n", out_dir_name);
+    
+    Data_Output_Dir = opendir(out_dir_name);
+    
+    if(Data_Output_Dir == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("%s\n", output_dir_name);
+    
+    return Data_Output_Dir;
+
+}
+
 // Opens data input file
 FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, int c )
 {

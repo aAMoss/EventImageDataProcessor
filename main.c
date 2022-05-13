@@ -35,7 +35,8 @@ int main(void)
         
         // Opens the input directory of the N-MNIST Dataset
         Data_Input_Dir = dataio_open_data_input_dir(Data_Input_Dir, c);
-
+        Data_Output_Dir = dataio_open_data_output_dir_test(Data_Output_Dir, output_dir_name, c);
+        
         while(  (Data_Input_Dir_Entry = readdir(Data_Input_Dir)) )
         {
 
