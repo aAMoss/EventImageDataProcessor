@@ -3,6 +3,7 @@
 // Standard Headers
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //Posix Headers
 #include <dirent.h>
@@ -13,7 +14,7 @@
 // Program Specific Headers
 #include "process.h"
 
-
+void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][f_packet_size], int packet_size);
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
@@ -24,7 +25,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     int event_no = 0;
     int packet_event_no = 0;
     
-    int literals_raw[RAW_BOOL_MAX][packet_size];
+    int literals_raw[RAW_BOOL_MAX][f_packet_size];
     
     // Run for N number of packets to extract all data
     for(int packet_no = 0; packet_no < packets_req; packet_no++)
@@ -66,7 +67,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
         
         // PRINT TO FILE - Comment out as necessary
-        
+        dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, f_packet_size);
         // will require output directory and file opening!!! see main.c and datio.c!!!
         
         
@@ -92,3 +93,29 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
 }
 
+
+
+void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][f_packet_size], int packet_size)
+{
+    
+    char buf[2] = "";
+    char *space = " ";
+    char line[ (2 * ((2 * RAW_XY_BOOL) + RAW_P_BOOL + RAW_T_BOOL + RAW_C_BOOL)) + 1 ] = "";
+    
+    for(int a = 0; a < f_packet_size; a++)
+    {
+        
+        for(int b = 0; b < RAW_BOOL_MAX; b++)
+        {
+            
+            sprintf(buf, "%d", literals_raw[b][a]);
+            strcat(line,buf);
+            strcat(line,space);
+            //printf("%d", literals_raw[b][a]);
+            fprintf(Processed_Data_Output_File, "%s\n", line);
+
+        }
+    
+    }
+
+}
