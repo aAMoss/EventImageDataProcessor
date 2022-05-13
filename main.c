@@ -21,13 +21,13 @@ int main(void)
 {
     
     // Sets the name for the output data
-    config_get_out_dir_label(output_dir_label);
+    dataio_get_out_dir_label(output_dir_label);
     
     // Creates the output data directories
-    config_create_output_dir(output_dir_label, output_dir_name);
+    dataio_create_output_dir(output_dir_label, output_dir_name);
     
     // Sets the packet variables: size and overlap
-    config_set_event_packet_vars(&packet_size, &packet_overlap);
+    dataio_set_event_packet_vars(&packet_size, &packet_overlap);
     
     // Runs for everyone of the test data classes
     for(int c = 0; c < CLASSES; c++)

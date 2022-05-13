@@ -16,17 +16,10 @@
 #include "dataio.h"
 
 
-
-// Variables
-//char output_dir_label[(DATA_OUT_NAME_MAX /2)] = "";
-//char output_dir_name[DATA_OUT_NAME_MAX] = "";
-//
-//int packet_size = 0;
-//int packet_overlap = 0;
-
+// 
 
 // Allows the user to set the name of the output data (data that has been processed and booleanized)
-void config_get_out_dir_label(char *output_dir_label)
+void dataio_get_out_dir_label(char *output_dir_label)
 {
     char user_input[(DATA_OUT_NAME_MAX/4)];
     char time_string[100] = "";
@@ -45,7 +38,7 @@ void config_get_out_dir_label(char *output_dir_label)
 
 
 // Allows the user to set the number of events in each packet to be processed, and the overlap of the event packets (in number of events)
-void config_set_event_packet_vars(int *packet_size, int *packet_overlap)
+void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
 {
     int p_s = 0;
     int p_o = 0;
@@ -95,9 +88,8 @@ void config_set_event_packet_vars(int *packet_size, int *packet_overlap)
 }
 
 
-
 // Function to create the new output directories
-void config_create_output_dir(char *output_dir_label, char *output_dir_name)
+void dataio_create_output_dir(char *output_dir_label, char *output_dir_name)
 {
     // Static Strings
     char *s0 = "./";
@@ -141,7 +133,7 @@ void config_create_output_dir(char *output_dir_label, char *output_dir_name)
 }
 
 
-
+// Opens data input directory
 DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c)
 {
     char *s = "/";
@@ -168,7 +160,7 @@ DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c)
 
 }
 
-
+// Opens data input file
 FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, int c )
 {
     char *s = "/";
@@ -203,7 +195,7 @@ FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, 
 
 
 
-
+// Gets number of  bytes and events from the input sample file
 void dataio_get_input_sample_var(FILE *Sample_Input_File, long int *sample_bytes, long int *sample_events)
 {
     fseek(Sample_Input_File, 0, SEEK_END);
