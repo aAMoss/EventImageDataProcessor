@@ -50,7 +50,7 @@ int main(void)
                 
                 
                 Sample_Input_File = dataio_open_data_input_file(Data_Input_Dir, Sample_Input_File, c);
-                
+                Processed_Data_Output_File = dataio_open_data_output_file(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
                 
                 puts("Input and output files opened!");
                 
@@ -66,10 +66,12 @@ int main(void)
                 
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT);
-        
-                //Need a function to open the output file then one to write the data to it
-                //Sample_Output_File = dataio_open_data_output_file(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c);
-                Processed_Data_Output_File = dataio_open_data_output_file(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
+                
+   
+                
+                
+                
+                
                 
                 fclose(Sample_Input_File);
                 fclose(Processed_Data_Output_File);

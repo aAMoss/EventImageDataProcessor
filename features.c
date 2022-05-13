@@ -18,8 +18,7 @@
 void features_literals_raw_data(long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
                              int f_packet_size, int c, int literals_raw[RAW_BOOL_MAX][f_packet_size] )
 {
-    // var needs to be outside in .h or elsewhere
-    //int literals_raw[RAW_BOOL_MAX][f_packet_size];
+
 
 
     for(int a = 0; a < f_packet_size; a++)
