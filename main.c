@@ -35,6 +35,8 @@ int main(void)
         
         // Opens the input directory of the N-MNIST Dataset
         Data_Input_Dir = dataio_open_data_input_dir(Data_Input_Dir, c);
+        
+        //Opens the output directory for the processed data
         Data_Output_Dir = dataio_open_data_output_dir_test(Data_Output_Dir, output_dir_name, c);
         
         while(  (Data_Input_Dir_Entry = readdir(Data_Input_Dir)) )
@@ -65,21 +67,25 @@ int main(void)
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
-                
+                //Need a function to open the output file then one to write the data to it
+                //Sample_Output_File = dataio_open_data_output_file(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c);
+                Processed_Data_Output_File = dataio_open_data_output_file(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
                 
                 fclose(Sample_Input_File);
+                fclose(Processed_Data_Output_File);
                 
             } // close if
         
         } // close while
         
+        closedir(Data_Output_Dir);
+        closedir(Data_Input_Dir);
         
-    } // close for
+    } // End Classes For Loop
     
     
     // once ready and tested will duplicate all again for training data
     
-    //5589
     
     
     return 0;

@@ -19,7 +19,7 @@ struct dirent *Data_Output_Dir_Entry;
 
 // File Objects
 FILE *Sample_Input_File;
-FILE *Sample_Output_File;
+FILE *Processed_Data_Output_File;
 
 // Packet Variables - User specified
 int packet_size;
@@ -56,6 +56,7 @@ DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c);
 FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, int c );
 
 DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_name, int c);
+FILE *dataio_open_data_output_file(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c);
 
 void dataio_get_input_sample_var(FILE *Sample_Input_File, long int *sample_bytes, long int *sample_events);
 void datio_set_secondary_event_packet_vars(long int sample_events, int packet_size, int packet_overlap, int *packets_req,

@@ -159,7 +159,7 @@ DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c)
 
 }
 
-// Opens data input directory
+// Opens data output directory
 DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_name, int c)
 {
     char *s = "/";
@@ -173,7 +173,6 @@ DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_nam
     strcat(out_dir_name, test);
     strcat(out_dir_name, class_num);
     strcat(out_dir_name, s);
-    printf("%s\n", out_dir_name);
     
     Data_Output_Dir = opendir(out_dir_name);
     
@@ -182,8 +181,6 @@ DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_nam
         puts("ERROR: Unable to read directory!");
         exit(EXIT_FAILURE);
     }
-    
-    printf("%s\n", output_dir_name);
     
     return Data_Output_Dir;
 
@@ -219,8 +216,45 @@ FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, 
     return Sample_Input_File;
 }
 
+// Opens data output file
+FILE *dataio_open_data_output_file(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c)
+{
+    char *s = "/";
+    char classnum[2] = "";
+    char out_file_path[300] = "";
+    char *test = "/Test/";
+    char *train = "/Train/";
+    
+    // Creates the file path name using strcat
+    sprintf(classnum, "%d", c);
+    strcat(out_file_path, output_dir_name);
+    strcat(out_file_path, test);
+    strcat(out_file_path, classnum);
+    strcat(out_file_path, s);
+    strcat(out_file_path, Data_Input_Dir_Entry->d_name);
+    
+    // REMOVED bin from sample file path
+    char *temp;
+    temp = strchr(out_file_path,'b');   //Get the pointer to char token
+    *temp = '\0';             //Replace token with null char
+    
+    
+    //printf("The samplefilepath is %s\n",samplefilepathname);
+    strcat(out_file_path, "txt");
+    
+    
+    // Open file stream for the sample file, in read mode, binary
+    Processed_Data_Output_File = fopen(out_file_path,"w");
 
-
+    
+    if(Processed_Data_Output_File == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return Processed_Data_Output_File;
+}
 
 
 
