@@ -1,9 +1,10 @@
 // dataio.h
 
-// Directory paths for the input data
+// Definitions - Input directory paths for the N-MNIST data set
 #define TEST_IN_DIR "./N-MNIST_test/Test/"
 #define TRAIN_IN_DIR "./N-MNIST_test/Train/"
 
+// Definitions - Variables
 #define EVENTS_PER_SAMPLE_MAX 10000
 #define DATA_IN_NAME_MAX 200
 #define EVENT_BUFF_SIZE 5
@@ -13,37 +14,39 @@
 // Directory Objects and Structures
 DIR *Data_Input_Dir;
 struct dirent *Data_Input_Dir_Entry;
-
-
+DIR *Data_Output_Dir;
+struct dirent *Data_Output_Dir_Entry;
 
 // File Objects
 FILE *Sample_Input_File;
+FILE *Sample_Output_File;
 
-
-// Variables
+// Packet Variables - User specified
 int packet_size;
 int packet_overlap;
 
+// Packet Variables II - Determined by input sample file
 long int sample_bytes;
 long int sample_events;
+
+// Packet Variables III - Calculated using I and II above
 int packets_req;
 int packet_events_overshoot;
 int last_packet_zeros;
 int last_packet_size;
 
+// Event Packet Varaibles - 1 array each for the co-ordinates, polarity, and timestamp (in us) of each event
 long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
 long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
 long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
 long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
 
+// Directory label names - User specified, names the output directory
 char output_dir_label[(DATA_OUT_NAME_MAX /2)];
 char output_dir_name[DATA_OUT_NAME_MAX];
 
 
-
 // Function Prototypes
-
-// Set-up
 void dataio_get_out_dir_label(char *output_dir_label);
 void dataio_create_output_dir(char *output_dir_label, char *output_dir_name);
 void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap);

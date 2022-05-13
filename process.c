@@ -62,9 +62,14 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         
         
         
-        
+        // FEATURES - Comment out as necessary
         features_literals_raw_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
 
+        
+        // PRINT TO FILE - Comment out as necessary
+        
+        // will require output directory and file opening!!! see main.c and datio.c!!!
+        
         
         // Print to terminal for checking output and debug
         for(int a = 0; a < f_packet_size; a++)
