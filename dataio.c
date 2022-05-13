@@ -16,7 +16,6 @@
 #include "dataio.h"
 
 
-// 
 
 // Allows the user to set the name of the output data (data that has been processed and booleanized)
 void dataio_get_out_dir_label(char *output_dir_label)
