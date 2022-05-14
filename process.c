@@ -60,44 +60,35 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         // Arrays to store int version of the literals/booleans, has to be called after f_packet)size is set
         int literals_raw[RAW_BOOL_MAX][f_packet_size];
         
-        printf("packet_no %d\t", packet_no);
-        printf("byte_no %d\t", byte_no);
-        printf("f_packet_size %d\n", f_packet_size);
+        //printf("packet_no %d\t", packet_no);
+        //printf("byte_no %d\t", byte_no);
+        //printf("f_packet_size %d\n", f_packet_size);
         
         // Extract a packets worth of event data
         dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
         
-       
-        
-        
         // FEATURES - Comment out as necessary
         features_literals_raw_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
-
-        // Print to terminal for checking output and debug
-        for(int a = 0; a < f_packet_size; a++)
-        {
-
-            printf("Packet Event No --> %d \t%lu\t%lu", a, EventPacketX[a],EventPacketY[a]);
-            printf("\t%lu\t%lu\t",EventPacketP[a],EventPacketT[a]);
-            for(int b = 0; b < RAW_BOOL_MAX; b++)
-            {
-
-                printf("%d", literals_raw[b][a]);
-
-            }
-
-            printf("\n");
-        }
-
         
-        
-        // I appear to ahve done something that causes an illegal hardware instruction with dataio_print ...
-        
-//      // PRINT TO FILE - Comment out as necessary
+        // PRINT TO FILE - Comment out as necessary
         dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
-//
-        
 
+        
+//        // Print to terminal for checking output and debug
+//        for(int a = 0; a < f_packet_size; a++)
+//        {
+//
+//            printf("Packet Event No --> %d \t%lu\t%lu", a, EventPacketX[a],EventPacketY[a]);
+//            printf("\t%lu\t%lu\t",EventPacketP[a],EventPacketT[a]);
+//            for(int b = 0; b < RAW_BOOL_MAX; b++)
+//            {
+//
+//                printf("%d", literals_raw[b][a]);
+//
+//            }
+//
+//            printf("\n");
+//        }
 
 
     }
@@ -105,8 +96,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 }
 
 
-// I think the illegal hardware fault has something to do with *p_f_packetsize, might have to retool all the code in processes, to accomodate
-// the packet_size and final_packet_size
+ 
 void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][*p_f_packet_size], int *p_f_packet_size)
 {
 
@@ -122,6 +112,7 @@ void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int lit
         {
             sprintf(buf, "%d", literals_raw[b][a]);
             strcat(line,buf);
+            memset(buf,0,sizeof(buf));
             strcat(line,space);
         }
 
