@@ -26,6 +26,18 @@ long int test_samples;
 long int train_samples;
 char test_dir_label[(TEST_DATA_NAME_MAX /2)];
 
+// Going to need some counters???
+// Will certainly need to calculate the total number of lines of booleans/literals for the raw bool data.
+// This is because the TM program treats each line of booleans as an individual data sample, my initial hypothesis requires the event data
+// to be input unprocessed as bools. Each sample of N-MNIST is several thousand lines of bools. SO will need to calculate the total lines (from the selected data samples)
+// to ensure I ahve a value that can be entered into the TM
+
+
+// going to need a function to read the appropriate directory
+// goind to need a function to open a file from the dataset (in said directory)
+// going to need a function to create the output test and train files for the TM
+// going to need a function to copy the contents of the dataset file to the appropriate test and train files... basically concatenating them together.
+
 
 
 // Function Prototypes
