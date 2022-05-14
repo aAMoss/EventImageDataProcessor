@@ -1,5 +1,9 @@
 // dataio.h
 
+// Program Specific Headers
+#include "features.h"
+
+
 // Definitions - Input directory paths for the N-MNIST data set
 #define TEST_IN_DIR "./N-MNIST_test/Test/"
 #define TRAIN_IN_DIR "./N-MNIST_test/Train/"
@@ -45,6 +49,8 @@ long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t v
 char output_dir_label[(DATA_OUT_NAME_MAX /2)];
 char output_dir_name[DATA_OUT_NAME_MAX];
 
+// Pointer for dataio_print_to_file_literals_raw
+int *p_f_packet_size;
 
 // Function Prototypes
 void dataio_get_out_dir_label(char *output_dir_label);
@@ -69,4 +75,4 @@ void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_pa
 
 
 
-
+void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][*p_f_packet_size], int *p_f_packet_size);

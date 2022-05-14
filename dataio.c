@@ -338,3 +338,31 @@ void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_pa
 
     
 }
+
+
+
+void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][*p_f_packet_size], int *p_f_packet_size)
+{
+
+    char buf[2] = "";
+    char *space = " ";
+    char line[(2 * RAW_BOOL_MAX) + 1];
+    int local_packet_size = *p_f_packet_size;
+    
+    for(int a = 0; a < local_packet_size; a++)
+    {
+
+        for(int b = 0; b < RAW_BOOL_MAX; b++)
+        {
+            sprintf(buf, "%d", literals_raw[b][a]);
+            strcat(line,buf);
+            memset(buf,0,sizeof(buf));
+            strcat(line,space);
+        }
+
+        fprintf(Processed_Data_Output_File, "%s\n", line);
+        memset(line,0,sizeof(line));
+
+    }
+
+}
