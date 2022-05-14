@@ -35,7 +35,6 @@ void dataio_get_out_dir_label(char *output_dir_label)
     strcat(output_dir_label, user_input);
 }
 
-
 // Allows the user to set the number of events in each packet to be processed, and the overlap of the event packets (in number of events)
 void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
 {
@@ -86,7 +85,6 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
     }
 }
 
-
 // Function to create the new output directories
 void dataio_create_output_dir(char *output_dir_label, char *output_dir_name)
 {
@@ -132,8 +130,11 @@ void dataio_create_output_dir(char *output_dir_label, char *output_dir_name)
 }
 
 
-// Opens data input directory
-DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c)
+
+
+
+// Opens data input directory, for the test data
+DIR *dataio_open_data_input_dir_test(DIR *Data_Input_Dir, int c)
 {
     char *s = "/";
     char class_num[2] = "";
@@ -156,17 +157,47 @@ DIR *dataio_open_data_input_dir(DIR *Data_Input_Dir, int c)
     printf("%s\n", input_dir_name);
     
     return Data_Input_Dir;
-
 }
 
-// Opens data output directory
+// Opens data input directory, for the training data
+DIR *dataio_open_data_input_dir_train(DIR *Data_Input_Dir, int c)
+{
+    char *s = "/";
+    char class_num[2] = "";
+    char input_dir_name[200] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_dir_name, TRAIN_IN_DIR);
+    
+    strcat(input_dir_name, class_num);
+    strcat(input_dir_name, s);
+    
+    
+    
+    Data_Input_Dir = opendir(input_dir_name);
+    
+    if(Data_Input_Dir == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("%s\n", input_dir_name);
+    
+    return Data_Input_Dir;
+}
+
+
+
+
+
+// Opens data output directory, for the processed test data
 DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_name, int c)
 {
     char *s = "/";
     char class_num[2] = "";
     char out_dir_name[200] = "";
     char *test = "/Test/";
-    char *train = "/Train/";
     
     sprintf(class_num, "%d", c);
     strcat(out_dir_name, output_dir_name);
@@ -186,8 +217,38 @@ DIR *dataio_open_data_output_dir_test(DIR *Data_Output_Dir, char* output_dir_nam
 
 }
 
-// Opens data input file
-FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, int c )
+// Opens data output directory, for the processed train data
+DIR *dataio_open_data_output_dir_train(DIR *Data_Output_Dir, char* output_dir_name, int c)
+{
+    char *s = "/";
+    char class_num[2] = "";
+    char out_dir_name[200] = "";
+    char *train = "/Train/";
+    
+    sprintf(class_num, "%d", c);
+    strcat(out_dir_name, output_dir_name);
+    strcat(out_dir_name, train);
+    strcat(out_dir_name, class_num);
+    strcat(out_dir_name, s);
+    
+    Data_Output_Dir = opendir(out_dir_name);
+    
+    if(Data_Output_Dir == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    return Data_Output_Dir;
+
+}
+
+
+
+
+
+// Opens test data input file,
+FILE *dataio_open_data_input_file_test(DIR *Data_Input_Dir, FILE *Sample_Input_File, int c )
 {
     char *s = "/";
     char class_num[2] = "";
@@ -216,14 +277,49 @@ FILE *dataio_open_data_input_file(DIR *Data_Input_Dir, FILE *Sample_Input_File, 
     return Sample_Input_File;
 }
 
-// Opens data output file
-FILE *dataio_open_data_output_file(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c)
+// Opens train data input file,
+FILE *dataio_open_data_input_file_train(DIR *Data_Input_Dir, FILE *Sample_Input_File, int c )
+{
+    char *s = "/";
+    char class_num[2] = "";
+    char input_file_path[200] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_file_path, TRAIN_IN_DIR);
+    
+    strcat(input_file_path, class_num);
+    strcat(input_file_path, s);
+    strcat(input_file_path, Data_Input_Dir_Entry->d_name);
+    
+    
+    // Open file stream for the sample file, in read mode, binary
+    Sample_Input_File = fopen(input_file_path,"rb");
+
+    if(Sample_Input_File == NULL)
+    {
+        puts("Unable to open the file");
+        exit(EXIT_FAILURE);
+    }
+    
+    
+    printf("%s\n", input_file_path);
+    
+    return Sample_Input_File;
+}
+
+
+
+
+
+
+
+// Opens processed test data output file
+FILE *dataio_open_data_output_file_test(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c)
 {
     char *s = "/";
     char classnum[2] = "";
     char out_file_path[300] = "";
     char *test = "/Test/";
-    char *train = "/Train/";
     
     // Creates the file path name using strcat
     sprintf(classnum, "%d", c);
@@ -256,6 +352,47 @@ FILE *dataio_open_data_output_file(DIR *Data_Output_Dir, char* output_dir_name, 
     return Processed_Data_Output_File;
 }
 
+// Opens processed train data output file
+FILE *dataio_open_data_output_file_train(DIR *Data_Output_Dir, char* output_dir_name, FILE *Processed_Data_Output_File, int c)
+{
+    char *s = "/";
+    char classnum[2] = "";
+    char out_file_path[300] = "";
+    char *train = "/Train/";
+    
+    // Creates the file path name using strcat
+    sprintf(classnum, "%d", c);
+    strcat(out_file_path, output_dir_name);
+    strcat(out_file_path, train);
+    strcat(out_file_path, classnum);
+    strcat(out_file_path, s);
+    strcat(out_file_path, Data_Input_Dir_Entry->d_name);
+    
+    // REMOVED bin from sample file path
+    char *temp;
+    temp = strchr(out_file_path,'b');   //Get the pointer to char token
+    *temp = '\0';             //Replace token with null char
+    
+    
+    //printf("The samplefilepath is %s\n",samplefilepathname);
+    strcat(out_file_path, "txt");
+    
+    
+    // Open file stream for the sample file, in read mode, binary
+    Processed_Data_Output_File = fopen(out_file_path,"w");
+
+    
+    if(Processed_Data_Output_File == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return Processed_Data_Output_File;
+}
+
+
+
 
 
 // Gets number of  bytes and events from the input sample file
@@ -267,7 +404,7 @@ void dataio_get_input_sample_var(FILE *Sample_Input_File, long int *sample_bytes
         *sample_events = ( ftell(Sample_Input_File) ) / EVENT_BUFF_SIZE;
 }
 
-
+// Sets secondary packet variables using the user input and sample file variables
 void datio_set_secondary_event_packet_vars(long int sample_events, int packet_size, int packet_overlap, int *packets_req,
                                  int *packet_events_overshoot, int *last_packet_zeros, int *last_packet_size)
 {
@@ -288,6 +425,7 @@ void datio_set_secondary_event_packet_vars(long int sample_events, int packet_si
 
 
 
+
 void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacketY[],long int EventPacketP[],long int EventPacketT[])
 {
     
@@ -300,7 +438,6 @@ void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacke
     }
 
 }
-
 
 void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no,long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
 {
@@ -338,8 +475,6 @@ void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_pa
 
     
 }
-
-
 
 void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][*p_f_packet_size], int *p_f_packet_size)
 {
