@@ -172,7 +172,7 @@ DIR *dataio_open_data_input_dir_train(DIR *Data_Input_Dir, int c)
     strcat(input_dir_name, class_num);
     strcat(input_dir_name, s);
     
-    
+    printf("Directory name: %s!", input_dir_name);
     
     Data_Input_Dir = opendir(input_dir_name);
     
