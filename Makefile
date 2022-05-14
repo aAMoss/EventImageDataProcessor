@@ -1,6 +1,6 @@
 .POSIX:
 .SUFFIXES:
-all: eidp
+all: eidp tmda
 
 eidp: eidp.o dataio.o process.o features.o
 	gcc -o eidp eidp.o dataio.o process.o features.o
@@ -17,5 +17,13 @@ process.o: process.c process.h
 features.o: features.c features.h
 	gcc -c features.c
 
+tmda: tmda.o
+	gcc -o tmda tmda.o
+	
+tmda.o: tmda.c tmda.h
+	gcc -c tmda.c
+	
+	
 clean:
 	rm -f eidp eidp.o dataio.o process.o features.o
+	rm -f tmda tmda.o
