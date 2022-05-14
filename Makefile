@@ -2,11 +2,11 @@
 .SUFFIXES:
 all: eidp
 
-eidp: main.o dataio.o process.o features.o
-	gcc -o eidp main.o dataio.o process.o features.o
+eidp: eidp.o dataio.o process.o features.o
+	gcc -o eidp eidp.o dataio.o process.o features.o
 
-main.o: main.c main.h
-	gcc -c main.c
+eidp.o: eidp.c eidp.h
+	gcc -c eidp.c
 	
 dataio.o: dataio.c dataio.h
 	gcc -c dataio.c
@@ -18,4 +18,4 @@ features.o: features.c features.h
 	gcc -c features.c
 
 clean:
-	rm -f eidp main.o dataio.o process.o features.o
+	rm -f eidp eidp.o dataio.o process.o features.o

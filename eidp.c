@@ -1,4 +1,4 @@
-// main.c
+// eidp.c
 
 // Standard Headers
 #include <stdio.h>
@@ -13,7 +13,7 @@
 #include <unistd.h>
 
 // Program Specific Headers
-#include "main.h"
+#include "eidp.h"
 
 
 

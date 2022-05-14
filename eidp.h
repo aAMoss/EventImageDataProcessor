@@ -1,4 +1,4 @@
-// main.h
+// eidp.h
 
 // Program Specific Headers
 #include "dataio.h"
