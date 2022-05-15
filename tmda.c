@@ -26,14 +26,23 @@
 // Variables
 long int test_samples;
 long int train_samples;
-char test_dir_label[(TEST_DATA_NAME_MAX /2)];
-
 long int class_test_samples;
 long int class_train_samples;
-
 long int total_test_samples;
 long int total_train_samples;
 long int total_nmnist_samples;
+
+char dataset_dir_label[(TEST_DATA_NAME_MAX /2)];
+
+
+// Directory Objects and Structures
+DIR *DATASET_INPUT_DIR;
+struct dirent *Dataset_Input_Dir_Entry;
+
+// File Objects
+FILE *NMNIST_DATA_SAMPLE;
+FILE *TEST_DATA_OUTPUT;
+FILE *TRAIN_DATA_OUTPUT;
 
 // Going to need some counters???
 // Will certainly need to calculate the total number of lines of booleans/literals for the raw bool data.
@@ -52,27 +61,119 @@ long int total_nmnist_samples;
 
 
 
+
+
+
 // Function Prototypes
-void tmda_get_test_dir_label(char *test_dir_label);
+void tmda_get_dataset_dir_label(char *dataset_dir_label);
 void tmda_set_data_samples(long int *test_samples, long int *train_samples);
 
 void tmda_get_data_sample_per_class(long int test_samples, long int train_samples,
                                     long int *class_test_samples, long int *class_train_samples,
                                     long int *total_test_samples, long int *total_train_samples, long int *total_nmnist_samples);
-                                    
+
+DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c);
+DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c);
+
+DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
+{
+    char *s0 = "./";
+    char *s1 = "/test/";
+    char *s2 = "/";
+    char class_num[2] = "";
+    char input_dir_name[200] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_dir_name, s0);
+    strcat(input_dir_name, dataset_dir_label);
+    strcat(input_dir_name, s1);
+    
+    strcat(input_dir_name, class_num);
+    strcat(input_dir_name, s2);
+    
+    DATASET_INPUT_DIR = opendir(input_dir_name);
+    
+    if(DATASET_INPUT_DIR == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("%s\n", input_dir_name);
+    
+    return DATASET_INPUT_DIR;
+    
+}
+
+DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
+{
+    char *s0 = "./";
+    char *s1 = "/train/";
+    char *s2 = "/";
+    char class_num[2] = "";
+    char input_dir_name[200] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_dir_name, s0);
+    strcat(input_dir_name, dataset_dir_label);
+    strcat(input_dir_name, s1);
+    
+    strcat(input_dir_name, class_num);
+    strcat(input_dir_name, s2);
+    
+    DATASET_INPUT_DIR = opendir(input_dir_name);
+    
+    if(DATASET_INPUT_DIR == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("%s\n", input_dir_name);
+    
+    return DATASET_INPUT_DIR;
+    
+}
 
 
 int main(void)
 {
     
-    tmda_get_test_dir_label(test_dir_label);
+    tmda_get_dataset_dir_label(dataset_dir_label);
     
     tmda_set_data_samples(&test_samples, &train_samples);
     
-    tmda_get_data_sample_per_class(test_samples, train_samples, &class_test_samples, &class_train_samples, &total_test_samples, &total_train_samples, &total_nmnist_samples);
-   
+    tmda_get_data_sample_per_class(test_samples, train_samples, &class_test_samples, &class_train_samples,
+                                   &total_test_samples, &total_train_samples, &total_nmnist_samples);
     
-    printf("Data Directory Name:\t%s\n", test_dir_label);
+    // Selecting Test Data
+    for(int c = 0; c < CLASSES; c++)
+    {
+        
+        DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, c);
+        
+        
+        closedir(DATASET_INPUT_DIR);
+        
+        
+    }
+    
+    // Selecting Training Data
+    for(int c = 0; c < CLASSES; c++)
+    {
+        
+        DATASET_INPUT_DIR = tmda_open_dataset_input_dir_train(DATASET_INPUT_DIR, dataset_dir_label, c);
+        
+        
+        closedir(DATASET_INPUT_DIR);
+        
+        
+    }
+    
+    
+    
+    
+    printf("Data Directory Name:\t%s\n", dataset_dir_label);
     printf("Test Samples: %ld\nTraining Samples: %ld\n", test_samples, train_samples);
     printf("Samples per test class: %ld\nSamples per train class: %ld\n", class_test_samples, class_train_samples);
     printf("Total test samples: %ld\nTotal train samples: %ld\n", total_test_samples, total_train_samples);
@@ -91,7 +192,7 @@ int main(void)
     return 0;
 }
 
-void tmda_get_test_dir_label(char *test_dir_label)
+void tmda_get_dataset_dir_label(char *dataset_dir_label)
 {
     char user_input[TEST_DATA_NAME_MAX];
 
@@ -100,7 +201,7 @@ void tmda_get_test_dir_label(char *test_dir_label)
 
     fgets(user_input, (TEST_DATA_NAME_MAX), stdin);
     user_input[strcspn(user_input, "\n")] = '\0'; // removes the return key
-    strcat(test_dir_label, user_input);
+    strcat(dataset_dir_label, user_input);
 }
 
 
