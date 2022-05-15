@@ -56,10 +56,7 @@ int test_class_status[CLASSES];
 int train_class_status[CLASSES];
 
 
-FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label);
-FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label);
-FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
-FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
+
 int main(void)
 {
     
@@ -194,144 +191,33 @@ int main(void)
 }
 
 
-// Directory Objects and Structures
-//DIR *DATASET_INPUT_DIR;
-//struct dirent *Dataset_Input_Dir_Entry;
-
-//// File Objects
-//FILE *NMNIST_DATA_SAMPLE;
-//FILE *TEST_DATA_OUTPUT;
-//FILE *TRAIN_DATA_OUTPUT;
 
 
 
 
-
-// Opens processed train data output file
-FILE *tmda_open_data_output_file_testdata(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label)
-{
-    char *s = "./";
-    char *output_file = "_EIDPTestData.txt";
-    char out_file_path[300] = "";
-    
-    // Creates the file path name using strcat
-    strcat(out_file_path, s);
-    strcat(out_file_path, dataset_dir_label);
-    strcat(out_file_path, output_file);
-
-
-    // Open file stream for the sample file, in read mode, binary
-    TEST_DATA_OUTPUT = fopen(out_file_path,"w");
-
-    
-    if(TEST_DATA_OUTPUT == NULL)
-    {
-        puts("Unable to create the output file");
-        exit(EXIT_FAILURE);
-    }
-    
-    return TEST_DATA_OUTPUT;
-}
-
-
-
-
-
-// Opens processed train data output file
-FILE *tmda_open_data_output_file_traindata(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label)
-{
-    char *s = "./";
-    char *output_file = "_EIDPTrainData.txt";
-    char out_file_path[300] = "";
-    
-    // Creates the file path name using strcat
-    strcat(out_file_path, s);
-    strcat(out_file_path, dataset_dir_label);
-    strcat(out_file_path, output_file);
-
-
-    // Open file stream for the sample file, in read mode, binary
-    TRAIN_DATA_OUTPUT = fopen(out_file_path,"w");
-
-    
-    if(TRAIN_DATA_OUTPUT == NULL)
-    {
-        puts("Unable to create the output file");
-        exit(EXIT_FAILURE);
-    }
-    
-    return TRAIN_DATA_OUTPUT;
-}
-
-
-
-
-
-
-
-
-// Opens test data input file,
-FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c )
-{
-    char *s0 = "./";
-    char *s1 = "/test/";
-    char *s2 = "/";
-    char class_num[2] = "";
-    char input_file_path[300] = "";
-    
-    sprintf(class_num, "%d", c);
-    strcat(input_file_path, s0);
-    strcat(input_file_path, dataset_dir_label);
-    strcat(input_file_path, s1);
-    strcat(input_file_path, class_num);
-    strcat(input_file_path, s2);
-    strcat(input_file_path, Dataset_Input_Dir_Entry->d_name);
-    
-    
-    // Open file stream for the sample file, in read mode, binary
-    NMNIST_DATA_SAMPLE = fopen(input_file_path,"rb");
-
-    if(NMNIST_DATA_SAMPLE == NULL)
-    {
-        puts("Unable to open the file");
-        exit(EXIT_FAILURE);
-    }
-    
-    
-    printf("%s\n", input_file_path);
-    
-    return NMNIST_DATA_SAMPLE;
-}
-
-// Opens test data input file,
-FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE, char *dataset_dir_label, int c )
-{
-    char *s0 = "./";
-    char *s1 = "/train/";
-    char *s2 = "/";
-    char class_num[2] = "";
-    char input_file_path[300] = "";
-    
-    sprintf(class_num, "%d", c);
-    strcat(input_file_path, s0);
-    strcat(input_file_path, dataset_dir_label);
-    strcat(input_file_path, s1);
-    strcat(input_file_path, class_num);
-    strcat(input_file_path, s2);
-    strcat(input_file_path, Dataset_Input_Dir_Entry->d_name);
-    
-    
-    // Open file stream for the sample file, in read mode, binary
-    NMNIST_DATA_SAMPLE = fopen(input_file_path,"rb");
-
-    if(NMNIST_DATA_SAMPLE == NULL)
-    {
-        puts("Unable to open the file");
-        exit(EXIT_FAILURE);
-    }
-    
-    
-    printf("%s\n", input_file_path);
-    
-    return NMNIST_DATA_SAMPLE;
-}
+//#include <iostream>
+//#include <stdlib.h>
+//using namespace std;
+//int main() {
+//   char ch;// source_file[20], target_file[20];
+//   FILE *source, *target;
+//   char source_file[]="x1.txt";
+//   char target_file[]="x2.txt";
+//   source = fopen(source_file, "r");
+//   if (source == NULL) {
+//      printf("Press any key to exit...\n");
+//      exit(EXIT_FAILURE);
+//   }
+//   target = fopen(target_file, "w");
+//   if (target == NULL) {
+//      fclose(source);
+//      printf("Press any key to exit...\n");
+//      exit(EXIT_FAILURE);
+//   }
+//   while ((ch = fgetc(source)) != EOF)
+//      fputc(ch, target);
+//   printf("File copied successfully.\n");
+//   fclose(source);
+//   fclose(target);
+//   return 0;
+//}

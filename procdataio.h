@@ -53,3 +53,9 @@ void tmda_get_data_sample_per_class(long int test_samples, long int train_sample
 
 DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c);
 DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c);
+
+FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label);
+FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label);
+
+FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
+FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
