@@ -75,65 +75,7 @@ void tmda_get_data_sample_per_class(long int test_samples, long int train_sample
 DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c);
 DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c);
 
-DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
-{
-    char *s0 = "./";
-    char *s1 = "/test/";
-    char *s2 = "/";
-    char class_num[2] = "";
-    char input_dir_name[200] = "";
-    
-    sprintf(class_num, "%d", c);
-    strcat(input_dir_name, s0);
-    strcat(input_dir_name, dataset_dir_label);
-    strcat(input_dir_name, s1);
-    
-    strcat(input_dir_name, class_num);
-    strcat(input_dir_name, s2);
-    
-    DATASET_INPUT_DIR = opendir(input_dir_name);
-    
-    if(DATASET_INPUT_DIR == NULL)
-    {
-        puts("ERROR: Unable to read directory!");
-        exit(EXIT_FAILURE);
-    }
-    
-    printf("%s\n", input_dir_name);
-    
-    return DATASET_INPUT_DIR;
-    
-}
 
-DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
-{
-    char *s0 = "./";
-    char *s1 = "/train/";
-    char *s2 = "/";
-    char class_num[2] = "";
-    char input_dir_name[200] = "";
-    
-    sprintf(class_num, "%d", c);
-    strcat(input_dir_name, s0);
-    strcat(input_dir_name, dataset_dir_label);
-    strcat(input_dir_name, s1);
-    
-    strcat(input_dir_name, class_num);
-    strcat(input_dir_name, s2);
-    
-    DATASET_INPUT_DIR = opendir(input_dir_name);
-    
-    if(DATASET_INPUT_DIR == NULL)
-    {
-        puts("ERROR: Unable to read directory!");
-        exit(EXIT_FAILURE);
-    }
-    
-    printf("%s\n", input_dir_name);
-    
-    return DATASET_INPUT_DIR;
-    
-}
 
 
 int main(void)
@@ -266,5 +208,66 @@ void tmda_get_data_sample_per_class(long int test_samples, long int train_sample
     *total_test_samples = *class_test_samples * CLASSES;
     *total_train_samples = *class_train_samples * CLASSES;
     *total_nmnist_samples = (*total_test_samples) + (*total_train_samples);
+    
+}
+
+
+DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
+{
+    char *s0 = "./";
+    char *s1 = "/test/";
+    char *s2 = "/";
+    char class_num[2] = "";
+    char input_dir_name[200] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_dir_name, s0);
+    strcat(input_dir_name, dataset_dir_label);
+    strcat(input_dir_name, s1);
+    
+    strcat(input_dir_name, class_num);
+    strcat(input_dir_name, s2);
+    
+    DATASET_INPUT_DIR = opendir(input_dir_name);
+    
+    if(DATASET_INPUT_DIR == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("%s\n", input_dir_name);
+    
+    return DATASET_INPUT_DIR;
+    
+}
+
+DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
+{
+    char *s0 = "./";
+    char *s1 = "/train/";
+    char *s2 = "/";
+    char class_num[2] = "";
+    char input_dir_name[200] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_dir_name, s0);
+    strcat(input_dir_name, dataset_dir_label);
+    strcat(input_dir_name, s1);
+    
+    strcat(input_dir_name, class_num);
+    strcat(input_dir_name, s2);
+    
+    DATASET_INPUT_DIR = opendir(input_dir_name);
+    
+    if(DATASET_INPUT_DIR == NULL)
+    {
+        puts("ERROR: Unable to read directory!");
+        exit(EXIT_FAILURE);
+    }
+    
+    printf("%s\n", input_dir_name);
+    
+    return DATASET_INPUT_DIR;
     
 }
