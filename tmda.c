@@ -120,14 +120,7 @@ int main(void)
     printf("random_class\ttest_pos\ttrain_pos\n");
     
     
-    
-    
-    for(int i = 0; i < CLASSES; i++)
-    {
-        
-        
-    }
-    
+
     
     copied_test_samples = 0;
     
