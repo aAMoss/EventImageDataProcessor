@@ -58,7 +58,8 @@ int train_class_status[CLASSES];
 
 FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label);
 FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label);
-
+FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
+FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
 int main(void)
 {
     
@@ -207,7 +208,7 @@ int main(void)
 
 
 // Opens processed train data output file
-FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label)
+FILE *tmda_open_data_output_file_testdata(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label)
 {
     char *s = "./";
     char *output_file = "_EIDPTestData.txt";
@@ -237,7 +238,7 @@ FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_
 
 
 // Opens processed train data output file
-FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label)
+FILE *tmda_open_data_output_file_traindata(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label)
 {
     char *s = "./";
     char *output_file = "_EIDPTrainData.txt";
@@ -263,3 +264,74 @@ FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_di
 }
 
 
+
+
+
+
+
+
+// Opens test data input file,
+FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c )
+{
+    char *s0 = "./";
+    char *s1 = "/test/";
+    char *s2 = "/";
+    char class_num[2] = "";
+    char input_file_path[300] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_file_path, s0);
+    strcat(input_file_path, dataset_dir_label);
+    strcat(input_file_path, s1);
+    strcat(input_file_path, class_num);
+    strcat(input_file_path, s2);
+    strcat(input_file_path, Dataset_Input_Dir_Entry->d_name);
+    
+    
+    // Open file stream for the sample file, in read mode, binary
+    NMNIST_DATA_SAMPLE = fopen(input_file_path,"rb");
+
+    if(NMNIST_DATA_SAMPLE == NULL)
+    {
+        puts("Unable to open the file");
+        exit(EXIT_FAILURE);
+    }
+    
+    
+    printf("%s\n", input_file_path);
+    
+    return NMNIST_DATA_SAMPLE;
+}
+
+// Opens test data input file,
+FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE, char *dataset_dir_label, int c )
+{
+    char *s0 = "./";
+    char *s1 = "/train/";
+    char *s2 = "/";
+    char class_num[2] = "";
+    char input_file_path[300] = "";
+    
+    sprintf(class_num, "%d", c);
+    strcat(input_file_path, s0);
+    strcat(input_file_path, dataset_dir_label);
+    strcat(input_file_path, s1);
+    strcat(input_file_path, class_num);
+    strcat(input_file_path, s2);
+    strcat(input_file_path, Dataset_Input_Dir_Entry->d_name);
+    
+    
+    // Open file stream for the sample file, in read mode, binary
+    NMNIST_DATA_SAMPLE = fopen(input_file_path,"rb");
+
+    if(NMNIST_DATA_SAMPLE == NULL)
+    {
+        puts("Unable to open the file");
+        exit(EXIT_FAILURE);
+    }
+    
+    
+    printf("%s\n", input_file_path);
+    
+    return NMNIST_DATA_SAMPLE;
+}
