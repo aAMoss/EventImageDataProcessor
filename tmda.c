@@ -56,8 +56,8 @@ int test_class_status[CLASSES];
 int train_class_status[CLASSES];
 
 
-
-
+FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label);
+FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label);
 
 int main(void)
 {
@@ -190,6 +190,76 @@ int main(void)
     
 
     return 0;
+}
+
+
+// Directory Objects and Structures
+//DIR *DATASET_INPUT_DIR;
+//struct dirent *Dataset_Input_Dir_Entry;
+
+//// File Objects
+//FILE *NMNIST_DATA_SAMPLE;
+//FILE *TEST_DATA_OUTPUT;
+//FILE *TRAIN_DATA_OUTPUT;
+
+
+
+
+
+// Opens processed train data output file
+FILE *tmda_open_data_output_file_test(FILE *TEST_DATA_OUTPUT, char *dataset_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_EIDPTestData.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, dataset_dir_label);
+    strcat(out_file_path, output_file);
+
+
+    // Open file stream for the sample file, in read mode, binary
+    TEST_DATA_OUTPUT = fopen(out_file_path,"w");
+
+    
+    if(TEST_DATA_OUTPUT == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return TEST_DATA_OUTPUT;
+}
+
+
+
+
+
+// Opens processed train data output file
+FILE *tmda_open_data_output_file_train(FILE *TRAIN_DATA_OUTPUT, char *dataset_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_EIDPTrainData.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, dataset_dir_label);
+    strcat(out_file_path, output_file);
+
+
+    // Open file stream for the sample file, in read mode, binary
+    TRAIN_DATA_OUTPUT = fopen(out_file_path,"w");
+
+    
+    if(TRAIN_DATA_OUTPUT == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return TRAIN_DATA_OUTPUT;
 }
 
 
