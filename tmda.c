@@ -58,24 +58,8 @@ void tmda_set_data_samples(long int *test_samples, long int *train_samples);
 
 void tmda_get_data_sample_per_class(long int test_samples, long int train_samples,
                                     long int *class_test_samples, long int *class_train_samples,
-                                    long int *total_test_samples, long int *total_train_samples, long int *total_nmnist_samples)
+                                    long int *total_test_samples, long int *total_train_samples, long int *total_nmnist_samples);
                                     
-{
-    
-    // Calculates the number of samples that will be taken from each class
-    *class_test_samples = test_samples / CLASSES;
-    *class_train_samples = train_samples / CLASSES;
-    
-    // Calculates the total number of samples selected
-    // Accounts for descrepencies when choosing numbers of samples that aren't multiples of 10
-    *total_test_samples = *class_test_samples * CLASSES;
-    *total_train_samples = *class_train_samples * CLASSES;
-    *total_nmnist_samples = (*total_test_samples) + (*total_train_samples);
-    
-    
-}
-
-
 
 
 int main(void)
@@ -166,3 +150,20 @@ void tmda_set_data_samples(long int *test_samples, long int *train_samples)
 }
 
 
+void tmda_get_data_sample_per_class(long int test_samples, long int train_samples,
+                                    long int *class_test_samples, long int *class_train_samples,
+                                    long int *total_test_samples, long int *total_train_samples, long int *total_nmnist_samples)
+                                    
+{
+    
+    // Calculates the number of samples that will be taken from each class
+    *class_test_samples = test_samples / CLASSES;
+    *class_train_samples = train_samples / CLASSES;
+    
+    // Calculates the total number of samples selected
+    // Accounts for descrepencies when choosing numbers of samples that aren't multiples of 10
+    *total_test_samples = *class_test_samples * CLASSES;
+    *total_train_samples = *class_train_samples * CLASSES;
+    *total_nmnist_samples = (*total_test_samples) + (*total_train_samples);
+    
+}
