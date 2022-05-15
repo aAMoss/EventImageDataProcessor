@@ -50,6 +50,8 @@ int main(void)
     tmda_get_data_sample_per_class(test_samples, train_samples, &class_test_samples, &class_train_samples,
                                    &total_test_samples, &total_train_samples, &total_nmnist_samples);
     
+    // Going to create / open the output files here
+    
     // Selecting Test Data
     for(int c = 0; c < CLASSES; c++)
     {
@@ -57,6 +59,19 @@ int main(void)
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, c);
         
         
+        // will first count the number of files in the directory and record the entries
+        // will then rewind to the directory start
+        //  will randomly step through the directory selecting samples, will record the name of selected samples
+        // willuse the recorded name to ensure duplicates of samples aren't selected
+        
+        
+        
+        
+        // going to open  the input files here
+        
+        //
+        
+        //close file here
         closedir(DATASET_INPUT_DIR);
         
         
