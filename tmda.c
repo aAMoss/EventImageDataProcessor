@@ -132,7 +132,7 @@ int main(void)
     copied_test_samples = 0;
     
     
-    
+    TEST_DATA_OUTPUT = tmda_open_data_output_file_testdata(TEST_DATA_OUTPUT, dataset_dir_label);
     
     
     while(copied_test_samples < class_test_samples)
@@ -148,7 +148,9 @@ int main(void)
 
         
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, random_class);
-
+        NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
+        
+        
         seekdir(DATASET_INPUT_DIR, dir_pos);
         
         while(  (Dataset_Input_Dir_Entry = readdir(DATASET_INPUT_DIR)) )
@@ -157,15 +159,20 @@ int main(void)
               strcmp(Dataset_Input_Dir_Entry->d_name, ".DS_Store"))
            {
                
+               
                for(int i = 0; i < test_class_sample_count[random_class]; i ++)
                {
                    
                    if( class_status[i] == 0 )
                    {
                        
-                       //open input sample file
-                       //copy input sample contents to the output file
-                       
+                       char ch;
+                       while ((ch = fgetc(NMNIST_DATA_SAMPLE)) != EOF)
+                       {
+                           fputc(ch, TEST_DATA_OUTPUT);
+                       }
+                           
+                           
                        class_status[i]++;
                        copied_test_samples++;
                        break;
@@ -178,10 +185,10 @@ int main(void)
            }
             
         }
-        
-  
-        
-      
+
+        fclose(NMNIST_DATA_SAMPLE);
+        closedir(DATASET_INPUT_DIR);
+
 
     }
     
@@ -189,8 +196,6 @@ int main(void)
 
     return 0;
 }
-
-
 
 
 
