@@ -2,8 +2,11 @@
 .SUFFIXES:
 all: eidp tmda
 
+
+
 eidp: eidp.o dataio.o process.o features.o
 	gcc -o eidp eidp.o dataio.o process.o features.o
+
 
 eidp.o: eidp.c eidp.h
 	gcc -c eidp.c
@@ -17,11 +20,18 @@ process.o: process.c process.h
 features.o: features.c features.h
 	gcc -c features.c
 
-tmda: tmda.o
-	gcc -o tmda tmda.o
+
+
+tmda: tmda.o procdataio.o
+	gcc -o tmda tmda.o procdataio.o
+	
 	
 tmda.o: tmda.c tmda.h
 	gcc -c tmda.c
+	
+procdataio.o: procdataio.c procdataio.h
+	gcc -c procdataio.c
+	
 	
 	
 clean:
