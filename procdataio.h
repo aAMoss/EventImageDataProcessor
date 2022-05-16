@@ -15,12 +15,18 @@
 
 // Definitions
 #define TEST_DATA_NAME_MAX 200
+#define NMNIST_TEST_SAMPLES 10000
+#define NMNIST_TRAIN_SAMPLES 60000
 #define CLASSES 10
+
 #define MAX_TEST_SAMPLES 10000
 #define MAX_TRAIN_SAMPLES 60000
-#define TOTAL_SAMPLES 70000
+#define TOTAL_SAMPLES (MAX_TEST_SAMPLES + MAX_TRAIN_SAMPLES)
+
 
 // Variables
+int d_flag;
+int l_flag;
 long int test_samples;
 long int train_samples;
 long int class_test_samples;
@@ -40,12 +46,13 @@ struct dirent *Dataset_Input_Dir_Entry;
 FILE *NMNIST_DATA_SAMPLE;
 FILE *TEST_DATA_OUTPUT;
 FILE *TRAIN_DATA_OUTPUT;
+FILE *TMDA_LOG_FILE;
 
 
 
 // Function Prototypes
 void tmda_get_dataset_dir_label(char *dataset_dir_label);
-void tmda_set_data_samples(long int *test_samples, long int *train_samples);
+void tmda_set_data_samples(int *d_flag, long int *test_samples, long int *train_samples);
 
 void tmda_get_data_sample_per_class(long int test_samples, long int train_samples,
                                     long int *class_test_samples, long int *class_train_samples,
@@ -59,3 +66,5 @@ FILE *tmda_open_data_output_file_traindata(FILE *TRAIN_DATA_OUTPUT, char *datase
 
 FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
 FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c );
+
+FILE *tmda_open_log_file(FILE *TMDA_LOG_FILE, char *dataset_dir_label);

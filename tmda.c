@@ -48,13 +48,31 @@
 
 
 int copied_test_samples;
+int count_test_class_samples[CLASSES] = {0};
 int copied_train_samples;
+int count_train_class_samples[CLASSES] = {0};
 
 int test_class_sample_count[CLASSES] = {0};
 int train_class_sample_count[CLASSES] = {0};
 
 int test_class_status[CLASSES];
 int train_class_status[CLASSES];
+
+int random_class;
+long int random_class_sample_count;
+long int random_dir_pos;
+long int tell_random_dir;
+long int seek_random_dir;
+
+void tmda_print_log_file_1(FILE *TMDA_LOG_FILE, char *dataset_dir_label, int d_flag,
+                           long int test_samples, long int train_samples,
+                           long int class_test_samples, long int class_train_samples,
+                           long int total_test_samples, long int total_train_samples,
+                           long int total_nmnist_samples );
+void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLASSES], int train_class_sample_count[CLASSES]);
+
+
+
 
 
 
@@ -63,15 +81,25 @@ int main(void)
     
     srand(time(NULL));
     
+    
+    
     tmda_get_dataset_dir_label(dataset_dir_label);
     
-    tmda_set_data_samples(&test_samples, &train_samples);
+    tmda_set_data_samples(&d_flag,&test_samples, &train_samples);
     
     tmda_get_data_sample_per_class(test_samples, train_samples, &class_test_samples, &class_train_samples,
                                    &total_test_samples, &total_train_samples, &total_nmnist_samples);
     
     
-    // Counts the number of samples in each class for the test and train data
+    TMDA_LOG_FILE = tmda_open_log_file(TMDA_LOG_FILE,  dataset_dir_label);
+    
+    
+    tmda_print_log_file_1(TMDA_LOG_FILE, dataset_dir_label, d_flag, test_samples,  train_samples,
+                          class_test_samples, class_train_samples, total_test_samples, total_train_samples,total_nmnist_samples );
+    
+
+    
+    // Gets the number of samples of test data and training data in each class from the dataset
     for(int c = 0; c < CLASSES; c++)
     {
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, c);
@@ -102,54 +130,40 @@ int main(void)
         closedir(DATASET_INPUT_DIR);
     }
     
-    printf("Class\tTest\tTrain\n");
-    printf("No\tSamples\tSamples\n");
-    for(int i = 0; i < CLASSES; i++)
-    {
-        printf("%d\t%d\t%d\n", i, test_class_sample_count[i], train_class_sample_count[i]);
-        
-    }
+    tmda_print_log_file_2(TMDA_LOG_FILE, test_class_sample_count, train_class_sample_count);
     
-    printf("Data Directory Name:\t%s\n", dataset_dir_label);
-    printf("Test Samples: %ld\nTraining Samples: %ld\n", test_samples, train_samples);
-    printf("Samples per test class: %ld\nSamples per train class: %ld\n", class_test_samples, class_train_samples);
-    printf("Total test samples: %ld\nTotal train samples: %ld\n", total_test_samples, total_train_samples);
-    printf("Total nmnist samples: %ld\n", total_nmnist_samples);
-  
-
     
-    copied_test_samples = 0;
+    
+    // FUCK FUCK FUCK need to figure out how to do this!!!
     
     
     TEST_DATA_OUTPUT = tmda_open_data_output_file_testdata(TEST_DATA_OUTPUT, dataset_dir_label);
     puts("\nOpened Data Output File!\n");
     
+    
     while(copied_test_samples < total_test_samples)
     {
         
-        int random_class = ( rand() % (MAX_CLASS - MIN_CLASS + 1) ) + MIN_CLASS;
+        // Selects a random class, 0 to 9
+        random_class = ( rand() % (MAX_CLASS - MIN_CLASS + 1) ) + MIN_CLASS;
         
-        long int local_class_sample_count = test_class_sample_count[random_class];
+        // Gets the number of data samples available of the random class
+        random_class_sample_count = test_class_sample_count[random_class];
         
-        long int dir_pos = ( rand() % (test_class_sample_count[random_class] - MIN_POS + 1) ) + MIN_POS;
-        long int tell_dir = 0;
+        //  Selects a random directory position (as a long int) from 0 to random_class_sample_count
+        random_dir_pos = ( rand() % (random_class_sample_count - MIN_POS + 1) ) + MIN_POS;
+        tell_random_dir = 0;
         
-        int class_status[ (test_class_sample_count[random_class]) ];
-
-        printf("random_class %d\tlocal_class_sample_count %ld\tdir_pos %ld\n\n", random_class, local_class_sample_count, dir_pos );
+   
+        int test_sample_status[CLASSES][random_class_sample_count];
         
+        printf("random_class %d\tlocal_class_sample_count %ld\trandom_dir_pos %ld\n\n", random_class, random_class_sample_count, random_dir_pos );
+        
+        // Opens the input directory of the randomly chosen class
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, random_class);
         
         puts("Opened Data Input Directory!\n");
         
-        
-        
-       
-        
-        
-
-        
-       // while(  (Dataset_Input_Dir_Entry = seekdir(DATASET_INPUT_DIR, dir_pos)) )
         while(  (Dataset_Input_Dir_Entry = readdir(DATASET_INPUT_DIR)) )
         {
             
@@ -158,12 +172,13 @@ int main(void)
                strcmp(Dataset_Input_Dir_Entry->d_name, ".DS_Store"))
             {
                 
-                tell_dir = telldir(DATASET_INPUT_DIR);
-                //seekdir(DATASET_INPUT_DIR, dir_pos);
-
-                if(tell_dir == dir_pos)
+                // gets the current directory position (as a long int) from 0 to random_class_sample_count
+                tell_random_dir = telldir(DATASET_INPUT_DIR);
+                
+                // executes if the directory position matches that of the chosen sample, and it that sample hasn't been selected before (status = 0)
+                if( (tell_random_dir == random_dir_pos) && (d_flag == 1) ) // || (tell_random_dir == random_dir_pos) && (d_flag == 0) && )
                 {
-                    printf("seekdir position %ld\n", dir_pos);
+                    printf("seekdir position %ld\n", random_dir_pos);
                     puts("Sample found!");
                     NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
                     puts("Sample File Opened!");
@@ -178,7 +193,10 @@ int main(void)
                     fclose(NMNIST_DATA_SAMPLE);
                     puts("Sample File Closed!");
                     
+                    
+                    count_test_class_samples[random_class]++;
                     copied_test_samples++;
+                    
                     printf("Test Samples Copied: %d\n", copied_test_samples);
                     
                 }
@@ -194,35 +212,48 @@ int main(void)
         puts("Input Directory Closed!");
     }
     
-    
+    fclose(TMDA_LOG_FILE);
 
     return 0;
 }
 
 
-//
-//for(int i = 0; i < test_class_sample_count[random_class]; i ++)
-//{
-//
-//    if( class_status[i] == 0 )
-//    {
-//        // This is causing the segmentation fault!
-//        NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
-//        puts("\nOpened Data Input File!\n");
-//
-//        char ch;
-//        while ((ch = fgetc(NMNIST_DATA_SAMPLE)) != EOF)
-//        {
-//            fputc(ch, TEST_DATA_OUTPUT);
-//        }
-//
-//        fclose(NMNIST_DATA_SAMPLE);
-//        puts("\nClosed Data Input File!\n");
-//        class_status[i]++;
-//        copied_test_samples++;
-//        break;
-//    }
-//
-//    break;
-//
-//}
+
+
+
+
+
+
+
+
+void tmda_print_log_file_1(FILE *TMDA_LOG_FILE, char *dataset_dir_label, int d_flag,
+                           long int test_samples, long int train_samples,
+                           long int class_test_samples, long int class_train_samples,
+                           long int total_test_samples, long int total_train_samples,
+                           long int total_nmnist_samples )
+{
+ 
+    fprintf(TMDA_LOG_FILE, "%s_tmda_logfile.txt\n\n", dataset_dir_label);
+    fprintf(TMDA_LOG_FILE, "Duplicates, Set Test Samples, Set Train Samples,");
+    fprintf(TMDA_LOG_FILE, "Samples per Test Class, Samples per Train Class, Total Test Samples, Total Train Samples, Total NMNIST Samples\n");
+    fprintf(TMDA_LOG_FILE, "%d,%ld,%ld,%ld,%ld,%ld,%ld,%ld\n\n", d_flag, test_samples, train_samples, class_test_samples, class_train_samples,
+            total_test_samples, total_train_samples, total_nmnist_samples);
+    
+}
+
+
+
+void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLASSES], int train_class_sample_count[CLASSES])
+{
+    
+    fprintf(TMDA_LOG_FILE, "Class No, Dataset Test Samples, Dataset Training Samples\n");
+    for(int i = 0; i < CLASSES; i++)
+    {
+        fprintf(TMDA_LOG_FILE, "%d,%d,%d\n", i, test_class_sample_count[i], train_class_sample_count[i]);
+        
+    }
+    
+    
+}
+
+

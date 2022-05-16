@@ -18,12 +18,38 @@ void tmda_get_dataset_dir_label(char *dataset_dir_label)
 
 
 
-void tmda_set_data_samples(long int *test_samples, long int *train_samples)
+void tmda_set_data_samples(int *d_flag, long int *test_samples, long int *train_samples)
 {
+    
+    int duplicates = 0;
     long int test = 0;
     long int train = 0;
+    
+    int l_d_flag;
     int test_flag = 0;
     int train_flag = 0;
+    
+    
+    while(l_d_flag < 1)
+    {
+        printf("Allow duplicates of samples? Enter 1 for ON, 0 for OFF!.\n");
+    
+        scanf("%d", &duplicates);
+        
+        if(duplicates < 0 || duplicates > 1)
+        {
+            printf("ERROR: Must select 1 or 0 !\n");
+        }
+        else
+            if (duplicates == 1 || duplicates == 0)
+        {
+            *d_flag = duplicates;
+            l_d_flag++;
+        }
+        
+    }
+
+    
     
     while(test_flag < 1)
     {
@@ -49,7 +75,7 @@ void tmda_set_data_samples(long int *test_samples, long int *train_samples)
        
         scanf("%ld", &train);
         
-        if(train < 1 || train > MAX_TRAIN_SAMPLES)
+        if(train < 1 || train > MAX_TRAIN_SAMPLES )
         {
             printf("ERROR: Must select between 1 and %d samples!\n", MAX_TRAIN_SAMPLES);
         }
@@ -106,7 +132,6 @@ DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_
         exit(EXIT_FAILURE);
     }
     
-    printf("%s\n", input_dir_name);
     
     return DATASET_INPUT_DIR;
     
@@ -135,8 +160,6 @@ DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir
         puts("ERROR: Unable to read directory!");
         exit(EXIT_FAILURE);
     }
-    
-    printf("%s\n", input_dir_name);
     
     return DATASET_INPUT_DIR;
     
@@ -272,3 +295,32 @@ FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_
     
     return NMNIST_DATA_SAMPLE;
 }
+
+
+
+// Opens log file
+FILE *tmda_open_log_file(FILE *TMDA_LOG_FILE, char *dataset_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_tmda_logfile.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, dataset_dir_label);
+    strcat(out_file_path, output_file);
+
+
+    // Open file stream for the sample file, in read mode, binary
+    TMDA_LOG_FILE = fopen(out_file_path,"w");
+
+    
+    if(TMDA_LOG_FILE == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return TMDA_LOG_FILE;
+}
+
