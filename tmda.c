@@ -141,12 +141,13 @@ int main(void)
         
         puts("Opened Data Input Directory!\n");
         
-        // This is causing the segmentation fault!
-        NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
         
-        puts("\nOpened Data Input File!\n");
+        
+       
         
         seekdir(DATASET_INPUT_DIR, dir_pos);
+        
+
         
         while(  (Dataset_Input_Dir_Entry = readdir(DATASET_INPUT_DIR)) )
         {
@@ -160,6 +161,9 @@ int main(void)
                    
                    if( class_status[i] == 0 )
                    {
+                       // This is causing the segmentation fault!
+                       NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
+                       puts("\nOpened Data Input File!\n");
                        
                        char ch;
                        while ((ch = fgetc(NMNIST_DATA_SAMPLE)) != EOF)
@@ -167,7 +171,8 @@ int main(void)
                            fputc(ch, TEST_DATA_OUTPUT);
                        }
                            
-                           
+                       fclose(NMNIST_DATA_SAMPLE);
+                       puts("\nClosed Data Input File!\n");
                        class_status[i]++;
                        copied_test_samples++;
                        break;
@@ -181,7 +186,7 @@ int main(void)
             
         }
 
-        fclose(NMNIST_DATA_SAMPLE);
+        
         closedir(DATASET_INPUT_DIR);
 
 
