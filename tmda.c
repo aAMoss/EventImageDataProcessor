@@ -115,18 +115,13 @@ int main(void)
     printf("Total test samples: %ld\nTotal train samples: %ld\n", total_test_samples, total_train_samples);
     printf("Total nmnist samples: %ld\n", total_nmnist_samples);
   
-    
-    
-    printf("random_class\ttest_pos\ttrain_pos\n");
-    
-    
 
     
     copied_test_samples = 0;
     
     
     TEST_DATA_OUTPUT = tmda_open_data_output_file_testdata(TEST_DATA_OUTPUT, dataset_dir_label);
-    
+    puts("\nOpened Data Output File!\n");
     
     while(copied_test_samples < class_test_samples)
     {
@@ -139,10 +134,17 @@ int main(void)
         
         int class_status[ (test_class_sample_count[random_class]) ];
 
+        printf("random_class\tlocal_class_sample_count\tdir_pos\n");
+        printf("%d\t\t%d\t\t\t\t%ld\n\n", random_class, local_class_sample_count, dir_pos);
         
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, random_class);
+        
+        puts("Opened Data Input Directory!\n");
+        
+        // This is causing the segmentation fault!
         NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
         
+        puts("\nOpened Data Input File!\n");
         
         seekdir(DATASET_INPUT_DIR, dir_pos);
         
