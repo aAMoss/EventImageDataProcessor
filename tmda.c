@@ -42,6 +42,7 @@
 #define MAX_CLASS 9
 #define MIN_POS 0
 #define SAMPLE_STAT 1
+#define MAX_LINE 82
 
 
 
@@ -128,14 +129,15 @@ int main(void)
         
         int random_class = ( rand() % (MAX_CLASS - MIN_CLASS + 1) ) + MIN_CLASS;
         
-        int local_class_sample_count = test_class_sample_count[random_class];
+        long int local_class_sample_count = test_class_sample_count[random_class];
         
         long int dir_pos = ( rand() % (test_class_sample_count[random_class] - MIN_POS + 1) ) + MIN_POS;
+        long int tell_dir = 0;
         
         int class_status[ (test_class_sample_count[random_class]) ];
 
         printf("random_class\tlocal_class_sample_count\tdir_pos\n");
-        printf("%d\t\t%d\t\t\t\t%ld\n\n", random_class, local_class_sample_count, dir_pos);
+        printf("%d\t\t%ld\t\t\t\t%ld\n\n", random_class, local_class_sample_count, dir_pos);
         
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, random_class);
         
@@ -145,51 +147,48 @@ int main(void)
         
        
         
-        seekdir(DATASET_INPUT_DIR, dir_pos);
         
 
         
+       // while(  (Dataset_Input_Dir_Entry = seekdir(DATASET_INPUT_DIR, dir_pos)) )
         while(  (Dataset_Input_Dir_Entry = readdir(DATASET_INPUT_DIR)) )
         {
-           if(strcmp(Dataset_Input_Dir_Entry->d_name, ".") != 0 && strcmp(Dataset_Input_Dir_Entry->d_name, "..") != 0 &&
-              strcmp(Dataset_Input_Dir_Entry->d_name, ".DS_Store"))
-           {
-               
-               
-               for(int i = 0; i < test_class_sample_count[random_class]; i ++)
-               {
-                   
-                   if( class_status[i] == 0 )
-                   {
-                       // This is causing the segmentation fault!
-                       NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
-                       puts("\nOpened Data Input File!\n");
-                       
-                       char ch;
-                       while ((ch = fgetc(NMNIST_DATA_SAMPLE)) != EOF)
-                       {
-                           fputc(ch, TEST_DATA_OUTPUT);
-                       }
-                           
-                       fclose(NMNIST_DATA_SAMPLE);
-                       puts("\nClosed Data Input File!\n");
-                       class_status[i]++;
-                       copied_test_samples++;
-                       break;
-                   }
-                   
-                   break;
-                   
-               }
+            
+            
+            if(strcmp(Dataset_Input_Dir_Entry->d_name, ".") != 0 && strcmp(Dataset_Input_Dir_Entry->d_name, "..") != 0 &&
+               strcmp(Dataset_Input_Dir_Entry->d_name, ".DS_Store"))
+            {
+                
+                tell_dir = telldir(DATASET_INPUT_DIR);
+                //seekdir(DATASET_INPUT_DIR, dir_pos);
 
-           }
+                if(tell_dir == dir_pos)
+                {
+                    printf("seekdir position %ld\n", dir_pos);
+                    puts("Sample found!");
+                    NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
+                    puts("Sample File Opened!");
+                    
+                    char ch_buf[MAX_LINE];
+                    while ((ch_buf = fgets(NMNIST_DATA_SAMPLE)) != EOF)
+                    {
+                        fputs(ch_buf, TEST_DATA_OUTPUT);
+                    }
+                    
+                    fclose(NMNIST_DATA_SAMPLE);
+                    puts("Sample File Closed!");
+                    
+                }
+                
+               
+            }
             
         }
-
+        
+        
         
         closedir(DATASET_INPUT_DIR);
-
-
+        puts("Input Directory Closed!");
     }
     
     
@@ -198,4 +197,29 @@ int main(void)
 }
 
 
-
+//
+//for(int i = 0; i < test_class_sample_count[random_class]; i ++)
+//{
+//
+//    if( class_status[i] == 0 )
+//    {
+//        // This is causing the segmentation fault!
+//        NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
+//        puts("\nOpened Data Input File!\n");
+//
+//        char ch;
+//        while ((ch = fgetc(NMNIST_DATA_SAMPLE)) != EOF)
+//        {
+//            fputc(ch, TEST_DATA_OUTPUT);
+//        }
+//
+//        fclose(NMNIST_DATA_SAMPLE);
+//        puts("\nClosed Data Input File!\n");
+//        class_status[i]++;
+//        copied_test_samples++;
+//        break;
+//    }
+//
+//    break;
+//
+//}
