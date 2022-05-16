@@ -124,9 +124,9 @@ int main(void)
     
     // FUCK FUCK FUCK need to figure out how to do this!!!
     // create an type for each test class that stores the number of samples for that class, number of samples per class depends on the test class
-    int max_value = 10000;
+
     int samples_per_class;
-    int test_class_status[CLASSES][max_value];
+    int test_class_status[CLASSES][MAX_SAMPLES_STATUS];
     
     for(int i = 0; i < CLASSES; i++)
     {
@@ -141,6 +141,7 @@ int main(void)
         }
         
     }
+    
     
     TEST_DATA_OUTPUT = tmda_open_data_output_file_testdata(TEST_DATA_OUTPUT, dataset_dir_label);
     puts("\nOpened Data Output File!\n");
