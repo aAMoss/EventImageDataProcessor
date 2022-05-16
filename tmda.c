@@ -122,23 +122,32 @@ int main(void)
     
     
     
-    // FUCK FUCK FUCK need to figure out how to do this!!!
+    
     // create an type for each test class that stores the number of samples for that class, number of samples per class depends on the test class
-
-    int samples_per_class;
+    //it fucking works!
+   
     int test_class_status[CLASSES][MAX_SAMPLES_STATUS];
     
     for(int i = 0; i < CLASSES; i++)
     {
         
-        samples_per_class = test_class_sample_count[i];
-        for(int j = 0; j < samples_per_class ;j++)
+        for(int j = 0; j < test_class_sample_count[i] ;j++)
         {
            
             test_class_status[i][j] = 0;
             
             
         }
+        
+    }
+    
+    
+    // how the f is j undefined...?!
+    for(int i = 0; i < CLASSES; i++)
+    {
+        for(int j = 0; j < test_class_sample_count[i]; j++)
+            
+            printf("Class %d\t Test Samples %d\t Values%d\n", i, j, test_class_status[i][j]);
         
     }
     
