@@ -25,18 +25,6 @@
 
 // to avoid over-training will have it so that equal numbers of each class are selected
 
-// all samples have an individual number unique for the training and test sets, maybe use some kind of string comparison to avoid picking the same samples
-
-// going to need a function to read the appropriate directory
-// goind to need a function to open a file from the dataset (in said directory)
-// going to need a function to create the output test and train files for the TM
-// going to need a function to copy the contents of the dataset file to the appropriate test and train files... basically concatenating them together.
-
-
-// will first count the number of files in the directory and record the entries
-// will then rewind to the directory start
-//  will randomly step through the directory selecting samples, will record the name of selected samples
-// willuse the recorded name to ensure duplicates of samples aren't selected
 
 #define MIN_CLASS 0
 #define MAX_CLASS 9
@@ -135,8 +123,6 @@ int main(void)
     
     
     // FUCK FUCK FUCK need to figure out how to do this!!!
-    
-    
     // create an type for each test class that stores the number of samples for that class, number of samples per class depends on the test class
     int max_value = 10000;
     int samples_per_class;
