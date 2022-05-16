@@ -124,7 +124,7 @@ int main(void)
     TEST_DATA_OUTPUT = tmda_open_data_output_file_testdata(TEST_DATA_OUTPUT, dataset_dir_label);
     puts("\nOpened Data Output File!\n");
     
-    while(copied_test_samples < class_test_samples)
+    while(copied_test_samples < total_test_samples)
     {
         
         int random_class = ( rand() % (MAX_CLASS - MIN_CLASS + 1) ) + MIN_CLASS;
@@ -136,8 +136,7 @@ int main(void)
         
         int class_status[ (test_class_sample_count[random_class]) ];
 
-        printf("random_class\tlocal_class_sample_count\tdir_pos\n");
-        printf("%d\t\t%ld\t\t\t\t%ld\n\n", random_class, local_class_sample_count, dir_pos);
+        printf("random_class %d\tlocal_class_sample_count %ld\tdir_pos %ld\n\n", random_class, local_class_sample_count, dir_pos );
         
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, random_class);
         
@@ -170,13 +169,17 @@ int main(void)
                     puts("Sample File Opened!");
                     
                     char ch_buf[MAX_LINE];
-                    while ((ch_buf = fgets(NMNIST_DATA_SAMPLE)) != EOF)
+                    while (feof(NMNIST_DATA_SAMPLE) != 1)
                     {
+                        fgets(ch_buf, sizeof(ch_buf),NMNIST_DATA_SAMPLE);
                         fputs(ch_buf, TEST_DATA_OUTPUT);
                     }
                     
                     fclose(NMNIST_DATA_SAMPLE);
                     puts("Sample File Closed!");
+                    
+                    copied_test_samples++;
+                    printf("Test Samples Copied: %d\n", copied_test_samples);
                     
                 }
                 
