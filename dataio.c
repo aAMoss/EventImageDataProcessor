@@ -490,7 +490,11 @@ void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int lit
             sprintf(buf, "%d", literals_raw[b][a]);
             strcat(line,buf);
             memset(buf,0,sizeof(buf));
+            if( b < (RAW_BOOL_MAX - 1) )
+            {
             strcat(line,space);
+            }
+               
         }
 
         fprintf(Processed_Data_Output_File, "%s\n", line);

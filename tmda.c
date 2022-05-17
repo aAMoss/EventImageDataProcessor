@@ -43,14 +43,12 @@ int count_train_class_samples[CLASSES] = {0};
 int test_class_sample_count[CLASSES] = {0};
 int train_class_sample_count[CLASSES] = {0};
 
-int test_class_status[CLASSES];
-int train_class_status[CLASSES];
-
 int random_class;
 long int random_class_sample_count;
 long int random_dir_pos;
 long int tell_random_dir;
 long int seek_random_dir;
+int status_check;
 
 void tmda_print_log_file_1(FILE *TMDA_LOG_FILE, char *dataset_dir_label, int d_flag,
                            long int test_samples, long int train_samples,
@@ -126,7 +124,8 @@ int main(void)
     // create an type for each test class that stores the number of samples for that class, number of samples per class depends on the test class
     //it fucking works!
    
-    int test_class_status[CLASSES][MAX_SAMPLES_STATUS];
+    int test_class_sample_status[CLASSES][MAX_SAMPLES_STATUS];
+    int train_class_sample_status[CLASSES][MAX_SAMPLES_STATUS];
     
     for(int i = 0; i < CLASSES; i++)
     {
@@ -134,29 +133,28 @@ int main(void)
         for(int j = 0; j < test_class_sample_count[i] ;j++)
         {
            
-            test_class_status[i][j] = 0;
-            
-            
+            test_class_sample_status[i][j] = 0;
+        
+        }
+        
+        for(int j = 0; j < train_class_sample_count[i] ;j++)
+        {
+           
+           train_class_sample_status[i][j] = 0;
+        
         }
         
     }
     
     
-    // how the f is j undefined...?!
-    for(int i = 0; i < CLASSES; i++)
-    {
-        for(int j = 0; j < test_class_sample_count[i]; j++)
-            
-            printf("Class %d\t Test Samples %d\t Values%d\n", i, j, test_class_status[i][j]);
-        
-    }
-    
+
+
     
     TEST_DATA_OUTPUT = tmda_open_data_output_file_testdata(TEST_DATA_OUTPUT, dataset_dir_label);
     puts("\nOpened Data Output File!\n");
     
     
-    while(copied_test_samples < total_test_samples)
+    while(copied_test_samples < test_samples)
     {
         
         // Selects a random class, 0 to 9
@@ -170,14 +168,12 @@ int main(void)
         tell_random_dir = 0;
         
    
-        int test_sample_status[CLASSES][random_class_sample_count];
+        status_check = test_class_sample_status[random_class][random_class_sample_count];
         
-        printf("random_class %d\tlocal_class_sample_count %ld\trandom_dir_pos %ld\n\n", random_class, random_class_sample_count, random_dir_pos );
+        printf("random_class %d\tlocal_class_sample_count %ld\trandom_dir_pos %ld\t status %d\n", random_class, random_class_sample_count, random_dir_pos, status_check );
         
         // Opens the input directory of the randomly chosen class
         DATASET_INPUT_DIR = tmda_open_dataset_input_dir_test(DATASET_INPUT_DIR, dataset_dir_label, random_class);
-        
-        puts("Opened Data Input Directory!\n");
         
         while(  (Dataset_Input_Dir_Entry = readdir(DATASET_INPUT_DIR)) )
         {
@@ -191,12 +187,12 @@ int main(void)
                 tell_random_dir = telldir(DATASET_INPUT_DIR);
                 
                 // executes if the directory position matches that of the chosen sample, and it that sample hasn't been selected before (status = 0)
-                if( (tell_random_dir == random_dir_pos) && (d_flag == 1) ) // || (tell_random_dir == random_dir_pos) && (d_flag == 0) && )
+                if(  (tell_random_dir == random_dir_pos) && (d_flag == 1) )
                 {
-                    printf("seekdir position %ld\n", random_dir_pos);
-                    puts("Sample found!");
+                    
+                    
                     NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
-                    puts("Sample File Opened!");
+                  
                     
                     char ch_buf[MAX_LINE];
                     while (feof(NMNIST_DATA_SAMPLE) != 1)
@@ -206,13 +202,39 @@ int main(void)
                     }
                     
                     fclose(NMNIST_DATA_SAMPLE);
-                    puts("Sample File Closed!");
                     
                     
+                    test_class_sample_status[random_class][random_class_sample_count]++;
                     count_test_class_samples[random_class]++;
                     copied_test_samples++;
                     
                     printf("Test Samples Copied: %d\n", copied_test_samples);
+                    
+                } else
+                if ( (tell_random_dir == random_dir_pos) && (status_check < 1) )
+                {
+                    
+                    
+                    NMNIST_DATA_SAMPLE = tmda_open_data_input_file_test(DATASET_INPUT_DIR, NMNIST_DATA_SAMPLE, dataset_dir_label, random_class);
+                    
+                    char ch_buf[MAX_LINE];
+                    while (feof(NMNIST_DATA_SAMPLE) != 1)
+                    {
+                        fgets(ch_buf, sizeof(ch_buf),NMNIST_DATA_SAMPLE);
+                        fputs(ch_buf, TEST_DATA_OUTPUT);
+                    }
+                    
+                    fclose(NMNIST_DATA_SAMPLE);
+       
+                    
+                    
+                    test_class_sample_status[random_class][random_class_sample_count]++;
+                    count_test_class_samples[random_class]++;
+                    copied_test_samples++;
+                    
+                    printf("Test Samples Copied: %d\n", copied_test_samples);
+                    
+                    
                     
                 }
                 
@@ -224,7 +246,7 @@ int main(void)
         
         
         closedir(DATASET_INPUT_DIR);
-        puts("Input Directory Closed!");
+
     }
     
     fclose(TMDA_LOG_FILE);

@@ -21,7 +21,7 @@
 
 #define MAX_TEST_SAMPLES 10000
 #define MAX_TRAIN_SAMPLES 60000
-#define MAX_SAMPLES_STATUS 10000
+#define MAX_SAMPLES_STATUS 10000 // needs to be larger than the maximum number of samples in a class
 #define TOTAL_SAMPLES (MAX_TEST_SAMPLES + MAX_TRAIN_SAMPLES)
 
 
