@@ -53,7 +53,7 @@ FILE *TMDA_LOG_FILE;
 
 // Function Prototypes
 void tmda_get_dataset_dir_label(char *dataset_dir_label);
-void tmda_set_data_samples(int *d_flag, long int *test_samples, long int *train_samples);
+void tmda_set_data_samples(long int *test_samples, long int *train_samples);
 
 void tmda_get_data_sample_per_class(long int test_samples, long int train_samples,
                                     long int *class_test_samples, long int *class_train_samples,

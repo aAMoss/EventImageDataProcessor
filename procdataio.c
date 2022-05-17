@@ -18,37 +18,15 @@ void tmda_get_dataset_dir_label(char *dataset_dir_label)
 
 
 
-void tmda_set_data_samples(int *d_flag, long int *test_samples, long int *train_samples)
+void tmda_set_data_samples(long int *test_samples, long int *train_samples)
 {
     
-    int duplicates = 0;
+
     long int test = 0;
     long int train = 0;
-    
-    int l_d_flag;
+
     int test_flag = 0;
     int train_flag = 0;
-    
-    
-    while(l_d_flag < 1)
-    {
-        printf("Allow duplicates of samples? Enter 1 for ON, 0 for OFF!.\n");
-    
-        scanf("%d", &duplicates);
-        
-        if(duplicates < 0 || duplicates > 1)
-        {
-            printf("ERROR: Must select 1 or 0 !\n");
-        }
-        else
-            if (duplicates == 1 || duplicates == 0)
-        {
-            *d_flag = duplicates;
-            l_d_flag++;
-        }
-        
-    }
-
     
     
     while(test_flag < 1)
