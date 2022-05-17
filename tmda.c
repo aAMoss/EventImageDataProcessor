@@ -55,7 +55,7 @@ void tmda_print_log_file_1(FILE *TMDA_LOG_FILE, char *dataset_dir_label,
                            long int total_nmnist_samples );
 void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLASSES], int train_class_sample_count[CLASSES]);
 
-
+void tmda_print_log_file_x(FILE *TMDA_LOG_FILE, int count_test_class_samples[CLASSES], int count_train_class_samples[CLASSES]);
 
 
 
@@ -115,12 +115,6 @@ int main(void)
     }
     
     tmda_print_log_file_2(TMDA_LOG_FILE, test_class_sample_count, train_class_sample_count);
-    
-    
-    
-    
-    
-    
 
 
     
@@ -253,7 +247,7 @@ int main(void)
                     count_train_class_samples[random_class]++;
                     copied_train_samples++;
                     
-                    printf("Train Samples Copied: %d\n", copied_test_samples);
+                    printf("Train Samples Copied: %d\n", copied_train_samples);
                     
                 }
                 
@@ -270,10 +264,15 @@ int main(void)
     
     fclose(TEST_DATA_OUTPUT);
     
+    
+    tmda_print_log_file_x(TMDA_LOG_FILE, count_test_class_samples, count_train_class_samples);
+    
     fclose(TMDA_LOG_FILE);
     
-    printf("Test Samples Copied: %d\n", copied_test_samples);
-    printf("Train Samples Copied: %d\n", copied_test_samples);
+    puts(" ");
+    printf("Test Samples Copied: %d\tTrain Samples Copied: %d\n", copied_test_samples, copied_train_samples);
+    
+    
     
     return 0;
 }
@@ -314,7 +313,21 @@ void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLAS
         
     }
     
+    fprintf(TMDA_LOG_FILE, "\n");
     
 }
 
 
+void tmda_print_log_file_x(FILE *TMDA_LOG_FILE, int count_test_class_samples[CLASSES], int count_train_class_samples[CLASSES])
+{
+    
+    fprintf(TMDA_LOG_FILE, "Class No, Copied Test Samples, Copied Training Samples\n");
+    for(int i = 0; i < CLASSES; i++)
+    {
+        fprintf(TMDA_LOG_FILE, "%d,%d,%d\n", i, count_test_class_samples[i], count_train_class_samples[i]);
+        
+    }
+    
+    fprintf(TMDA_LOG_FILE, "\n");
+    
+}
