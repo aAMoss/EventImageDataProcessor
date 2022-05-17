@@ -26,39 +26,6 @@
 // to avoid over-training will have it so that equal numbers of each class are selected
 
 
-#define MIN_CLASS 0
-#define MAX_CLASS 9
-#define MIN_POS 0
-#define SAMPLE_STAT 1
-#define MAX_LINE 82
-
-
-int test_class_sample_count[CLASSES] = {0};
-int train_class_sample_count[CLASSES] = {0};
-
-int random_class;
-long int random_class_sample_count;
-long int random_dir_pos;
-long int tell_random_dir;
-long int seek_random_dir;
-
-
-int copied_test_samples;
-int count_test_class_samples[CLASSES] = {0};
-int copied_train_samples;
-int count_train_class_samples[CLASSES] = {0};
-
-void tmda_print_log_file_1(FILE *TMDA_LOG_FILE, char *dataset_dir_label,
-                           long int test_samples, long int train_samples,
-                           long int class_test_samples, long int class_train_samples,
-                           long int total_test_samples, long int total_train_samples,
-                           long int total_nmnist_samples );
-void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLASSES], int train_class_sample_count[CLASSES]);
-
-void tmda_print_log_file_x(FILE *TMDA_LOG_FILE, int count_test_class_samples[CLASSES], int count_train_class_samples[CLASSES]);
-
-
-
 
 int main(void)
 {
@@ -286,48 +253,3 @@ int main(void)
 
 
 
-void tmda_print_log_file_1(FILE *TMDA_LOG_FILE, char *dataset_dir_label,
-                           long int test_samples, long int train_samples,
-                           long int class_test_samples, long int class_train_samples,
-                           long int total_test_samples, long int total_train_samples,
-                           long int total_nmnist_samples )
-{
- 
-    fprintf(TMDA_LOG_FILE, "%s_tmda_logfile.txt\n\n", dataset_dir_label);
-    fprintf(TMDA_LOG_FILE, "Set Test Samples, Set Train Samples,");
-    fprintf(TMDA_LOG_FILE, "Samples per Test Class, Samples per Train Class, Total Test Samples, Total Train Samples, Total NMNIST Samples\n");
-    fprintf(TMDA_LOG_FILE, "%ld,%ld,%ld,%ld,%ld,%ld,%ld\n\n", test_samples, train_samples, class_test_samples, class_train_samples,
-            total_test_samples, total_train_samples, total_nmnist_samples);
-    
-}
-
-
-
-void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLASSES], int train_class_sample_count[CLASSES])
-{
-    
-    fprintf(TMDA_LOG_FILE, "Class No, Dataset Test Samples, Dataset Training Samples\n");
-    for(int i = 0; i < CLASSES; i++)
-    {
-        fprintf(TMDA_LOG_FILE, "%d,%d,%d\n", i, test_class_sample_count[i], train_class_sample_count[i]);
-        
-    }
-    
-    fprintf(TMDA_LOG_FILE, "\n");
-    
-}
-
-
-void tmda_print_log_file_x(FILE *TMDA_LOG_FILE, int count_test_class_samples[CLASSES], int count_train_class_samples[CLASSES])
-{
-    
-    fprintf(TMDA_LOG_FILE, "Class No, Copied Test Samples, Copied Training Samples\n");
-    for(int i = 0; i < CLASSES; i++)
-    {
-        fprintf(TMDA_LOG_FILE, "%d,%d,%d\n", i, count_test_class_samples[i], count_train_class_samples[i]);
-        
-    }
-    
-    fprintf(TMDA_LOG_FILE, "\n");
-    
-}
