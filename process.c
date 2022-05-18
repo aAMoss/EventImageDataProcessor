@@ -17,6 +17,14 @@
 #define MAXFRAME_X 32
 #define MAXFRAME_Y 32
 
+#define F_DIV 2
+#define REG_X 8
+#define REG_Y 8
+
+
+#define MIN_FRAME_X (MAXFRAME_X / F_DIV)
+#define MIN_FRAME_Y (MAXFRAME_Y / F_DIV)
+
 int f_select;
 
 int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y];
@@ -31,6 +39,12 @@ int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y];
 int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y];
 int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y];
 
+int MiniEventFrameBoolsALL[MIN_FRAME_X][MIN_FRAME_Y];
+int MiniEventFrameBoolsPOS[MIN_FRAME_X][MIN_FRAME_Y];
+int MiniEventFrameBoolsNEG[MIN_FRAME_X][MIN_FRAME_Y];
+
+int MiniEventRegion[REG_X][REG_Y];
+
 void features_event_packet_accumulator(int f_packet_size, int *packet_event_no, int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
                                        int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y], int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y],
                                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
@@ -40,15 +54,17 @@ void features_print_accumulated_event_packet(int f_packet_size, int *packet_even
                                              long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 
 
-void features_zero_array(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
-                         int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
-                         int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y],
-                         int PrevEventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
-                         int PrevEventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
-                         int PrevEventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y],
-                         int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                         int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
-                         int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
+void features_zero_EventPacketFrames(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
+                                     int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
+                                     int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y]);
+                                    
+void features_zero_PrevEventPacketFrames(int PrevEventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
+                                         int PrevEventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
+                                         int PrevEventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y]);
+                                    
+void features_zero_OutputEventFrameBools(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                         int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
+                                         int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
 
 void features_eframe_continuous_bool(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
                                      int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
@@ -65,7 +81,10 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
                                            int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
 
 
-
+void features_continuous_bool_min(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                  int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
+                                  int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y],
+                                  int MiniEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y], int f_packet_size);
 
 
 
@@ -79,9 +98,13 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     int event_no = 0;
     int packet_event_no = 0;
     
-    features_zero_array(EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG,
-                        PrevEventPacketFrameALL, PrevEventPacketFramePOS, PrevEventPacketFrameNEG,
-                        OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+    
+    
+                                        
+    features_zero_PrevEventPacketFrames(PrevEventPacketFrameALL, PrevEventPacketFramePOS, PrevEventPacketFrameNEG);
+                                        
+    
+    
     
     // Run for N number of packets to extract all data
     for(int packet_no = 0; packet_no < packets_req; packet_no++)
@@ -90,7 +113,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         
         // Zero the packet arrays
         dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-        
+        features_zero_EventPacketFrames(EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG);
+        features_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
         
         // Select variables for first N-1 packets, and last Nth packet
         if(packet_no < (packets_req - 1))
@@ -126,13 +150,13 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                                           EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG,
                                           EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
-        features_eframe_continuous_bool(EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG,
-                                        PrevEventPacketFrameALL, PrevEventPacketFramePOS, PrevEventPacketFrameNEG,
-                                        OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+//        features_eframe_continuous_bool(EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG,
+//                                        PrevEventPacketFrameALL, PrevEventPacketFramePOS, PrevEventPacketFrameNEG,
+//                                        OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
 
-        features_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-        //features_print_accumulated_event_packet(f_packet_size, &packet_event_no, EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG,
-        //                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+       // features_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+        features_print_accumulated_event_packet(f_packet_size, &packet_event_no, EventPacketFrameALL, EventPacketFramePOS, EventPacketFrameNEG,
+                                                EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
         features_literals_raw_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
         
@@ -235,7 +259,8 @@ void features_print_accumulated_event_packet(int f_packet_size, int *packet_even
             {
     
                 printf("%d\t", EventPacketFrameALL[i][j]);
-    
+                //printf("%d\t", EventPacketFramePOS[i][j]);
+                //printf("%d\t", EventPacketFrameNEG[i][j]);
             }
     
             printf("\n");
@@ -247,15 +272,10 @@ void features_print_accumulated_event_packet(int f_packet_size, int *packet_even
     
 }
 
-void features_zero_array(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
-                         int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
-                         int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y],
-                         int PrevEventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
-                         int PrevEventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
-                         int PrevEventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y],
-                         int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                         int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
-                         int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y])
+
+void features_zero_EventPacketFrames(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
+                                     int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
+                                     int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y])
 {
     for (int i = 0; i < MAXFRAME_X; i++)
     {
@@ -265,9 +285,38 @@ void features_zero_array(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
             EventPacketFrameALL[i][j] = 0;
             EventPacketFramePOS[i][j] = 0;
             EventPacketFrameNEG[i][j] = 0;
+        }
+
+    }
+
+}
+                                    
+void features_zero_PrevEventPacketFrames(int PrevEventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
+                                         int PrevEventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y],
+                                         int PrevEventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y])
+{
+    for (int i = 0; i < MAXFRAME_X; i++)
+    {
+
+        for (int j = 0; j < MAXFRAME_Y; j++)
+        {
             PrevEventPacketFrameALL[i][j] = 0;
             PrevEventPacketFramePOS[i][j] = 0;
             PrevEventPacketFrameNEG[i][j] = 0;
+        }
+
+    }
+
+}
+void features_zero_OutputEventFrameBools(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                           int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
+                                           int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y])
+{
+    for (int i = 0; i < MAXFRAME_X; i++)
+    {
+
+        for (int j = 0; j < MAXFRAME_Y; j++)
+        {
             OutputEventFrameBoolsALL[i][j] = 0;
             OutputEventFrameBoolsPOS[i][j] = 0;
             OutputEventFrameBoolsNEG[i][j] = 0;
@@ -276,6 +325,9 @@ void features_zero_array(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
     }
 
 }
+
+
+
 
 
 void features_eframe_continuous_bool(int EventPacketFrameALL[MAXFRAME_X][MAXFRAME_Y],
@@ -336,17 +388,17 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
                                             int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y])
 {
     
-    printf("Positive and Negative Polarity\n");
-    for(int i = 0; i < MAXFRAME_X; i++)
-    {
-        
-        for(int j = 0; j < MAXFRAME_Y; j++)
-        {
-            printf("%d", OutputEventFrameBoolsALL[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+//    printf("Positive and Negative Polarity\n");
+//    for(int i = 0; i < MAXFRAME_X; i++)
+//    {
+//
+//        for(int j = 0; j < MAXFRAME_Y; j++)
+//        {
+//            printf("%d", OutputEventFrameBoolsALL[i][j]);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
     
     printf("Positive Polarity\n");
     for(int i = 0; i < MAXFRAME_X; i++)
@@ -360,19 +412,32 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
     }
     printf("\n");
     
-    printf("Negative Polarity\n");
-    for(int i = 0; i < MAXFRAME_X; i++)
-    {
-        
-        for(int j = 0; j < MAXFRAME_Y; j++)
-        {
-            printf("%d", OutputEventFrameBoolsNEG[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+//    printf("Negative Polarity\n");
+//    for(int i = 0; i < MAXFRAME_X; i++)
+//    {
+//
+//        for(int j = 0; j < MAXFRAME_Y; j++)
+//        {
+//            printf("%d", OutputEventFrameBoolsNEG[i][j]);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
     
 }
+
+
+void features_continuous_bool_min(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                  int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
+                                  int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y],
+                                  int MiniEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                  int f_packet_size)
+{
+    
+
+}
+
+
 
 
 void dataio_print_to_file_eframe_continuous_bool(FILE *Processed_Data_Output_File, int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y], int c)
