@@ -18,6 +18,8 @@
 //packet sizes? 1,5,10,25,50,100,250,500,1000
 //overlap%  5 10 25 50 75
 
+
+
 int main(void)
 {
     
@@ -168,65 +170,6 @@ int main(void)
 //PostProcData = fopen(fname,"w");
 //rewind(PostProcData);
 //
-//
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n");
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n\n");
-//
-//fprintf(PostProcData,"%s\n\n", buftime );
-//
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n");
-//fprintf(PostProcData,"Processing Parameters\n");
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n\n");
-//
-//fprintf(PostProcData,"Par1\tPar2\tPar3\tPar4\tPar5\tPar6\t\n\n");
-//
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n");
-//fprintf(PostProcData,"Test Data\n");
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n\n");
-//
-//fprintf(PostProcData,"Class\tStart Time\tEnd Time\tElapsed Time\tSamples\tEvents\t\n\n");
-//fprintf(PostProcData,"0\t\n");
-//fprintf(PostProcData,"1\t\n");
-//fprintf(PostProcData,"2\t\n");
-//fprintf(PostProcData,"3\t\n");
-//fprintf(PostProcData,"4\t\n");
-//fprintf(PostProcData,"5\t\n");
-//fprintf(PostProcData,"6\t\n");
-//fprintf(PostProcData,"7\t\n");
-//fprintf(PostProcData,"8\t\n");
-//fprintf(PostProcData,"9\t\n");
-//
-//fprintf(PostProcData, "\n----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n");
-//fprintf(PostProcData,"Training Data\n");
-//fprintf(PostProcData, "----------------------------------------");
-//fprintf(PostProcData, "----------------------------------------\n\n");
-//
-//fprintf(PostProcData,"Class\tStart Time\tEnd Time\tElapsed Time\tSamples\tEvents\t\n\n");
-//fprintf(PostProcData,"0\t\n");
-//fprintf(PostProcData,"1\t\n");
-//fprintf(PostProcData,"2\t\n");
-//fprintf(PostProcData,"3\t\n");
-//fprintf(PostProcData,"4\t\n");
-//fprintf(PostProcData,"5\t\n");
-//fprintf(PostProcData,"6\t\n");
-//fprintf(PostProcData,"7\t\n");
-//fprintf(PostProcData,"8\t\n");
-//fprintf(PostProcData,"9\t\n");
-//
-//fclose(PostProcData);
-//
-//
-//return 0;
-//
-//}
-
 
 //
 //#define MAXFRAME_X 32
@@ -239,68 +182,12 @@ int main(void)
 //
 //
 //
-//void Features_ZeroArray(int EventPacketFrame[MAXFRAME_X][MAXFRAME_Y], int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y], int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y])
-//{
-//    for (int i = 0; i < MAXFRAME_X; i++)
-//    {
-//
-//        for (int j = 0; j < MAXFRAME_Y; j++)
-//        {
-//            EventPacketFrame[i][j] = 0;
-//            EventPacketFramePOS[i][j] = 0;
-//            EventPacketFrameNEG[i][j] = 0;
-//        }
-//
-//    }
-//
-//}
-//
-//void Features_PolarityIntegrate(unsigned long int x, unsigned long int y, unsigned long int p, unsigned long int t, int EventPacketFrame[MAXFRAME_X][MAXFRAME_Y],
-//                               int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y], int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y])
-//{
-//
-//    for (int i = 0; i < MAXFRAME_X; i++)
-//    {
-//
-//        for (int j = 0; j < MAXFRAME_Y; j++)
-//        {
-//
-//            if (i == x && j == y && p == 1)
-//            {
-//                int temp1 = EventPacketFrame[i][j];
-//                int temp2 = EventPacketFramePOS[i][j];
-//                temp1++;
-//                temp2++;
-//                EventPacketFrame[i][j] = temp1;
-//                EventPacketFramePOS[i][j] = temp2;
-//
-//            }
-//
-//            if (i == x && j == y && p == 0)
-//            {
-//                int temp1 = EventPacketFrame[i][j];
-//                int temp2 = EventPacketFrameNEG[i][j];
-//                temp1++;
-//                temp2++;
-//                EventPacketFrame[i][j] = temp1;
-//                EventPacketFrameNEG[i][j] = temp2;
-//            }
-//
-//
-//        }
-//
-//
-//
-//    }
-//
-//
-//
-//}
 
 
 
 
-//void dataio_ZeroEventPacketArrays(unsigned long int EventPacket[SAMPLEMAXSIZE]);
+
+
 
 //void dataio_ZeroEventPacketArrays(unsigned long int EventPacket[SAMPLEMAXSIZE])
 //{
@@ -357,24 +244,3 @@ int main(void)
 
 
 
-
-//
-//void display_PrintFeaturesPolarityIntegrate(int EventPacketFrame[MAXFRAME_X][MAXFRAME_Y] )
-//{
-//
-//    for (int i = 0; i < MAXFRAME_X; i++)
-//    {
-//
-//        for (int j = 0; j < MAXFRAME_Y; j++)
-//        {
-//
-//            printf("%d\t", EventPacketFrame[i][j]);
-//
-//        }
-//
-//        printf("\n");
-//
-//    }
-//
-//    printf("\n");
-//}
