@@ -429,28 +429,28 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
     }
     printf("\n");
     
-    printf("Positive Polarity\n");
-    for(int i = 0; i < MAXFRAME_X; i++)
-    {
-
-        for(int j = 0; j < MAXFRAME_Y; j++)
-        {
-            printf("%d ", OutputEventFrameBoolsPOS[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-
-    printf("Negative Polarity\n");
-    for(int i = 0; i < MAXFRAME_X; i++)
-    {
-
-        for(int j = 0; j < MAXFRAME_Y; j++)
-        {
-            printf("%d ", OutputEventFrameBoolsNEG[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
+//    printf("Positive Polarity\n");
+//    for(int i = 0; i < MAXFRAME_X; i++)
+//    {
+//
+//        for(int j = 0; j < MAXFRAME_Y; j++)
+//        {
+//            printf("%d ", OutputEventFrameBoolsPOS[i][j]);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
+//
+//    printf("Negative Polarity\n");
+//    for(int i = 0; i < MAXFRAME_X; i++)
+//    {
+//
+//        for(int j = 0; j < MAXFRAME_Y; j++)
+//        {
+//            printf("%d ", OutputEventFrameBoolsNEG[i][j]);
+//        }
+//        printf("\n");
+//    }
+//    printf("\n");
     
 }

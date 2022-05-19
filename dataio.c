@@ -45,16 +45,16 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
     
     while(p_s_flag < 1)
     {
-        printf("Please enter the Event Packet Size.\nValue must be in the range 1 to 1000.\n");
+        printf("Please enter the Event Packet Size.\nValue must be in the range %d to %d.\n", PACKET_MIN, PACKET_MAX);
        
         scanf("%d", &p_s);
         
-        if(p_s < 1 || p_s > 1000)
+        if(p_s < PACKET_MIN || p_s > PACKET_MAX)
         {
-            printf("ERROR: Event Packet Size must be between 1 and 1000!\n");
+            printf("ERROR: Event Packet Size must be between %d and %d!\n", PACKET_MIN, PACKET_MAX);
         }
         else
-        if (p_s >= 1 && p_s <= 1000)
+        if (p_s >= PACKET_MIN && p_s <= PACKET_MAX)
         {
             *packet_size = p_s;
             p_s_flag++;
@@ -75,7 +75,7 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
         
         if(p_o < 0 || p_o > (p_s - 1) )
         {
-            printf("ERROR: Event Packet Size must be between 0 and %d!\n", (p_s - 1) );
+            printf("ERROR: Event Packet Overlap must be between 0 and %d!\n", (p_s - 1) );
         }
         else if (p_o >= 0 && p_o < p_s)
         {

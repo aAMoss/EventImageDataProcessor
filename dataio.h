@@ -13,6 +13,8 @@
 // Definitions - Variables
 #define EVENTS_PER_SAMPLE_MAX 10000
 #define DATA_IN_NAME_MAX 200
+#define PACKET_MAX 1500
+#define PACKET_MIN 100
 #define EVENT_BUFF_SIZE 5
 #define DATA_OUT_NAME_MAX 200
 #define CLASSES 10

@@ -14,10 +14,139 @@
 // Program Specific Headers
 #include "process.h"
 
+// patch D x D
+#define PATCH_D 7
+
+// max patch D origin 0,0 postion
+#define PATCH_X_MAX (MAXFRAME_X - PATCH_D)
+#define PATCH_Y_MAX (MAXFRAME_Y - PATCH_D)
+#define PATCH_X_MIN 0
+#define PATCH_Y_MIN 0
+// 32 -7 = 25 , can go 0 - 24 in both dimensions
+
+#define B_FEATURES 4
 
 
-int f_select;
-int MiniEventRegion[REG_X][REG_Y];
+int binary_features[B_FEATURES];
+
+void features_binary_patches(int f_packet_size, long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
+
+void features_binary_patches(int f_packet_size, long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
+{
+    // Zero Patch Origin Coords
+    int patch_o_px[B_FEATURES] = {0};
+    int patch_o_py[B_FEATURES] = {0};
+    int patch_o_nx[B_FEATURES] = {0};
+    int patch_o_ny[B_FEATURES] = {0};
+    
+    // Zero Patch Max Coords
+    int patch_m_px[B_FEATURES] = {0};
+    int patch_m_py[B_FEATURES] = {0};
+    int patch_m_nx[B_FEATURES] = {0};
+    int patch_m_ny[B_FEATURES] = {0};
+    
+    
+    
+    
+    // calculate patch origin and max coords
+    for(int b = 0; b < B_FEATURES; b++)
+    {
+        //Positive Patch - origin coords
+        patch_o_px[b] = ( rand() % (PATCH_X_MAX - PATCH_X_MIN + 1) ) + PATCH_X_MIN;
+        patch_o_py[b] = ( rand() % (PATCH_Y_MAX - PATCH_Y_MIN + 1) ) + PATCH_Y_MIN;
+        
+        // Negative Patch - origin coords
+        patch_o_nx[b] = ( rand() % (PATCH_X_MAX - PATCH_X_MIN + 1) ) + PATCH_X_MIN;
+        patch_o_ny[b] = ( rand() % (PATCH_Y_MAX - PATCH_Y_MIN + 1) ) + PATCH_Y_MIN;
+        
+    }
+    
+    for(int b = 0; b < B_FEATURES; b++)
+    {
+        // Positive Patch - max coords
+        patch_m_px[b] = patch_o_px[b] + PATCH_D;
+        patch_m_py[b] = patch_o_py[b] + PATCH_D;
+        
+        // Negative Patch - max coords
+        patch_m_nx[b] = patch_o_px[b] + PATCH_D;
+        patch_m_ny[b] = patch_o_py[b] + PATCH_D;
+        
+        // Zero the counters
+        binary_features[b] = 0;
+    }
+    
+    
+    
+    
+    
+    for(int e = 0; e < f_packet_size; e++) //for every event in the packet
+    {
+        for(int i = 0; i < MAXFRAME_X; i++) //for each packet event x coord
+        {
+            for(int j = 0; j < MAXFRAME_Y; j++) //for each pachet event y coord
+            {
+                
+                if( (EventPacketX[e] == i) &&  ( EventPacketY[e] == j) ) // check if there's an event at packet coords x y
+                {
+                    // Check Positive Patches
+                    for(int p = 0; p < B_FEATURES; p++)
+                    {
+                        
+                        for(int k = patch_o_px[p]; k < patch_m_px[p]; k++) // for each patch x coord
+                        {
+                        
+                            for(int l = patch_o_py[p]; l < patch_m_py[p]; k++) // for each patch y coord
+                            {
+                                
+                               if( (EventPacketX[e] == k) && (EventPacketY[e] == l) )
+                               {
+                                   
+                                   binary_features[p]++;
+                                   
+                               }
+                                
+                            } // end of patch y coords
+           
+                        } // end of patch x coords
+                        
+                    }
+                    
+                    
+                    // Check Negative Patches
+                    for(int n = 0; n < B_FEATURES; n++)
+                    {
+                        
+                        for(int k = patch_o_nx[n]; k < patch_m_nx[n]; k++) // for each patch x coord
+                        {
+                        
+                            for(int l = patch_o_ny[n]; l < patch_m_ny[n]; k++) // for each patch y coord
+                            {
+                                
+                               if( (EventPacketX[e] == k) && (EventPacketY[e] == l) )
+                               {
+                                   
+                                   binary_features[n]--;
+
+                               }
+                              
+                            } // end of patch y coords
+          
+                            
+                        } // end of patch x coords
+                        
+                        
+                    }
+                    
+                    
+                } //end if event is in patch
+             
+            } // end of packet event y coords
+            
+        } // end of packet event x coords
+        
+    } // end of packet events
+        
+}
 
 
 
@@ -143,24 +272,4 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
 
  
-
-
-
-
-
-void features_continuous_bool_min(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                                  int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
-                                  int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y],
-                                  int MiniEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                                  int f_packet_size)
-{
-   
-    //a bool is generated if the number of events at the next packet exceeded the previous, otherwise it was zero
-    // areas where bools are generated are active areas, we're interested in those areas, like a heat map
-    // so we could add the bools in a segment, and normalize to the number of packets
-    // OR them, AND them, XOR them
-    // going to count up the number of bools per segment, some form of thresholding, we've reduced the event space to the most active areas
-    //segment and count, not unlike chrononetworks
-}
-
 

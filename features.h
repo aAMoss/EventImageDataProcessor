@@ -90,12 +90,6 @@ void features_eframe_continuous_bool(int EventFrameCountALL[MAXFRAME_X][MAXFRAME
                                      int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
                                      int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
 
-void features_continuous_bool_min(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                                  int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
-                                  int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y],
-                                  int MiniEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y], int f_packet_size);
-
-
 
 // Function Prototypes - printing to terminal
 
