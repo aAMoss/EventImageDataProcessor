@@ -167,32 +167,40 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
         
         
-        // FEATURES - Comment out as necessary
+        // PACKET FEATURES - Comment out as necessary
+        
+        features_event_frame_count(f_packet_size, &packet_event_no,
+                                          EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+                                          EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
         features_event_frame_density(f_packet_size, &packet_event_no,
                                      EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG,
                                      EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
-        features_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
+        // PACKET-TO-PACKET FEATURES
+        features_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+                                        PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
+                                        OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
         
         
         
-//
-//        features_event_frame_count(f_packet_size, &packet_event_no,
-//                                          EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-//                                          EventPacketX, EventPacketY, EventPacketP, EventPacketT);
-//
-//        features_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-//                                        PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
-//                                        OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-//
-//        features_print_event_frame_count(f_packet_size, &packet_event_no,
-//                                                EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-//                                                EventPacketX, EventPacketY, EventPacketP, EventPacketT);
-//        features_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+        
+        // PRINT FEATURES - comment out as necessary
+
+        //features_print_event_frame_count(f_packet_size, &packet_event_no,
+        //                                        EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+        //                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+        
+        //features_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
         
         
         
+        // PRINT PACKET-TO-PACKET FEATURES
+
+        features_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+        
+        
+        //Other
         features_literals_raw_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
         dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
 
@@ -536,7 +544,7 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
 
         for(int j = 0; j < MAXFRAME_Y; j++)
         {
-            printf("%d", OutputEventFrameBoolsALL[i][j]);
+            printf("%d ", OutputEventFrameBoolsALL[i][j]);
         }
         printf("\n");
     }
@@ -548,7 +556,7 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
 
         for(int j = 0; j < MAXFRAME_Y; j++)
         {
-            printf("%d", OutputEventFrameBoolsPOS[i][j]);
+            printf("%d ", OutputEventFrameBoolsPOS[i][j]);
         }
         printf("\n");
     }
@@ -560,7 +568,7 @@ void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME
 
         for(int j = 0; j < MAXFRAME_Y; j++)
         {
-            printf("%d", OutputEventFrameBoolsNEG[i][j]);
+            printf("%d ", OutputEventFrameBoolsNEG[i][j]);
         }
         printf("\n");
     }
