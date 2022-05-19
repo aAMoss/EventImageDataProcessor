@@ -36,7 +36,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                                     patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
     
     // homebrew feature extraction
-    features_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
+    idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
     
     
     
@@ -51,9 +51,9 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         
         // homebrew feature extraction
         dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-        features_zero_EventFrameCounts(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG);
-        features_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-        features_zero_EventFrameDensity(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
+        idfe_zero_EventFrameCounts(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG);
+        idfe_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+        idfe_zero_EventFrameDensity(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
         
         // Select variables for first N-1 packets, and last Nth packet
         if(packet_no < (packets_req - 1))
@@ -106,25 +106,25 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
         
         // homebrew feature extraction
-        features_event_frame_count(f_packet_size, &packet_event_no,
+        idfe_event_frame_count(f_packet_size, &packet_event_no,
                                           EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
                                           EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
-        features_event_frame_density(f_packet_size, &packet_event_no,
+        idfe_event_frame_density(f_packet_size, &packet_event_no,
                                      EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG,
                                      EventPacketX, EventPacketY, EventPacketP, EventPacketT);
        
-        features_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+        idfe_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
                                         PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
                                         OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
         
-        //features_print_event_frame_count(f_packet_size, &packet_event_no,
+        //idfe_print_event_frame_count(f_packet_size, &packet_event_no,
         //                                        EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
         //                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
         
-        //features_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
+        //idfe_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
         
-        //features_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+        //idfe_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
        
  
 
