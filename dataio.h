@@ -1,7 +1,7 @@
 // dataio.h
 
 // Program Specific Headers
-#include "features.h"
+#include "raw.h"
 
 
 // Definitions - Input directory paths for the N-MNIST data set (choose between the full set or a smaller test set)

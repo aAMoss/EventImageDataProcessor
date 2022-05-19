@@ -85,7 +85,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         
         
         // raw literals
-        features_literals_raw_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
+        raw_literals_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
         dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
         
         
