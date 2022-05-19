@@ -37,24 +37,24 @@ int patch_m_py[B_FEATURES];
 int patch_m_nx[B_FEATURES];
 int patch_m_ny[B_FEATURES];
 
-void features_zero_binary_variables(int output_binary_literals[], int binary_features_count[]);
+void tbfe_zero_binary_variables(int output_binary_literals[], int binary_features_count[]);
 
-void features_zero_patch_variables(int patch_o_px[],int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
+void tbfe_zero_patch_variables(int patch_o_px[],int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
                                    int patch_m_px[],int patch_m_py[], int patch_m_nx[], int patch_m_ny[]);
 
-void features_binary_patch_variables(int patch_o_px[], int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
+void tbfe_binary_patch_variables(int patch_o_px[], int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
                                      int patch_m_px[],int patch_m_py[], int patch_m_nx[], int patch_m_ny[]);
 
-void features_positive_binary_patch(int binary_features_count[], long int EventPacketX[], long int EventPacketY[],
+void tbfe_positive_binary_patch(int binary_features_count[], long int EventPacketX[], long int EventPacketY[],
                                     int patch_o_px[], int patch_o_py[], int patch_m_px[], int patch_m_py[]);
 
-void features_negative_binary_patch(int binary_features_count[], long int EventPacketX[], long int EventPacketY[],
+void tbfe_negative_binary_patch(int binary_features_count[], long int EventPacketX[], long int EventPacketY[],
                                     int patch_o_nx[], int patch_o_ny[], int patch_m_nx[], int patch_m_ny[]);
 
-void features_binary_patches_output(int output_binary_literals[], int binary_features_count[],
+void tbfe_binary_patches_output(int output_binary_literals[], int binary_features_count[],
                                     int f_packet_size, long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 
-void features_zero_binary_variables(int output_binary_literals[], int binary_features_count[])
+void tbfe_zero_binary_variables(int output_binary_literals[], int binary_features_count[])
 {
     //Zero them first
     for(int b = 0; b < B_FEATURES; b++)
@@ -67,7 +67,7 @@ void features_zero_binary_variables(int output_binary_literals[], int binary_fea
     
 }
 
-void features_zero_patch_variables(int patch_o_px[],int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
+void tbfe_zero_patch_variables(int patch_o_px[],int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
                                    int patch_m_px[],int patch_m_py[], int patch_m_nx[], int patch_m_ny[])
 {
     //Zero them first
@@ -88,7 +88,7 @@ void features_zero_patch_variables(int patch_o_px[],int patch_o_py[], int patch_
 }
                                    
 
-void features_binary_patch_variables(int patch_o_px[], int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
+void tbfe_binary_patch_variables(int patch_o_px[], int patch_o_py[], int patch_o_nx[], int patch_o_ny[],
                                      int patch_m_px[],int patch_m_py[], int patch_m_nx[], int patch_m_ny[])
 {
 
@@ -119,7 +119,7 @@ void features_binary_patch_variables(int patch_o_px[], int patch_o_py[], int pat
     
 }
 
-void features_positive_binary_patch(int binary_features_count[],
+void tbfe_positive_binary_patch(int binary_features_count[],
                                     long int EventPacketX[], long int EventPacketY[],
                                     int patch_o_px[], int patch_o_py[], int patch_m_px[], int patch_m_py[])
 {
@@ -157,7 +157,7 @@ void features_positive_binary_patch(int binary_features_count[],
     
 }
 
-void features_negative_binary_patch(int binary_features_count[],
+void tbfe_negative_binary_patch(int binary_features_count[],
                                     long int EventPacketX[], long int EventPacketY[],
                                     int patch_o_nx[], int patch_o_ny[], int patch_m_nx[], int patch_m_ny[])
 {
@@ -194,7 +194,7 @@ void features_negative_binary_patch(int binary_features_count[],
 }
 
 
-void features_binary_patches_output(int output_binary_literals[], int binary_features_count[], int f_packet_size,
+void tbfe_binary_patches_output(int output_binary_literals[], int binary_features_count[], int f_packet_size,
                                     long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
 {
 
@@ -208,9 +208,9 @@ void features_binary_patches_output(int output_binary_literals[], int binary_fea
                 if( (EventPacketX[e] == i) &&  ( EventPacketY[e] == j) ) // check if there's an event at packet coords x y
                 {
                    
-                    features_positive_binary_patch(binary_features_count, EventPacketX, EventPacketY, patch_o_px, patch_m_px, patch_o_py, patch_m_py);
+                    tbfe_positive_binary_patch(binary_features_count, EventPacketX, EventPacketY, patch_o_px, patch_m_px, patch_o_py, patch_m_py);
                     
-                    features_negative_binary_patch(binary_features_count, EventPacketX, EventPacketY, patch_o_nx, patch_m_nx, patch_o_ny, patch_m_ny);
+                    tbfe_negative_binary_patch(binary_features_count, EventPacketX, EventPacketY, patch_o_nx, patch_m_nx, patch_o_ny, patch_m_ny);
                     
                     
                 } //end if event is in patch
@@ -262,10 +262,10 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
     
     
-    features_zero_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
+    tbfe_zero_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                   patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
 
-    features_binary_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
+    tbfe_binary_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                     patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
     
                                         
@@ -278,7 +278,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     for(int packet_no = 0; packet_no < packets_req; packet_no++)
     {
         // Zero binary ouutput variables
-        features_zero_binary_variables(output_binary_literals, binary_features_count);
+        tbfe_zero_binary_variables(output_binary_literals, binary_features_count);
         
         // Zero the packet arrays
         dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
@@ -331,7 +331,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
        
  
 
-        features_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
+        tbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
         
         
         
