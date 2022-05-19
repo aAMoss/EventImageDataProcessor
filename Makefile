@@ -4,8 +4,8 @@ all: eidp tmda
 
 
 
-eidp: eidp.o dataio.o process.o features.o
-	gcc -o eidp eidp.o dataio.o process.o features.o
+eidp: eidp.o dataio.o process.o features.o pbfe.o
+	gcc -o eidp eidp.o dataio.o process.o features.o pbfe.o
 
 
 eidp.o: eidp.c eidp.h
@@ -19,6 +19,9 @@ process.o: process.c process.h
 	
 features.o: features.c features.h
 	gcc -c features.c
+
+pbfe.o: pbfe.c pbfe.h
+	gcc -c pbfe.c
 
 
 
@@ -35,5 +38,5 @@ procdataio.o: procdataio.c procdataio.h
 	
 	
 clean:
-	rm -f eidp eidp.o dataio.o process.o features.o
+	rm -f eidp eidp.o dataio.o process.o features.o pbfe.o
 	rm -f tmda tmda.o
