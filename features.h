@@ -39,32 +39,47 @@ float EventFrameDensityPOS[MAXFRAME_X][MAXFRAME_Y];
 float EventFrameDensityNEG[MAXFRAME_X][MAXFRAME_Y];
 
 
-// Function Prototypes
+// Function Prototypes - raw
 void features_literals_raw_data(long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
                              int f_packet_size, int c, int literals_raw[RAW_BOOL_MAX][f_packet_size]);
 
-
-void features_event_frame_count(int f_packet_size, int *packet_event_no, int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
-                                       int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y], int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y],
-                                       long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
-
-void features_print_event_frame_count(int f_packet_size, int *packet_event_no, int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
-                                             int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y], int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y],
-                                             long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
-
-
+// Function Prototypes - zeroing
 void features_zero_EventFrameCounts(int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
-                                     int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y],
-                                     int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y]);
+                                    int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y],
+                                    int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y]);
                                     
 void features_zero_PrevEventFrameCounts(int PrevEventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
-                                         int PrevEventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y],
-                                         int PrevEventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y]);
+                                        int PrevEventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y],
+                                        int PrevEventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y]);
                                     
 void features_zero_OutputEventFrameBools(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
                                          int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
                                          int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
 
+
+void features_zero_EventFrameDensity(float EventFrameDensityALL[MAXFRAME_X][MAXFRAME_Y],
+                                     float EventFrameDensityPOS[MAXFRAME_X][MAXFRAME_Y],
+                                     float EventFrameDensityNEG[MAXFRAME_X][MAXFRAME_Y]);
+
+
+
+
+
+// Function Prototypes - packet features
+void features_event_frame_count(int f_packet_size, int *packet_event_no, int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
+                                int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y], int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y],
+                                long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
+
+
+void features_event_frame_density(int f_packet_size, int *packet_event_no, float EventFrameDensityALL[MAXFRAME_X][MAXFRAME_Y],
+                                  float EventFrameDensityPOS[MAXFRAME_X][MAXFRAME_Y], float EventFrameDensityNEG[MAXFRAME_X][MAXFRAME_Y],
+                                  long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
+
+
+
+
+
+// Function Prototypes - inter-packet features
 void features_eframe_continuous_bool(int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
                                      int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y],
                                      int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y],
@@ -75,26 +90,23 @@ void features_eframe_continuous_bool(int EventFrameCountALL[MAXFRAME_X][MAXFRAME
                                      int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
                                      int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
 
-void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                                           int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
-                                           int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
-
-
 void features_continuous_bool_min(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
                                   int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
                                   int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y],
                                   int MiniEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y], int f_packet_size);
 
 
-void features_event_frame_density(int f_packet_size, int *packet_event_no, float EventFrameDensityALL[MAXFRAME_X][MAXFRAME_Y],
-                                  float EventFrameDensityPOS[MAXFRAME_X][MAXFRAME_Y], float EventFrameDensityNEG[MAXFRAME_X][MAXFRAME_Y],
-                                  long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 
+// Function Prototypes - printing to terminal
+
+void features_print_event_frame_count(int f_packet_size, int *packet_event_no, int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y],
+                                      int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y], int EventFrameCountNEG[MAXFRAME_X][MAXFRAME_Y],
+                                      long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
+
+void features_print_eframe_continuous_bool(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                           int OutputEventFrameBoolsPOS[MAXFRAME_X][MAXFRAME_Y],
+                                           int OutputEventFrameBoolsNEG[MAXFRAME_X][MAXFRAME_Y]);
 
 void features_print_event_frame_density(float EventFrameDensityALL[MAXFRAME_X][MAXFRAME_Y],
                                         float EventFrameDensityPOS[MAXFRAME_X][MAXFRAME_Y],
                                         float EventFrameDensityNEG[MAXFRAME_X][MAXFRAME_Y]);
-    
-void features_zero_EventFrameDensity(float EventFrameDensityALL[MAXFRAME_X][MAXFRAME_Y],
-                                     float EventFrameDensityPOS[MAXFRAME_X][MAXFRAME_Y],
-                                     float EventFrameDensityNEG[MAXFRAME_X][MAXFRAME_Y]);

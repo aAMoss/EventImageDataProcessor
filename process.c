@@ -17,11 +17,6 @@
 
 
 int f_select;
-
-
-
-
-
 int MiniEventRegion[REG_X][REG_Y];
 
 
@@ -148,22 +143,6 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
 
  
-// need one function to create the features
-// will that include some form of thresholding functions??
-
-// need a function to create the booleans
-
-
-// need a function for minimization
-
-
-// need a function to print the boolenas/literals to the output directories
-
-
-
-// all these functions should be generic enough that they can just be slotted into the process_event_data loop and work seamlessly for both test and training data
-
-
 
 
 
