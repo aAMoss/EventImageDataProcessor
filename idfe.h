@@ -1,18 +1,12 @@
 // idfe.h - inter (packet) dynamics feature extraction
 
 // Program Specific Headers
+#include "dataio.h"
 
 
-#define MAXFRAME_X 32
-#define MAXFRAME_Y 32
-
-#define F_DIV 2
-#define REG_X 8
-#define REG_Y 8
 
 
-#define MIN_FRAME_X (MAXFRAME_X / F_DIV)
-#define MIN_FRAME_Y (MAXFRAME_Y / F_DIV)
+
 
 int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
 int EventFrameCountPOS[MAXFRAME_X][MAXFRAME_Y];

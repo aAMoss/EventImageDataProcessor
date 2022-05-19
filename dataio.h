@@ -13,6 +13,15 @@
 // Definitions - Variables
 #define EVENTS_PER_SAMPLE_MAX 10000
 #define DATA_IN_NAME_MAX 200
+
+#define MAXFRAME_X 32
+#define MAXFRAME_Y 32
+#define F_DIV 2
+#define REG_X 8
+#define REG_Y 8
+#define MIN_FRAME_X (MAXFRAME_X / F_DIV)
+#define MIN_FRAME_Y (MAXFRAME_Y / F_DIV)
+
 #define PACKET_MAX 1500
 #define PACKET_MIN 100
 #define EVENT_BUFF_SIZE 5
