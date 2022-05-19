@@ -91,7 +91,7 @@ void features_binary_patches(int f_packet_size, long int EventPacketX[], long in
                     // Check Positive Patches
                     for(int p = 0; p < B_FEATURES; p++)
                     {
-                        
+            
                         for(int k = patch_o_px[p]; k < patch_m_px[p]; k++) // for each patch x coord
                         {
                         
@@ -109,7 +109,7 @@ void features_binary_patches(int f_packet_size, long int EventPacketX[], long in
            
                         } // end of patch x coords
                         
-                    }
+                    }// End check positive patch
                     
                     
                     // Check Negative Patches
@@ -135,7 +135,7 @@ void features_binary_patches(int f_packet_size, long int EventPacketX[], long in
                         } // end of patch x coords
                         
                         
-                    }
+                    }// End check negative patch
                     
                     
                 } //end if event is in patch
