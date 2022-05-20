@@ -27,8 +27,8 @@ void dataio_get_out_dir_label(char *output_dir_label)
     strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
     strcat(output_dir_label, time_string);
     
-    puts("Please enter a name for the data output directory.");
-    printf("The name must be no more than %d characters.\n", (DATA_OUT_NAME_MAX/4));
+    puts("Please enter a name for the data output directory.\n");
+    printf("The name must be no more than %d characters.\n\n", (DATA_OUT_NAME_MAX/4));
 
     fgets(user_input, (DATA_OUT_NAME_MAX/4), stdin);
     user_input[strcspn(user_input, "\n")] = '\0'; // removes the return key
@@ -45,13 +45,13 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
     
     while(p_s_flag < 1)
     {
-        printf("Please enter the Event Packet Size.\nValue must be in the range %d to %d.\n", PACKET_MIN, PACKET_MAX);
+        printf("\nPlease enter the Event Packet Size.\nValue must be in the range %d to %d.\n\n", PACKET_MIN, PACKET_MAX);
        
         scanf("%d", &p_s);
         
         if(p_s < PACKET_MIN || p_s > PACKET_MAX)
         {
-            printf("ERROR: Event Packet Size must be between %d and %d!\n", PACKET_MIN, PACKET_MAX);
+            printf("\nERROR: Event Packet Size must be between %d and %d!\n\n", PACKET_MIN, PACKET_MAX);
         }
         else
         if (p_s >= PACKET_MIN && p_s <= PACKET_MAX)
@@ -69,13 +69,13 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
             break;
         }
         
-        printf("Please enter the Event Packet Overlap.\nValue must be in the range 0 to %d.\n", (p_s - 1) );
+        printf("\nPlease enter the Event Packet Overlap.\nValue must be in the range 0 to %d.\n\n", (p_s - 1) );
        
         scanf("%d", &p_o);
         
         if(p_o < 0 || p_o > (p_s - 1) )
         {
-            printf("ERROR: Event Packet Overlap must be between 0 and %d!\n", (p_s - 1) );
+            printf("\nERROR: Event Packet Overlap must be between 0 and %d!\n\n", (p_s - 1) );
         }
         else if (p_o >= 0 && p_o < p_s)
         {
@@ -109,7 +109,7 @@ void dataio_set_features_mode(int *fe_mode)
         
         if(mode < 0 || mode > 2)
         {
-            printf("ERROR: Please select a valid Feature Extraction Method!\n\n");
+            printf("\nERROR: Please select a valid Feature Extraction Method!\n\n");
         }
         else
         if ( mode >= 0 || mode <= 2)
