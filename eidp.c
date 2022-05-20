@@ -67,7 +67,7 @@ int main(void)
                 
                 
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
-                                   EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                                   EventPacketX, EventPacketY, EventPacketP, EventPacketT, fe_mode);
                 
                 fclose(Sample_Input_File);
                 fclose(Processed_Data_Output_File);
@@ -120,7 +120,7 @@ int main(void)
                 
                 
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
-                                   EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                                   EventPacketX, EventPacketY, EventPacketP, EventPacketT, fe_mode);
                 
                 fclose(Sample_Input_File);
                 fclose(Processed_Data_Output_File);

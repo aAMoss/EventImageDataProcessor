@@ -17,7 +17,7 @@
 
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
-                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[])
+                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[], int fe_mode)
 {
 
     // process event data initial variables
@@ -26,34 +26,74 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     int event_no = 0;
     int packet_event_no = 0;
     
-    
-    
-    // patch binary feature extraction
-    pbfe_zero_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
+    switch(fe_mode) // Zeroing variables I
+    {
+        case 0: // RAW
+            
+            // no actions required here
+            
+            break;
+            
+        case 1: // PBFE
+            
+            pbfe_zero_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                   patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
 
-    pbfe_binary_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
+            pbfe_binary_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                     patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
+            
+            break;
+        
+        case 2:  //IDFE
     
-    // homebrew feature extraction
-    idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
-    
-    
-    
+            idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
+            
+            break;
+            
+        default:
+            
+            puts("ERROR: NO FEATURE EXTRACTION MODE SELECTED!");
+            exit(EXIT_FAILURE);
+            
+            break;
+    }
     
     // Run for N number of packets to extract all data
     for(int packet_no = 0; packet_no < packets_req; packet_no++)
     {
-        // Zeroing variables
+       
+        switch(fe_mode) // Zeroing Variables II
+        {
+            case 0: // RAW
+                
+                dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+                
+                break;
+                
+            case 1: // PBFE
+                
+                dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+                pbfe_zero_binary_variables(output_binary_literals, binary_features_count);
+                
+                break;
+            
+            case 2:  //IDFE
         
-        // patch binary feature extraction
-        pbfe_zero_binary_variables(output_binary_literals, binary_features_count);
+                dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+                idfe_zero_EventFrameCounts(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG);
+                idfe_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+                idfe_zero_EventFrameDensity(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
+                
+                break;
+                
+            default:
+                
+                puts("ERROR: NO FEATURE EXTRACTION MODE SELECTED!");
+                exit(EXIT_FAILURE);
+                
+                break;
+        }
         
-        // homebrew feature extraction
-        dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-        idfe_zero_EventFrameCounts(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG);
-        idfe_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-        idfe_zero_EventFrameDensity(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
         
         // Select variables for first N-1 packets, and last Nth packet
         if(packet_no < (packets_req - 1))
@@ -80,55 +120,74 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         //printf("byte_no %d\t", byte_no);
         //printf("f_packet_size %d\n", f_packet_size);
         
-        // Extract a packets worth of event data
-        dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-        
-        
-        // raw literals
-        raw_literals_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
-        dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
-        
-        
-        // patch binary feature extraction
-        pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
-        
-        
-        printf("PN %d\t", packet_no);
-        
-        for(int i = 0; i < B_FEATURES; i++)
-        {
-            
-            printf("%d", output_binary_literals[i]);
-    
-        }
-        printf("\n");
-            
-    
-        
-        // homebrew feature extraction
-        idfe_event_frame_count(f_packet_size, &packet_event_no,
-                                          EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-                                          EventPacketX, EventPacketY, EventPacketP, EventPacketT);
-        
-        idfe_event_frame_density(f_packet_size, &packet_event_no,
-                                     EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG,
-                                     EventPacketX, EventPacketY, EventPacketP, EventPacketT);
-       
-        idfe_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-                                        PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
-                                        OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-        
-        //idfe_print_event_frame_count(f_packet_size, &packet_event_no,
-        //                                        EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-        //                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
-        
-        //idfe_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
-        
-        //idfe_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-       
- 
 
-        // Other
+        
+        
+        switch(fe_mode)
+        {
+            case 0: // RAW
+                
+                dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+                
+                raw_literals_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
+                
+                dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
+                
+                break;
+                
+            case 1: // PBFE
+                
+                dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+                
+                pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
+                
+                printf("PN %d\t", packet_no);
+                
+                for(int i = 0; i < B_FEATURES; i++)
+                {
+                    
+                    printf("%d", output_binary_literals[i]);
+            
+                }
+                printf("\n");
+                
+                break;
+            
+            case 2:  //IDFE
+        
+                dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
+                
+                idfe_event_frame_count(f_packet_size, &packet_event_no,
+                                                  EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+                                                  EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                
+                idfe_event_frame_density(f_packet_size, &packet_event_no,
+                                             EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG,
+                                             EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+               
+                idfe_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+                                                PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
+                                                OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+                
+                idfe_print_event_frame_count(f_packet_size, &packet_event_no,
+                                                        EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
+                                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                
+                idfe_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
+                
+                idfe_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+                
+                break;
+                
+            default:
+                
+                puts("ERROR: NO FEATURE EXTRACTION MODE SELECTED!");
+                exit(EXIT_FAILURE);
+                
+                break;
+        }
+        
+        
 //       // Print to terminal for checking output and debug
 //       for(int a = 0; a < f_packet_size; a++)
 //       {
