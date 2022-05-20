@@ -29,19 +29,18 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
     switch(fe_mode) // Zeroing variables I
     {
-        case 0: // RAW
             
-//            // process event data initial variables
-//            int byte_no = 0;
-//            int f_packet_size = 0;
-//            int event_no = 0;
-//            int packet_event_no = 0;
+            
+            
+            
+            
+        case 0: // RAW
             
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
             {
                
-
+                // Zero
                 dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                  
                 // Select variables for first N-1 packets, and last Nth packet
@@ -68,11 +67,13 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 //printf("byte_no %d\t", byte_no);
                 //printf("f_packet_size %d\n", f_packet_size);
                 
-     
+                // Extract
                 dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                 
+                // Process
                 raw_literals_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
                 
+                // Print
                 dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
 
                 
@@ -84,10 +85,12 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             break;
         
             
+        
+            
             
         case 1: // PBFE
             
-
+            // Zero
             pbfe_zero_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                   patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
 
@@ -97,7 +100,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
             {
-                     
+                 // Zero
                 dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                 pbfe_zero_binary_variables(output_binary_literals, binary_features_count);
                         
@@ -119,12 +122,13 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 }
                 
                 
-               
-                        
+                // Extract
                 dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                 
+                // Process
                 pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
                 
+                //Print
                 printf("PN %d\t", packet_no);
                 
                 for(int i = 0; i < B_FEATURES; i++)
@@ -142,15 +146,18 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         
             
             
+            
+            
         case 2:  //IDFE
     
-
+            // Zero
             idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
             
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
             {
-   
+                
+                // Zero
                 dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                 idfe_zero_EventFrameCounts(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG);
                 idfe_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
@@ -175,8 +182,10 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 }
                 
                 
+                // Extract
                 dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                 
+                // Process
                 idfe_event_frame_count(f_packet_size, &packet_event_no,
                                                   EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
                                                   EventPacketX, EventPacketY, EventPacketP, EventPacketT);
@@ -189,6 +198,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                                                 PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
                                                 OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
                 
+                // Print
                 idfe_print_event_frame_count(f_packet_size, &packet_event_no,
                                                         EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
                                                         EventPacketX, EventPacketY, EventPacketP, EventPacketT);
@@ -200,8 +210,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
             }
             
-            
             break;
+            
             
             
             
@@ -212,6 +222,11 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             exit(EXIT_FAILURE);
             
             break;
+            
+            
+            
+            
+            
     }
     
     // Other
