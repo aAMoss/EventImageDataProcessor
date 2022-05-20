@@ -85,6 +85,42 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
     }
 }
 
+
+
+
+// Select feature extraction mode
+void dataio_set_features_mode(int *fe_mode)
+{
+    
+    int mode = 0;
+    int mode_flag = 0;
+    
+    int num_features = 0;
+    int f_flag = 0;
+    
+    while(mode_flag < 1)
+    {
+        printf("Please select the Feature Extraction Method by entering 0, 1, or 2\n\n");
+        printf("0 --- RAW  --- Creates boolean literals from unprocessed event data samples, there is no pre-processing.\n\n");
+        printf("1 --- PBFE --- Packet Binary Feature Extraction\n\n");
+        printf("2 --- IDFE --- Inter(-packet) Dynamics Feature Extraction\n\n");
+        
+        scanf("%d", &mode);
+        
+        if(mode < 0 || mode > 2)
+        {
+            printf("ERROR: Please select a valid Feature Extraction Method!\n\n");
+        }
+        else
+        if ( mode >= 0 || mode <= 2)
+        {
+            *fe_mode = mode;
+            mode_flag++;
+        }
+    }
+    
+}
+
 // Function to create the new output directories
 void dataio_create_output_dir(char *output_dir_label, char *output_dir_name)
 {

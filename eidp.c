@@ -15,9 +15,6 @@
 // Program Specific Headers
 #include "eidp.h"
 
-//packet sizes? 1,5,10,25,50,100,250,500,1000
-//overlap%  5 10 25 50 75
-
 
 
 int main(void)
@@ -32,6 +29,8 @@ int main(void)
     // Sets the packet variables: size and overlap
     dataio_set_event_packet_vars(&packet_size, &packet_overlap);
     
+    dataio_set_features_mode(&fe_mode);
+                
     // Runs for everyone of the test data classes
     for(int c = 0; c < CLASSES; c++)
     {

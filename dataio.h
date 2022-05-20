@@ -42,6 +42,9 @@ FILE *Processed_Data_Output_File;
 int packet_size;
 int packet_overlap;
 
+// Feature Extraction Mode
+int fe_mode;
+
 // Packet Variables II - Determined by input sample file
 long int sample_bytes;
 long int sample_events;
@@ -69,7 +72,7 @@ int *p_f_packet_size;
 void dataio_get_out_dir_label(char *output_dir_label);
 void dataio_create_output_dir(char *output_dir_label, char *output_dir_name);
 void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap);
-
+void dataio_set_features_mode(int *fe_mode);
 
 
 DIR *dataio_open_data_input_dir_test(DIR *Data_Input_Dir, int c);
