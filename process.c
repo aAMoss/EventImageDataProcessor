@@ -128,7 +128,26 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 // Process
                 pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
                 
-                //Print
+                
+                // function to minimize goes here
+                // i call it reject and stack
+                
+                
+                // create an output array, int output_array[number of features][number of packets]
+                
+                
+                // maybe all of these functions are called after the above array is populated according to the number of packets, and outside of the packet loop
+                
+                //first function is reject, any packet where booleans are all zeros is rejected
+                
+                //second function, all booleans that match packet to packet, and accepted, and written to final singule
+                
+                
+                // function to add the class bools and print to file goes here!!!
+                
+                
+                
+                //Print to Terminal / Debug
                 printf("PN %d\t", packet_no);
                 
                 for(int i = 0; i < B_FEATURES; i++)
@@ -141,6 +160,9 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                         
 
             }
+            
+
+            
             
             break;
         
