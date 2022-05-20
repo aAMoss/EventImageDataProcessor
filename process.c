@@ -20,21 +20,28 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[], int fe_mode)
 {
 
-    // process event data initial variables
-    int byte_no = 0;
-    int f_packet_size = 0;
-    int event_no = 0;
-    int packet_event_no = 0;
+   
     
     switch(fe_mode) // Zeroing variables I
     {
         case 0: // RAW
             
-            // no actions required here
+            // process event data initial variables
+            int byte_no = 0;
+            int f_packet_size = 0;
+            int event_no = 0;
+            int packet_event_no = 0;
+            
             
             break;
             
         case 1: // PBFE
+            
+            // process event data initial variables
+            int byte_no = 0;
+            int f_packet_size = 0;
+            int event_no = 0;
+            int packet_event_no = 0;
             
             pbfe_zero_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                   patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
@@ -46,6 +53,12 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         
         case 2:  //IDFE
     
+            // process event data initial variables
+            int byte_no = 0;
+            int f_packet_size = 0;
+            int event_no = 0;
+            int packet_event_no = 0;
+            
             idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
             
             break;
