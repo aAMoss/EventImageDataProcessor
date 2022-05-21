@@ -13,6 +13,8 @@
 // Definitions - Variables
 #define EVENTS_PER_SAMPLE_MAX 10000
 #define DATA_IN_NAME_MAX 200
+#define FEATURES_MAX 1024
+#define FEATURES_MIN 4
 
 #define MAXFRAME_X 32
 #define MAXFRAME_Y 32
@@ -44,6 +46,9 @@ int packet_overlap;
 
 // Feature Extraction Mode
 int fe_mode;
+int features_number;
+
+// Number of Features
 
 // Packet Variables II - Determined by input sample file
 long int sample_bytes;
@@ -73,7 +78,7 @@ void dataio_get_out_dir_label(char *output_dir_label);
 void dataio_create_output_dir(char *output_dir_label, char *output_dir_name);
 void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap);
 void dataio_set_features_mode(int *fe_mode);
-
+void dataio_set_features_number(int *features_number);
 
 DIR *dataio_open_data_input_dir_test(DIR *Data_Input_Dir, int c);
 DIR *dataio_open_data_input_dir_train(DIR *Data_Input_Dir, int c);

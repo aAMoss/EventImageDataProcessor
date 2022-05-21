@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 //Posix Headers
 #include <dirent.h>
@@ -120,6 +121,46 @@ void dataio_set_features_mode(int *fe_mode)
     }
     
 }
+
+// set nubmer of features of output data
+void dataio_set_features_number(int *features_number)
+{
+    int num = 0;
+    int fn_flag = 0;
+    
+    while(fn_flag < 1)
+    {
+        printf("\nPlease enter the number of output features/literals.\n\nValue must be in the range %d to %d, and", FEATURES_MIN, FEATURES_MAX);
+        printf("be a perfect square number!\n\n");
+        scanf("%d", &num);
+        
+        int inum = 0;
+        float fnum = 0;
+        fnum = sqrt((double)num);
+        inum = fnum;
+              
+        if(fnum < FEATURES_MIN || fnum > PACKET_MAX)
+        {
+            printf("\nERROR: Number of Features must be between %d and %d!\n\n", FEATURES_MIN, FEATURES_MAX);
+        }
+        else
+        if ( inum == fnum )
+        {
+            *features_number = num;
+            fn_flag++;
+        }
+        else
+        {
+            printf("\nERROR: You selected %d, the number of features must be a perfect square!\n\n", num);
+        }
+        
+        
+    }
+
+    
+}
+
+
 
 // Function to create the new output directories
 void dataio_create_output_dir(char *output_dir_label, char *output_dir_name)

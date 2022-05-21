@@ -17,7 +17,8 @@
 
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
-                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[], int fe_mode)
+                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
+                        int fe_mode, int features_number)
 {
 
     // process event data initial variables
@@ -130,6 +131,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 
                 
                 // function to minimize goes here
+                
+                
                 // i call it reject and stack
                 
                 
@@ -138,7 +141,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 
                 // maybe all of these functions are called after the above array is populated according to the number of packets, and outside of the packet loop
                 
-                //first function is reject, any packet where booleans are all zeros is rejected
+                 //first function is reject, any packet where booleans are all zeros is rejected
                 
                 //second function, all booleans that match packet to packet, and accepted, and written to final singule
                 
