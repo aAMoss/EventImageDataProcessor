@@ -12,8 +12,8 @@
 #define PATCH_X_MIN 0
 #define PATCH_Y_MIN 0
 
-
-#define B_FEATURES 128
+// must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024
+#define B_FEATURES 64
 
 int output_binary_literals[B_FEATURES];
 int binary_features_count[B_FEATURES];

@@ -14,6 +14,33 @@
 // Program Specific Headers
 #include "process.h"
 
+void pbfe_print_to_terminal(int output_binary_literals[], int packet_no);
+
+void pbfe_print_to_terminal(int output_binary_literals[], int packet_no)
+{
+    
+    
+    
+    for(int i = 0; i < B_FEATURES; i++)
+    {
+        
+        if (i == 0)
+        {
+            
+            //Print to Terminal / Debug
+            printf("PN %d\t", packet_no);
+            
+            
+        }
+        
+        printf("%d", output_binary_literals[i]);
+
+        
+    }
+    printf("\n");
+    
+    
+}
 
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
@@ -130,6 +157,10 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
                 
                 
+                
+                // Print
+                pbfe_print_to_terminal(output_binary_literals, packet_no);
+                
                 // function to minimize goes here
                 
                 
@@ -148,18 +179,9 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 
                 // function to add the class bools and print to file goes here!!!
                 
+ 
                 
-                
-                //Print to Terminal / Debug
-                printf("PN %d\t", packet_no);
-                
-                for(int i = 0; i < B_FEATURES; i++)
-                {
-                    
-                    printf("%d", output_binary_literals[i]);
-            
-                }
-                printf("\n");
+  
                         
 
             }

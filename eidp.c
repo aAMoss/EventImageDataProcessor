@@ -34,7 +34,7 @@ int main(void)
     
     dataio_set_features_mode(&fe_mode);
     
-    //dataio_set_features_number(&features_number);
+    //dataio_set_features_number(&features_number); // must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024 for idfe
                 
     // Runs for everyone of the test data classes
     for(int c = 0; c < CLASSES; c++)

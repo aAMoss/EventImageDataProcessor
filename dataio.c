@@ -122,7 +122,7 @@ void dataio_set_features_mode(int *fe_mode)
     
 }
 
-// set nubmer of features of output data
+// set number of features of output data: 4, 16, 64, 256, 1024
 void dataio_set_features_number(int *features_number)
 {
     int num = 0;
