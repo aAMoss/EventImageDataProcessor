@@ -34,7 +34,7 @@ int main(void)
     
     dataio_set_features_mode(&fe_mode);
     
-    dataio_set_features_number(&features_number);
+    //dataio_set_features_number(&features_number);
                 
     // Runs for everyone of the test data classes
     for(int c = 0; c < CLASSES; c++)
