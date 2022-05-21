@@ -14,33 +14,8 @@
 // Program Specific Headers
 #include "process.h"
 
-void pbfe_print_to_terminal(int output_binary_literals[], int packet_no);
 
-void pbfe_print_to_terminal(int output_binary_literals[], int packet_no)
-{
-    
-    
-    
-    for(int i = 0; i < B_FEATURES; i++)
-    {
-        
-        if (i == 0)
-        {
-            
-            //Print to Terminal / Debug
-            printf("PN %d\t", packet_no);
-            
-            
-        }
-        
-        printf("%d", output_binary_literals[i]);
 
-        
-    }
-    printf("\n");
-    
-    
-}
 
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,

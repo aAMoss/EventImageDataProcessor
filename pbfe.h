@@ -45,3 +45,5 @@ void pbfe_negative_binary_patch(int binary_features_count[], long int EventPacke
 
 void pbfe_binary_patches_output(int output_binary_literals[], int binary_features_count[],
                                     int f_packet_size, long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
+
+void pbfe_print_to_terminal(int output_binary_literals[], int packet_no);

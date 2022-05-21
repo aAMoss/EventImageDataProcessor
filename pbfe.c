@@ -207,3 +207,30 @@ void pbfe_binary_patches_output(int output_binary_literals[], int binary_feature
     }
     
 }
+
+
+void pbfe_print_to_terminal(int output_binary_literals[], int packet_no)
+{
+    
+    
+    
+    for(int i = 0; i < B_FEATURES; i++)
+    {
+        
+        if (i == 0)
+        {
+            
+            //Print to Terminal / Debug
+            printf("PN %d\t", packet_no);
+            
+            
+        }
+        
+        printf("%d", output_binary_literals[i]);
+
+        
+    }
+    printf("\n");
+    
+    
+}
