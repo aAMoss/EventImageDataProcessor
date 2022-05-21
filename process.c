@@ -29,6 +29,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     int event_no = 0;
     int packet_event_no = 0;
     
+    // case 1 BPFE variables
+    int pbfe_packet_literals[packets_req][B_FEATURES];
     
     switch(fe_mode) // Zeroing variables I
     {
@@ -100,6 +102,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             pbfe_binary_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                     patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
             
+            
+            
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
             {
@@ -131,35 +135,63 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 // Process
                 pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
                 
+                // Output
                 
-                
-                // Print
+                //copy all the features per packet into a final output array, can then minimize or print them
+                // pbfe_copy_output_binary_literals()
+                for(int i = 0; i < B_FEATURES; i++)
+                {
+                    pbfe_packet_literals[packet_no][i] = output_binary_literals[i];
+                }
+               
+                // Debug
                 pbfe_print_to_terminal(output_binary_literals, packet_no);
                 
-                // function to minimize goes here
-                
-                
-                // i call it reject and stack
-                
-                
-                // create an output array, int output_array[number of features][number of packets]
-                
-                
-                // maybe all of these functions are called after the above array is populated according to the number of packets, and outside of the packet loop
-                
-                 //first function is reject, any packet where booleans are all zeros is rejected
-                
-                //second function, all booleans that match packet to packet, and accepted, and written to final singule
-                
-                
-                // function to add the class bools and print to file goes here!!!
-                
- 
-                
-  
-                        
+        
 
             }
+            
+            
+            
+            // print_pbfe_literals_to_file()
+            // pbfe_minimize_literals() // reject and stack
+            for(int i = 0; i < packets_req; i++)
+            {
+                int countzeros;
+                // reject all packet literals where every value is zero.
+                for(int j = 0; j < B_FEATURES; j++)
+                {
+                    
+                    if( pbfe_packet_literals[i][j] == 0)
+                    {
+                        countzeros++;
+                    }
+                    
+                    
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+            }
+            
+            
+            
+            
+            // maybe all of these functions are called after the above array is populated according to the number of packets, and outside of the packet loop
+            
+             //first function is reject, any packet where booleans are all zeros is rejected
+            
+            //second function, all booleans that match packet to packet, and accepted, and written to final singule
+            
+            
+            // function to add the class bools and print to file goes here!!!
+            
+
             
 
             
