@@ -31,6 +31,8 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
     // case 1 BPFE variables
     int pbfe_packet_literals[packets_req][B_FEATURES];
+    int pbfe_packet_literals_min1[packets_req][B_FEATURES];
+    
     
     switch(fe_mode) // Zeroing variables I
     {
@@ -157,7 +159,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             // pbfe_minimize_literals() // reject and stack
             for(int i = 0; i < packets_req; i++)
             {
-                int countzeros;
+                int countzeros = 0;
                 // reject all packet literals where every value is zero.
                 for(int j = 0; j < B_FEATURES; j++)
                 {
@@ -167,13 +169,21 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                         countzeros++;
                     }
                     
+                }
+                
+                if(countzeros != B_FEATURES)
+                {
                     
+                    for(int k = 0; k < B_FEATURES; k++)
+                    {
+                    
+                        pbfe_packet_literals_min1[][k];
+                        
+                    }
                     
                     
                     
                 }
-                
-                
                 
                 
                 
