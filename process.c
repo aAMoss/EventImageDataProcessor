@@ -31,7 +31,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
     // case 1 BPFE variables
     int pbfe_packet_literals[packets_req][B_FEATURES];
-    int pbfe_packet_literals_min1[packets_req][B_FEATURES];
+    char pbfe_packet_literals_min[packets_req][B_FEATURES_STRING];
     
     
     switch(fe_mode) // Zeroing variables I
@@ -139,45 +139,25 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 
                 // Output
                 
-                //copy all the features per packet into a final output array, can then minimize or print them
-                // pbfe_copy_output_binary_literals()
+                
+   
+                int countzeros = 0;
+                int countones = 0;
                 for(int i = 0; i < B_FEATURES; i++)
                 {
-                    pbfe_packet_literals[packet_no][i] = output_binary_literals[i];
-                }
-               
-                // Debug
-                pbfe_print_to_terminal(output_binary_literals, packet_no);
-                
-        
-
-            }
-            
-            
-            
-            // print_pbfe_literals_to_file()
-            // pbfe_minimize_literals() // reject and stack
-            for(int i = 0; i < packets_req; i++)
-            {
-                int countzeros = 0;
-                // reject all packet literals where every value is zero.
-                for(int j = 0; j < B_FEATURES; j++)
-                {
                     
-                    if( pbfe_packet_literals[i][j] == 0)
+
+                    if( output_binary_literals[i] == 0)
                     {
+                        
                         countzeros++;
+                        
                     }
                     
-                }
-                
-                if(countzeros != B_FEATURES)
-                {
-                    
-                    for(int k = 0; k < B_FEATURES; k++)
+                    if( output_binary_literals[i] == 1)
                     {
-                    
-                        pbfe_packet_literals_min1[][k];
+                        
+                        countones++;
                         
                     }
                     
@@ -185,23 +165,22 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                     
                 }
                 
+                //printf("Zeros %d\t Ones%d\n", countzeros, countones);
                 
+                if( countzeros != B_FEATURES)
+                {
+                    
+                    pbfe_print_to_terminal(output_binary_literals, packet_no);
+                    
+                }
+                
+                
+                
+               
+                // Debug
+                //pbfe_print_to_terminal(output_binary_literals, packet_no);
                 
             }
-            
-            
-            
-            
-            // maybe all of these functions are called after the above array is populated according to the number of packets, and outside of the packet loop
-            
-             //first function is reject, any packet where booleans are all zeros is rejected
-            
-            //second function, all booleans that match packet to packet, and accepted, and written to final singule
-            
-            
-            // function to add the class bools and print to file goes here!!!
-            
-
             
 
             
