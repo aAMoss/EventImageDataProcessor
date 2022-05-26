@@ -14,6 +14,18 @@
 // Program Specific Headers
 #include "process.h"
 
+int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y];
+
+
+
+
+
+void idfe_eframe_interpacket_bool_density(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                          int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y]);
+
+void idfe_print_interpacket_bool_density(int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y]);
+
+void idfe_zero_interpacket_bool_density(int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y]);
 
 
 
@@ -169,17 +181,17 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
         case 2:  //IDFE
     
             // Zero
-            idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG);
-            
+            idfe_zero_PrevEventFrameCounts(PrevEventFrameCountALL);
+            idfe_zero_interpacket_bool_density(idfe_bool_density_ALL);
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
             {
                 
                 // Zero
                 dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-                idfe_zero_EventFrameCounts(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG);
-                idfe_zero_OutputEventFrameBools(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
-                idfe_zero_EventFrameDensity(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
+                idfe_zero_EventFrameCounts(EventFrameCountALL);
+                idfe_zero_OutputEventFrameBools(OutputEventFrameBoolsALL);
+                idfe_zero_EventFrameDensity(EventFrameDensityALL);
                         
   
                 // Select variables for first N-1 packets, and last Nth packet
@@ -204,28 +216,30 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
                 
                 // Process
-                idfe_event_frame_count(f_packet_size, &packet_event_no,
-                                                  EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-                                                  EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                idfe_event_frame_count(f_packet_size, &packet_event_no, EventFrameCountALL,
+                                       EventPacketX, EventPacketY, EventPacketP, EventPacketT);
                 
-                idfe_event_frame_density(f_packet_size, &packet_event_no,
-                                             EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG,
-                                             EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                idfe_event_frame_density(f_packet_size, &packet_event_no,EventFrameDensityALL,
+                                         EventPacketX, EventPacketY, EventPacketP, EventPacketT);
                
-                idfe_eframe_continuous_bool(EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-                                                PrevEventFrameCountALL, PrevEventFrameCountPOS, PrevEventFrameCountNEG,
-                                                OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+                idfe_eframe_continuous_bool(EventFrameCountALL, PrevEventFrameCountALL,OutputEventFrameBoolsALL);
                 
-                // Print
-                idfe_print_event_frame_count(f_packet_size, &packet_event_no,
-                                                        EventFrameCountALL, EventFrameCountPOS, EventFrameCountNEG,
-                                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+                // Debug
+//                idfe_print_event_frame_count(f_packet_size, &packet_event_no,
+//                                                        EventFrameCountALL,
+//                                                        EventPacketX, EventPacketY, EventPacketP, EventPacketT);
+//
+//                idfe_print_event_frame_density(EventFrameDensityALL);
                 
-                idfe_print_event_frame_density(EventFrameDensityALL, EventFrameDensityPOS, EventFrameDensityNEG);
-                
-                idfe_print_eframe_continuous_bool(OutputEventFrameBoolsALL, OutputEventFrameBoolsPOS, OutputEventFrameBoolsNEG);
+                idfe_print_eframe_continuous_bool(OutputEventFrameBoolsALL);
                         
-
+                
+                idfe_eframe_interpacket_bool_density(OutputEventFrameBoolsALL, idfe_bool_density_ALL);
+                
+             
+                idfe_print_interpacket_bool_density(idfe_bool_density_ALL);
+                
+                
             }
             
             break;
@@ -269,3 +283,66 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
  
 
+// functions - inter-packet features
+void idfe_eframe_interpacket_bool_density(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                          int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y])
+{
+        
+        // Creating bools/literals
+        for(int i = 0; i < MAXFRAME_X; i++)
+        {
+            
+            for(int j = 0; j < MAXFRAME_Y; j++)
+            {
+                
+                if (OutputEventFrameBoolsALL[i][j] == 1)
+                {
+                    idfe_bool_density_ALL[i][j]++;
+                }
+
+
+            }
+            
+        }
+        
+        
+}
+
+
+
+
+void idfe_print_interpacket_bool_density(int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y])
+{
+    
+        for (int i = 0; i < MAXFRAME_X; i++)
+        {
+    
+            for (int j = 0; j < MAXFRAME_Y; j++)
+            {
+    
+                printf("%d\t", idfe_bool_density_ALL[i][j]);
+              
+            }
+    
+            printf("\n");
+    
+        }
+    
+        printf("\n");
+        
+}
+
+
+void idfe_zero_interpacket_bool_density(int idfe_bool_density_ALL[MAXFRAME_X][MAXFRAME_Y])
+{
+    for (int i = 0; i < MAXFRAME_X; i++)
+    {
+
+        for (int j = 0; j < MAXFRAME_Y; j++)
+        {
+            idfe_bool_density_ALL[i][j] = 0;
+        }
+
+    }
+
+}
