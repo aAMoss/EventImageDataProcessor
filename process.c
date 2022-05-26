@@ -264,7 +264,22 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             
     }
     
-
+    // Other
+    //       // Print to terminal for checking output and debug
+    //       for(int a = 0; a < f_packet_size; a++)
+    //       {
+    //
+    //            printf("Packet Event No --> %d \t%lu\t%lu", a, EventPacketX[a],EventPacketY[a]);
+    //            printf("\t%lu\t%lu\t",EventPacketP[a],EventPacketT[a]);
+    //            for(int b = 0; b < RAW_BOOL_MAX; b++)
+    //            {
+    //
+    //                printf("%d", literals_raw[b][a]);
+    //
+    //            }
+    //
+    //            printf("\n");
+    //        }
     
 }
 

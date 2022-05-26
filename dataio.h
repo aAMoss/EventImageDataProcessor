@@ -40,6 +40,8 @@ struct dirent *Data_Output_Dir_Entry;
 // File Objects
 FILE *Sample_Input_File;
 FILE *Processed_Data_Output_File;
+FILE *EIDP_LOG_FILE_TEST;
+FILE *EIDP_LOG_FILE_TRAIN;
 
 // Packet Variables - User specified
 int packet_size;

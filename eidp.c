@@ -18,6 +18,18 @@
 
 
 
+FILE *eidp_open_log_file_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label);
+FILE *eidp_open_log_file_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label);
+void eidp_print_log_file0_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label, int fe_mode);
+void eidp_print_log_file0_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label, int fe_mode);
+void eidp_print_log_file1_test(FILE *EIDP_LOG_FILE_TEST, int class,
+                          long int sample_bytes, long int sample_events,
+                          int packet_size, int packet_overlap, int packets_req,
+                               int packet_events_overshoot, int last_packet_zeros, int last_packet_size);
+void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
+                          long int sample_bytes, long int sample_events,
+                          int packet_size, int packet_overlap, int packets_req,
+                                int packet_events_overshoot, int last_packet_zeros, int last_packet_size);
 
 
 int main(void)
@@ -34,13 +46,18 @@ int main(void)
     
     dataio_set_features_mode(&fe_mode);
     
+    
+    EIDP_LOG_FILE_TEST = eidp_open_log_file_test(EIDP_LOG_FILE_TEST, output_dir_label);
+    
+    
+    eidp_print_log_file0_test(EIDP_LOG_FILE_TEST, output_dir_label, fe_mode);
  
     printf("\nPROCESS TEST DATA START\n\n");
     // Runs for everyone of the test data classes
     for(int c = 0; c < CLASSES; c++)
     {
         
-        printf("PROCESSING TEST CLASS %d\n", c);
+        printf("Processing Test Class %d\n", c);
                
         // Opens the input directory of the N-MNIST Dataset
         Data_Input_Dir = dataio_open_data_input_dir_test(Data_Input_Dir, c);
@@ -55,7 +72,7 @@ int main(void)
                strcmp(Data_Input_Dir_Entry->d_name, ".DS_Store"))
             {
         
-                printf("%s\n",Data_Input_Dir_Entry->d_name);
+               // printf("%s\n",Data_Input_Dir_Entry->d_name);
                 
                 
                 Sample_Input_File = dataio_open_data_input_file_test(Data_Input_Dir, Sample_Input_File, c);
@@ -71,6 +88,10 @@ int main(void)
 //                printf("Bytes\tEvents\tpacket_size\tpacket_overlap\tpackets_req\tOverShoot\tlast_packet_zeros\tlast_packet_size\n");
 //                printf("%ld\t%ld\t%d\t\t%d\t\t%d\t\t",sample_bytes, sample_events, packet_size, packet_overlap, packets_req);
 //                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
+                
+                eidp_print_log_file1_test(EIDP_LOG_FILE_TEST, c,sample_bytes, sample_events,
+                                          packet_size, packet_overlap, packets_req,
+                                          packet_events_overshoot, last_packet_zeros, last_packet_size);
                 
                 
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
@@ -90,13 +111,23 @@ int main(void)
     } // End Classes For Loop
     printf("\nPROCESS TEST DATA COMPLETE\n\n");
     
+    fclose(EIDP_LOG_FILE_TEST);
+    
+    
+    
+    
+    
+    EIDP_LOG_FILE_TRAIN = eidp_open_log_file_train(EIDP_LOG_FILE_TRAIN, output_dir_label);
+    
+    eidp_print_log_file0_train(EIDP_LOG_FILE_TRAIN, output_dir_label, fe_mode);
+
     
     printf("\nPROCESS TRAINING DATA START\n\n");
     // Runs for everyone of the training data classes
     for(int c = 0; c < CLASSES; c++)
     {
         
-        printf("PROCESS TRAINING CLASS %d\n", c);
+        printf("Processing Training Class %d\n", c);
         // Opens the input directory of the N-MNIST Dataset
         Data_Input_Dir = dataio_open_data_input_dir_train(Data_Input_Dir, c);
         
@@ -128,6 +159,11 @@ int main(void)
 //                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
 //
                 
+                eidp_print_log_file1_train(EIDP_LOG_FILE_TRAIN, c,sample_bytes, sample_events,
+                                          packet_size, packet_overlap, packets_req,
+                                          packet_events_overshoot, last_packet_zeros, last_packet_size);
+                
+                
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT, fe_mode, features_number);
                 
@@ -145,7 +181,7 @@ int main(void)
     } // End Classes For Loop
     printf("\nPROCESS TRAINING DATA COMPLETE\n\n");
     
-    
+    fclose(EIDP_LOG_FILE_TRAIN);
     
     
     return 0;
@@ -154,102 +190,109 @@ int main(void)
 
 
 
-//void PostProcessingDataRecord()
-//{
-//
-////Create data processing information file here
-//
-////Will have two functions eventually, one to create the file and one to update/populate it
-//
-//FILE *PostProcData;
-//
-//// will modify this so it dynamically creates a name with the current date and time
-//const char* fname = "./DataOUT/PostProcessingData.txt"; // or tmpnam(NULL);
-//
-//time_t systemtime;
-//struct tm *calendarinfo;
-//char buftime[80];
-//
-//time(&systemtime);
-//calendarinfo = localtime( &systemtime );
-//strftime(buftime,80,"%A %d %Y -- %H:%M:%S", calendarinfo);
-//
-//
-//
-//PostProcData = fopen(fname,"w");
-//rewind(PostProcData);
-//
-
-//
-//#define MAXFRAME_X 32
-//#define MAXFRAME_Y 32
-//
-//int EventPacketFrame[MAXFRAME_X][MAXFRAME_Y];
-//int EventPacketFramePOS[MAXFRAME_X][MAXFRAME_Y];
-//int EventPacketFrameNEG[MAXFRAME_X][MAXFRAME_Y];
-//
-//
-//
-//
+// Opens log file
+FILE *eidp_open_log_file_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_eidp_test_log.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, output_dir_label);
+    strcat(out_file_path, output_file);
 
 
+    // Open file stream for the sample file, in read mode, binary
+    EIDP_LOG_FILE_TEST= fopen(out_file_path,"w");
+
+    
+    if(EIDP_LOG_FILE_TEST == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return EIDP_LOG_FILE_TEST;
+}
+
+// Opens log file
+FILE *eidp_open_log_file_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_eidp_train_log.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, output_dir_label);
+    strcat(out_file_path, output_file);
 
 
+    // Open file stream for the sample file, in read mode, binary
+    EIDP_LOG_FILE_TRAIN= fopen(out_file_path,"w");
 
-
-
-//void dataio_ZeroEventPacketArrays(unsigned long int EventPacket[SAMPLEMAXSIZE])
-//{
-//
-//    for(int i = 0; i < SAMPLEMAXSIZE; i++)
-//    {
-//        EventPacket[i] = 0;
-//    }
-//
-//                //Old version
-//                // // ZERO EVENT PACKET ARRAYS
-//                // for(int i = 0; i < SAMPLEMAXSIZE; i++)
-//                // {
-//                //     EventPacketX[i] = 0;
-//                //     EventPacketY[i] = 0;
-//                //     EventPacketP[i] = 0;
-//                //     EventPacketT[i] = 0;
-//                // }
-//
-//}
-
-//void DisplayEventPacket()
-//{
-//
-//    int x = 32;
-//    int y = 32;
-//
-//    int frame[x][y] = {0};
-//
-//
-//
-//    for(int i = 0; i < x; i++)
-//    {
-//        for(int j = 0; j < y; j++)
-//        {
-//            printf("%d     ", frame[i][j]);
-//        }
-//        printf("\n");
-//    }
-//
-//}
+    
+    if(EIDP_LOG_FILE_TRAIN == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return EIDP_LOG_FILE_TRAIN;
+}
 
 
 
-//int row, columns;
-//for (row=0; row<numberOfLines; row++)
-//{
-//    for(columns=0; columns<numberColumns; columns++)
-//    {
-//         printf("%d     ", matrix[row][columns]);
-//    }
-//    printf("\n");
-//}
+void eidp_print_log_file0_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label, int fe_mode)
+{
+    fprintf(EIDP_LOG_FILE_TEST, "%s_eidp_test_log.txt\n\n", output_dir_label);
+    fprintf(EIDP_LOG_FILE_TEST, "Method %d\n\n", fe_mode);
+    fprintf(EIDP_LOG_FILE_TEST, "Class, Bytes, Events, PacketSize, PacketOverlap, PacketReq,");
+    fprintf(EIDP_LOG_FILE_TEST, "LastZeros, LastSize, features, time s\n");
+}
+
+void eidp_print_log_file0_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label, int fe_mode)
+{
+    fprintf(EIDP_LOG_FILE_TRAIN, "%s_eidp_train_log.txt\n\n", output_dir_label);
+    fprintf(EIDP_LOG_FILE_TRAIN, "Method %d\n\n", fe_mode);
+    fprintf(EIDP_LOG_FILE_TRAIN, "Class, Bytes, Events, PacketSize, PacketOverlap, PacketReq,");
+    fprintf(EIDP_LOG_FILE_TRAIN, "LastZeros, LastSize, features, time s\n");
+}
+
+
+
+void eidp_print_log_file1_test(FILE *EIDP_LOG_FILE_TEST, int class,
+                          long int sample_bytes, long int sample_events,
+                          int packet_size, int packet_overlap, int packets_req,
+                          int packet_events_overshoot, int last_packet_zeros, int last_packet_size)
+{
+    
+    fprintf(EIDP_LOG_FILE_TEST, "%d,", class);
+    fprintf(EIDP_LOG_FILE_TEST, "%ld,%ld,",sample_bytes, sample_events);
+    fprintf(EIDP_LOG_FILE_TEST, "%d,%d,%d,", packet_size, packet_overlap, packets_req);
+    fprintf(EIDP_LOG_FILE_TEST, "%d,%d,%d,",packet_events_overshoot, last_packet_zeros, last_packet_size);
+    fprintf(EIDP_LOG_FILE_TEST, "\n");
+    
+}
+
+void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
+                          long int sample_bytes, long int sample_events,
+                          int packet_size, int packet_overlap, int packets_req,
+                          int packet_events_overshoot, int last_packet_zeros, int last_packet_size)
+{
+    
+    fprintf(EIDP_LOG_FILE_TRAIN, "%d,", class);
+    fprintf(EIDP_LOG_FILE_TRAIN, "%ld,%ld,",sample_bytes, sample_events);
+    fprintf(EIDP_LOG_FILE_TRAIN, "%d,%d,%d,", packet_size, packet_overlap, packets_req);
+    fprintf(EIDP_LOG_FILE_TRAIN, "%d,%d,%d,",packet_events_overshoot, last_packet_zeros, last_packet_size);
+    fprintf(EIDP_LOG_FILE_TRAIN, "\n");
+    
+}
+
+
+
+
 
 
 

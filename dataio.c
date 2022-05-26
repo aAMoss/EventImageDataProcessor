@@ -231,7 +231,7 @@ DIR *dataio_open_data_input_dir_test(DIR *Data_Input_Dir, int c)
         exit(EXIT_FAILURE);
     }
     
-    printf("%s\n", input_dir_name);
+    //printf("%s\n", input_dir_name);
     
     return Data_Input_Dir;
 }
@@ -257,7 +257,7 @@ DIR *dataio_open_data_input_dir_train(DIR *Data_Input_Dir, int c)
         exit(EXIT_FAILURE);
     }
     
-    printf("%s\n", input_dir_name);
+    //printf("%s\n", input_dir_name);
     
     return Data_Input_Dir;
 }
@@ -347,7 +347,7 @@ FILE *dataio_open_data_input_file_test(DIR *Data_Input_Dir, FILE *Sample_Input_F
     }
     
     
-    printf("%s\n", input_file_path);
+   // printf("%s\n", input_file_path);
     
     return Sample_Input_File;
 }
@@ -377,7 +377,7 @@ FILE *dataio_open_data_input_file_train(DIR *Data_Input_Dir, FILE *Sample_Input_
     }
     
     
-    printf("%s\n", input_file_path);
+   // printf("%s\n", input_file_path);
     
     return Sample_Input_File;
 }
