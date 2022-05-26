@@ -34,12 +34,14 @@ int main(void)
     
     dataio_set_features_mode(&fe_mode);
     
-    //dataio_set_features_number(&features_number); // must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024 for idfe
-                
+ 
+    printf("\nPROCESS TEST DATA START\n\n");
     // Runs for everyone of the test data classes
     for(int c = 0; c < CLASSES; c++)
     {
         
+        printf("PROCESSING TEST CLASS %d\n", c);
+               
         // Opens the input directory of the N-MNIST Dataset
         Data_Input_Dir = dataio_open_data_input_dir_test(Data_Input_Dir, c);
         
@@ -59,16 +61,16 @@ int main(void)
                 Sample_Input_File = dataio_open_data_input_file_test(Data_Input_Dir, Sample_Input_File, c);
                 Processed_Data_Output_File = dataio_open_data_output_file_test(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
                 
-                puts("Input and output files opened!");
+               // puts("Input and output files opened!");
                 
                 dataio_get_input_sample_var(Sample_Input_File, &sample_bytes, &sample_events);
                 
                 datio_set_secondary_event_packet_vars(sample_events, packet_size, packet_overlap, &packets_req,
                                                       &packet_events_overshoot, &last_packet_zeros, &last_packet_size);
 
-                printf("Bytes\tEvents\tpacket_size\tpacket_overlap\tpackets_req\tOverShoot\tlast_packet_zeros\tlast_packet_size\n");
-                printf("%ld\t%ld\t%d\t\t%d\t\t%d\t\t",sample_bytes, sample_events, packet_size, packet_overlap, packets_req);
-                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
+//                printf("Bytes\tEvents\tpacket_size\tpacket_overlap\tpackets_req\tOverShoot\tlast_packet_zeros\tlast_packet_size\n");
+//                printf("%ld\t%ld\t%d\t\t%d\t\t%d\t\t",sample_bytes, sample_events, packet_size, packet_overlap, packets_req);
+//                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
                 
                 
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
@@ -86,14 +88,15 @@ int main(void)
         closedir(Data_Input_Dir);
         
     } // End Classes For Loop
+    printf("\nPROCESS TEST DATA COMPLETE\n\n");
     
     
-    
-    
+    printf("\nPROCESS TRAINING DATA START\n\n");
     // Runs for everyone of the training data classes
     for(int c = 0; c < CLASSES; c++)
     {
         
+        printf("PROCESS TRAINING CLASS %d\n", c);
         // Opens the input directory of the N-MNIST Dataset
         Data_Input_Dir = dataio_open_data_input_dir_train(Data_Input_Dir, c);
         
@@ -107,23 +110,23 @@ int main(void)
                strcmp(Data_Input_Dir_Entry->d_name, ".DS_Store"))
             {
         
-                printf("%s\n",Data_Input_Dir_Entry->d_name);
+                //printf("%s\n",Data_Input_Dir_Entry->d_name);
                 
                 
                 Sample_Input_File = dataio_open_data_input_file_train(Data_Input_Dir, Sample_Input_File, c);
                 Processed_Data_Output_File = dataio_open_data_output_file_train(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
                 
-                puts("Input and output files opened!");
+               // puts("Input and output files opened!");
                 
                 dataio_get_input_sample_var(Sample_Input_File, &sample_bytes, &sample_events);
                 
                 datio_set_secondary_event_packet_vars(sample_events, packet_size, packet_overlap, &packets_req,
                                                       &packet_events_overshoot, &last_packet_zeros, &last_packet_size);
 
-                printf("Bytes\tEvents\tpacket_size\tpacket_overlap\tpackets_req\tOverShoot\tlast_packet_zeros\tlast_packet_size\n");
-                printf("%ld\t%ld\t%d\t\t%d\t\t%d\t\t",sample_bytes, sample_events, packet_size, packet_overlap, packets_req);
-                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
-                
+//                printf("Bytes\tEvents\tpacket_size\tpacket_overlap\tpackets_req\tOverShoot\tlast_packet_zeros\tlast_packet_size\n");
+//                printf("%ld\t%ld\t%d\t\t%d\t\t%d\t\t",sample_bytes, sample_events, packet_size, packet_overlap, packets_req);
+//                printf("%d\t\t%d\t\t\t%d\n",packet_events_overshoot, last_packet_zeros, last_packet_size);
+//
                 
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT, fe_mode, features_number);
@@ -140,7 +143,7 @@ int main(void)
         closedir(Data_Input_Dir);
         
     } // End Classes For Loop
-    
+    printf("\nPROCESS TRAINING DATA COMPLETE\n\n");
     
     
     
