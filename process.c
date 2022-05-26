@@ -16,54 +16,8 @@
 
 
 
-void pbfe_output_packet_literals_min0(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count);
 
-void pbfe_output_packet_literals_min0(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count)
-{
-    
-    // Process - Check literals for zeros and ones
-    int countzeros = 0;
-    int countones = 0;
-    
-    for(int i = 0; i < B_FEATURES; i++)
-    {
-        if( output_binary_literals[i] == 0)
-        {
-            countzeros++;
-        }
-        
-        if( output_binary_literals[i] == 1)
-        {
-            countones++;
-        }
-    }
-    
-   
-    // packets with zero literals are rejected
-    if( countzeros != B_FEATURES)
-    {
-        for(int i = 0; i < B_FEATURES; i++)
-        {
-            pbfe_output_packet_literals[*packets_min0_count][i] = output_binary_literals[i];
-        }
-        *packets_min0_count = *packets_min0_count + 1;
-    }
-    
-    
-}
 
-int bpfe_final_output[B_FEATURES];
-void pbfe_output_packet_literals_min1(int bpfe_final_output[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count)
-{
-    
-    
-    
-    
-    
-    
-    
-    
-}
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
@@ -194,6 +148,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 
             } // packet loop ends
             
+            pbfe_output_packet_literals_min1(pbfe_final_output, pbfe_output_packet_literals, &packets_min0_count);
             
             // Prints the processed packet samples with literals
             for(int i = 0; i < packets_min0_count; i++)
@@ -208,73 +163,21 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                     
                 }
                 printf("\n");
+                
+            
             }
            
             
-            // going to count the number of literals in each of the output sample packets,
-            
-//            //pbfe_packet_literals_nozeros[packets_with_literals_counter][i] contains the final array of packet literals
-//            // from packet 0 to packet n-1, which is less than packets_req
-//
-//            int packet_literals_counters[packets_with_literals_counter];
-//            for(int i = 0; i < packets_with_literals_counter; i ++)
-//            {
-//
-//                packet_literals_counters[i] = 0;
-//
-//
-//
-//            }
-//            // counts the number of literals in each packet
-//            for(int i = 0; i < packets_with_literals_counter; i++)
-//            {
-//                for(int j = 0; j < B_FEATURES; j++)
-//                {
-//                    if( pbfe_packet_literals_nozeros[i][j] == 1)
-//                    {
-//                       packet_literals_counters[i]++;
-//                    }
-//                }
-//            }
-//
-//            //check which packet literals counter is higher and print the packet with those literals
-//
-//            int check_counter = 0;
-//            int hold_counter = 0;
-//            for(int i = 0; i < packets_with_literals_counter; i++)
-//            {
-//                check_counter = packet_literals_counters[i];
-//                if (check_counter > hold_counter)
-//                {
-//                    hold_counter = check_counter;
-//                }
-//            }
-//
-//
-//            printf("Final Output Packet Number %d\t", pbfe_packet_literals_nozeros[hold_counter]);
-//
-//            // This is it, after this it's print to file, and some other dynamics for a log file,
-//            // will implement the same for the other function, and then create data samples
-//
-//
-//
-//
-//            // print statement for
-//            for(int i = 0; i < B_FEATURES; i++)
-//            {
-//
-//                for(int i = 0; i < B_FEATURES; i++)
-//                {
-//
-//                    printf("%d",pbfe_packet_literals_nozeros[hold_counter][i]);
-//
-//                }
-//                printf("\n");
-//            }
-//
-//
-//
-            
+            printf("\nFinal Literals\t");
+            for(int j = 0; j < B_FEATURES; j++)
+            {
+                
+                
+                printf("%d", pbfe_final_output[j]);
+                
+                
+            }
+            printf("\n");
             
             
             

@@ -27,6 +27,7 @@ int patch_m_px[B_FEATURES];
 int patch_m_py[B_FEATURES];
 int patch_m_nx[B_FEATURES];
 int patch_m_ny[B_FEATURES];
+int pbfe_final_output[B_FEATURES];
 
 
 
@@ -49,3 +50,10 @@ void pbfe_binary_patches_output(int output_binary_literals[], int binary_feature
                                     int f_packet_size, long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 
 void pbfe_print_to_terminal(int output_binary_literals[], int packet_no);
+
+
+void pbfe_output_packet_literals_min0(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count);
+
+void pbfe_output_packet_literals_min1(int pbfe_final_output[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count);
+
+

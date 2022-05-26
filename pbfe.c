@@ -234,3 +234,109 @@ void pbfe_print_to_terminal(int output_binary_literals[], int packet_no)
     
     
 }
+
+
+
+
+
+void pbfe_output_packet_literals_min0(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count)
+{
+    
+    // Process - Check literals for zeros and ones
+    int countzeros = 0;
+    int countones = 0;
+    
+    for(int i = 0; i < B_FEATURES; i++)
+    {
+        if( output_binary_literals[i] == 0)
+        {
+            countzeros++;
+        }
+        
+        if( output_binary_literals[i] == 1)
+        {
+            countones++;
+        }
+    }
+    
+   
+    // packets with zero literals are rejected
+    if( countzeros != B_FEATURES)
+    {
+        for(int i = 0; i < B_FEATURES; i++)
+        {
+            pbfe_output_packet_literals[*packets_min0_count][i] = output_binary_literals[i];
+        }
+        *packets_min0_count = *packets_min0_count + 1;
+    }
+    
+    
+}
+
+
+
+void pbfe_output_packet_literals_min1(int pbfe_final_output[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count)
+{
+    
+    int min0_literals_counters[*packets_min0_count];
+    
+    
+    
+    
+    
+    for(int i = 0; i < *packets_min0_count; i++) // count through the number of packets from min0
+    {
+        int count_literals = 0;
+        
+        for(int j = 0; j< B_FEATURES; j++)
+        {
+            
+            if( pbfe_output_packet_literals[i][j] == 1)
+            {
+                
+                count_literals++;
+                
+                
+            }
+            
+            
+            
+            
+        }
+        
+        min0_literals_counters[i] = count_literals++;
+        
+        
+    }
+    
+    //check which packet literals counter is higher and print the packet with those literals
+
+    int check_counter = 0;
+    int hold_counter = 0;
+    int packet_number = 0;
+    
+    for(int i = 0; i < *packets_min0_count; i++)
+    {
+          check_counter = min0_literals_counters[i];
+          if (check_counter > hold_counter)
+          {
+              hold_counter = check_counter;
+              packet_number = i;
+          }
+        
+    }
+
+    
+    
+    // write the sample with the most literals to the output array
+    
+    for(int i = 0; i < B_FEATURES; i++)
+    {
+        
+        pbfe_final_output[i] = pbfe_output_packet_literals[packet_number][i];
+        
+        
+    }
+    
+    
+}
