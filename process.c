@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 
 //Posix Headers
 #include <dirent.h>
@@ -17,11 +18,23 @@
 
 
 
+
+
+
+
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
-                        int fe_mode, int features_number)
+                        int fe_mode, int type)
 {
-
+    
+    //For timing the function
+    clock_t start, end;
+    double cpu_time_used;
+    
+    start = clock();
+    
+    
+    
     // process event data initial variables
     int byte_no = 0;
     int f_packet_size = 0;
@@ -264,22 +277,13 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             
     }
     
-    // Other
-    //       // Print to terminal for checking output and debug
-    //       for(int a = 0; a < f_packet_size; a++)
-    //       {
-    //
-    //            printf("Packet Event No --> %d \t%lu\t%lu", a, EventPacketX[a],EventPacketY[a]);
-    //            printf("\t%lu\t%lu\t",EventPacketP[a],EventPacketT[a]);
-    //            for(int b = 0; b < RAW_BOOL_MAX; b++)
-    //            {
-    //
-    //                printf("%d", literals_raw[b][a]);
-    //
-    //            }
-    //
-    //            printf("\n");
-    //        }
+
+    
+    end = clock();
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    
+    eidp_print_log_file2(EIDP_LOG_FILE_TEST, EIDP_LOG_FILE_TRAIN,
+                         type, fe_mode, cpu_time_used);
     
 }
 
@@ -287,4 +291,167 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
  
 
 
+
+
+
+
+
+
+
+// log file stuff
+
+// Opens log file
+FILE *eidp_open_log_file_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_eidp_test_log.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, output_dir_label);
+    strcat(out_file_path, output_file);
+
+
+    // Open file stream for the sample file, in read mode, binary
+    EIDP_LOG_FILE_TEST= fopen(out_file_path,"w");
+
+    
+    if(EIDP_LOG_FILE_TEST == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return EIDP_LOG_FILE_TEST;
+}
+
+// Opens log file
+FILE *eidp_open_log_file_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label)
+{
+    char *s = "./";
+    char *output_file = "_eidp_train_log.txt";
+    char out_file_path[300] = "";
+    
+    // Creates the file path name using strcat
+    strcat(out_file_path, s);
+    strcat(out_file_path, output_dir_label);
+    strcat(out_file_path, output_file);
+
+
+    // Open file stream for the sample file, in read mode, binary
+    EIDP_LOG_FILE_TRAIN= fopen(out_file_path,"w");
+
+    
+    if(EIDP_LOG_FILE_TRAIN == NULL)
+    {
+        puts("Unable to create the output file");
+        exit(EXIT_FAILURE);
+    }
+    
+    return EIDP_LOG_FILE_TRAIN;
+}
+
+
+
+void eidp_print_log_file0_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label, int fe_mode)
+{
+    fprintf(EIDP_LOG_FILE_TEST, "%s_eidp_test_log.txt\n\n", output_dir_label);
+    fprintf(EIDP_LOG_FILE_TEST, "Method %d\n\n", fe_mode);
+    fprintf(EIDP_LOG_FILE_TEST, "Class, Bytes, Events, PacketSize, PacketOverlap, PacketReq,");
+    fprintf(EIDP_LOG_FILE_TEST, "LastZeros, LastSize, features, memsize, time s\n");
+}
+
+void eidp_print_log_file0_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label, int fe_mode)
+{
+    fprintf(EIDP_LOG_FILE_TRAIN, "%s_eidp_train_log.txt\n\n", output_dir_label);
+    fprintf(EIDP_LOG_FILE_TRAIN, "Method %d\n\n", fe_mode);
+    fprintf(EIDP_LOG_FILE_TRAIN, "Class, Bytes, Events, PacketSize, PacketOverlap, PacketReq,");
+    fprintf(EIDP_LOG_FILE_TRAIN, "LastZeros, LastSize, features, memsize, time s\n");
+}
+
+
+
+void eidp_print_log_file1_test(FILE *EIDP_LOG_FILE_TEST, int class,
+                          long int sample_bytes, long int sample_events,
+                          int packet_size, int packet_overlap, int packets_req,
+                          int packet_events_overshoot, int last_packet_zeros, int last_packet_size)
+{
+    
+    fprintf(EIDP_LOG_FILE_TEST, "%d,", class);
+    fprintf(EIDP_LOG_FILE_TEST, "%ld,%ld,",sample_bytes, sample_events);
+    fprintf(EIDP_LOG_FILE_TEST, "%d,%d,%d,", packet_size, packet_overlap, packets_req);
+    fprintf(EIDP_LOG_FILE_TEST, "%d,%d,%d,",packet_events_overshoot, last_packet_zeros, last_packet_size);
+    //fprintf(EIDP_LOG_FILE_TEST, "\n");
+    
+}
+
+void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
+                          long int sample_bytes, long int sample_events,
+                          int packet_size, int packet_overlap, int packets_req,
+                          int packet_events_overshoot, int last_packet_zeros, int last_packet_size)
+{
+    
+    fprintf(EIDP_LOG_FILE_TRAIN, "%d,", class);
+    fprintf(EIDP_LOG_FILE_TRAIN, "%ld,%ld,",sample_bytes, sample_events);
+    fprintf(EIDP_LOG_FILE_TRAIN, "%d,%d,%d,", packet_size, packet_overlap, packets_req);
+    fprintf(EIDP_LOG_FILE_TRAIN, "%d,%d,%d,",packet_events_overshoot, last_packet_zeros, last_packet_size);
+    //fprintf(EIDP_LOG_FILE_TRAIN, "\n");
+    
+}
+
+
+
+
+
+void eidp_print_log_file2(FILE *EIDP_LOG_FILE_TEST, FILE *EIDP_LOG_FILE_TRAIN,
+                          int type, int fe_mode, double cpu_time_used)
+{
+  
+            
+            
+        if(type == 0 && fe_mode == 1)
+        {
+            
+            fprintf(EIDP_LOG_FILE_TEST, "%d,", B_FEATURES);
+            fprintf(EIDP_LOG_FILE_TEST, "%d,", (B_FEATURES * 2) - 1);
+            fprintf(EIDP_LOG_FILE_TEST, "%lf,", cpu_time_used);
+            fprintf(EIDP_LOG_FILE_TEST, "\n");
+        }
+            
+        if(type == 0 && fe_mode == 2)
+        {
+            
+            fprintf(EIDP_LOG_FILE_TEST, "%d,", S_FEATURES);
+            fprintf(EIDP_LOG_FILE_TEST, "%d,", (S_FEATURES * 2) - 1);
+            fprintf(EIDP_LOG_FILE_TEST, "%lf,", cpu_time_used);
+            fprintf(EIDP_LOG_FILE_TEST, "\n");
+        }
+         
+            
+        if(type == 1 && fe_mode == 1)
+        {
+            
+            fprintf(EIDP_LOG_FILE_TRAIN, "%d,", B_FEATURES);
+            fprintf(EIDP_LOG_FILE_TRAIN, "%d,", (B_FEATURES * 2) - 1);
+            fprintf(EIDP_LOG_FILE_TRAIN, "%lf,", cpu_time_used);
+            fprintf(EIDP_LOG_FILE_TRAIN, "\n");
+            
+            
+        }
+            
+        if(type == 1 && fe_mode == 2)
+        {
+            
+            fprintf(EIDP_LOG_FILE_TRAIN, "%d,", S_FEATURES);
+            fprintf(EIDP_LOG_FILE_TRAIN, "%d,", (S_FEATURES * 2) - 1);
+            fprintf(EIDP_LOG_FILE_TRAIN, "%lf,", cpu_time_used);
+            fprintf(EIDP_LOG_FILE_TRAIN, "\n");
+            
+        }
+       
+
+    
+}
+    
 
