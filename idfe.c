@@ -200,3 +200,237 @@ void idfe_print_inter_frame_events(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXF
     printf("\n");
 
 }
+
+
+
+// functions - inter-packet features
+void idfe_inter_frame_events_counter(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                          int inter_frame_events[MAXFRAME_X][MAXFRAME_Y])
+{
+        
+        // Creating bools/literals
+        for(int i = 0; i < MAXFRAME_X; i++)
+        {
+            
+            for(int j = 0; j < MAXFRAME_Y; j++)
+            {
+                
+                if (OutputEventFrameBoolsALL[i][j] == 1)
+                {
+                    inter_frame_events[i][j]++;
+                }
+
+
+            }
+            
+        }
+        
+        
+}
+
+
+
+
+void idfe_print_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y])
+{
+    
+        for (int i = 0; i < MAXFRAME_X; i++)
+        {
+    
+            for (int j = 0; j < MAXFRAME_Y; j++)
+            {
+    
+                printf("%d\t", inter_frame_events[i][j]);
+              
+            }
+    
+            printf("\n");
+    
+        }
+    
+        printf("\n");
+        
+}
+
+
+void idfe_zero_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y])
+{
+    for (int i = 0; i < MAXFRAME_X; i++)
+    {
+
+        for (int j = 0; j < MAXFRAME_Y; j++)
+        {
+            inter_frame_events[i][j] = 0;
+        }
+
+    }
+
+}
+
+
+
+
+
+
+void idfe_inter_frame_events_segment_count(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y],
+                                           int seg_iframe_events[S_FEATURES][S_FEATURES])
+{
+    
+    
+    for(int i = 0; i < SEG_X; i++)
+    {
+        for(int j = 0; j < SEG_Y; j++)
+        {
+            
+            
+            count_segment_events(i, j, inter_frame_events, seg_iframe_events);
+            
+            
+        }
+        
+    }
+    
+}
+
+
+void count_segment_events(int seg_x, int seg_y,
+                          int inter_frame_events[MAXFRAME_X][MAXFRAME_Y],
+                          int seg_iframe_events[S_FEATURES][S_FEATURES] )
+{
+    
+    int x_start = seg_x * SEG_A_X;
+    int y_start = seg_y * SEG_A_Y;
+    
+    
+    for(int i = x_start; i < (x_start + SEG_A_X); i ++)
+    {
+       
+        for(int j = y_start; j < (y_start + SEG_A_Y); j++)
+        {
+            
+            if( inter_frame_events[i][j] >= 1)
+            {
+                
+                int temp = seg_iframe_events[seg_x][seg_y];
+                temp = temp + inter_frame_events[i][j];
+                seg_iframe_events[seg_x][seg_y] = temp;
+                
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+}
+
+
+void idfe_zero_seg_iframe_events( int seg_iframe_events[S_FEATURES][S_FEATURES])
+{
+        
+      
+        for(int i = 0; i < S_FEATURES; i++)
+        {
+            
+            for(int j = 0; j < S_FEATURES; j++)
+            {
+                
+                seg_iframe_events[i][j] = 0;
+                
+
+            }
+            
+        }
+        
+        
+}
+
+
+
+void idfe_print_inter_frame_events_per_segment(int seg_iframe_events[S_FEATURES][S_FEATURES])
+{
+    
+    printf("Interframe Events per Segment\n");
+    for(int i = 0; i < SEG_X; i++)
+    {
+        
+        
+        
+        for(int j = 0; j < SEG_Y; j++)
+        {
+            printf("Segment %d\t%d\t%d\n", i, j, seg_iframe_events[i][j]);
+        
+        }
+        
+        
+    }
+    
+    
+    
+    
+}
+
+
+
+void idfe_threshold_create_literals(int seg_iframe_events[S_FEATURES][S_FEATURES], int idfe_output_literals[S_FEATURES][S_FEATURES])
+{
+    
+    int check_seg_val = 0;
+    int hold_seg_val = 0;
+    int threshold_value = 0;
+    
+    
+    for(int i = 0; i < SEG_X; i++)
+    {
+        
+        for(int j = 0; j < SEG_Y; j++)
+        {
+            
+            check_seg_val = seg_iframe_events[i][j];
+            if (check_seg_val> hold_seg_val)
+            {
+                hold_seg_val = check_seg_val;
+            }
+        
+        }
+    
+    }
+    
+    
+    threshold_value = hold_seg_val / THRESHOLD_DIV;
+    
+    
+    for(int i = 0; i < SEG_X; i++)
+    {
+        
+        for(int j = 0; j < SEG_Y; j++)
+        {
+            
+            if(seg_iframe_events[i][j] >= threshold_value)
+            {
+                idfe_output_literals[i][j] = 1;
+
+            }
+            
+            if(seg_iframe_events[i][j] < threshold_value)
+            {
+                idfe_output_literals[i][j] = 0;
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
+

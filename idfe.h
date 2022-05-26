@@ -2,8 +2,21 @@
 
 // Program Specific Headers
 #include "dataio.h"
+#include <math.h>
+
+// 4, 16, 64, 256, 1024 features respectively
+#define S_FEATURES 16
+#define THRESHOLD_DIV 3
+
+#define SEG_X (sqrt(S_FEATURES))
+#define SEG_Y (sqrt(S_FEATURES))
+#define SEG_A_X (MAXFRAME_X / SEG_X)
+#define SEG_A_Y (MAXFRAME_Y / SEG_Y)
 
 
+int inter_frame_events[MAXFRAME_X][MAXFRAME_Y];
+int seg_iframe_events[S_FEATURES][S_FEATURES];
+int idfe_output_literals[S_FEATURES][S_FEATURES];
 
 
 
@@ -55,3 +68,25 @@ void idfe_print_event_frame_count(int f_packet_size, int *packet_event_no, int E
 
 void idfe_print_inter_frame_events(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y]);
 
+
+
+
+void idfe_inter_frame_events_counter(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
+                                          int inter_frame_events[MAXFRAME_X][MAXFRAME_Y]);
+void idfe_print_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y]);
+void idfe_zero_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y]);
+
+
+void count_segment_events(int seg_x, int seg_y,
+                          int inter_frame_events[MAXFRAME_X][MAXFRAME_Y],
+                          int seg_iframe_events[S_FEATURES][S_FEATURES] );
+
+void idfe_inter_frame_events_segment_count(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y],
+                                           int seg_iframe_events[S_FEATURES][S_FEATURES]);
+
+
+void idfe_zero_seg_iframe_events( int seg_iframe_events[S_FEATURES][S_FEATURES]);
+
+void idfe_print_inter_frame_events_per_segment(int seg_iframe_events[S_FEATURES][S_FEATURES]);
+
+void idfe_threshold_create_literals(int seg_iframe_events[S_FEATURES][S_FEATURES], int idfe_output_literals[S_FEATURES][S_FEATURES]);

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 //Posix Headers
 #include <dirent.h>
@@ -13,56 +14,6 @@
 
 // Program Specific Headers
 #include "process.h"
-
-
-// can be 2, 4, 8, 16, 32  giving 4, 16, 64, 256, 1024 features respectively
-#define S_FEATURES 2
-
-int inter_frame_events[MAXFRAME_X][MAXFRAME_Y];
-int seg_iframe_events[S_FEATURES][S_FEATURES];
-
-
-void idfe_inter_frame_events_counter(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                                          int inter_frame_events[MAXFRAME_X][MAXFRAME_Y]);
-void idfe_print_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y]);
-void idfe_zero_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y]);
-
-
-void idfe_inter_frame_events_segment_count(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y],
-                                           int seg_iframe_events[S_FEATURES][S_FEATURES])
-{
-    
-    
-    for(int i = 0; i < S_FEATURES; i++)
-    {
-        for(int j = 0; j < S_FEATURES; j++)
-        {
-            
-            
-            count_segment_events(i, j, inter_frame_events);
-            
-            
-        }
-        
-    }
-    
-}
-
-
-void count_segment_events(int seg_x, int seg_y, int inter_frame_events[][] )
-{
-    
-    for(int i = seg_x; i < (seg_x * (MAXFRAME_X / S_FEATURES))
-    
-    
-    
-    
-    
-    
-    
-}
-
-
 
 
 
@@ -220,6 +171,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             idfe_zero_prev_event_frame(PrevEventFrameCountALL);
             idfe_zero_inter_frame_events_counter(inter_frame_events);
             //idfe_zero_inter_frame_events_count
+            idfe_zero_seg_iframe_events(seg_iframe_events);
             
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
@@ -268,7 +220,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 
                 idfe_inter_frame_events_counter(OutputEventFrameBoolsALL, inter_frame_events);
 
-            
+                
                 
                 // Debug
                 //idfe_print_event_frame_count(f_packet_size, &packet_event_no, EventFrameCountALL,
@@ -282,29 +234,36 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             
             idfe_print_inter_frame_events_counter(inter_frame_events);
             
+            idfe_inter_frame_events_segment_count(inter_frame_events, seg_iframe_events);
+            
+            
+            idfe_print_inter_frame_events_per_segment(seg_iframe_events);
+            
+            idfe_threshold_create_literals(seg_iframe_events, idfe_output_literals);
             
             
             
             
+            for(int i = 0; i < SEG_X; i++)
+            {
+                
+                for(int j = 0; j < SEG_Y; j++)
+                {
+                    
+                    printf("%d ", idfe_output_literals[i][j]);
+                    
+                }
+                
+               
+            }
+            printf("\n");
+                
+                
+            
+            // threshold and bool function
             
             
-            
-            
-            // need a function to segment and count events in each segment
-            
-            // need a function to threshold the inter frame events counter to produce a 1 or 0
-            
-            
-            
-            // need print functions to verify
-            
-            
-            // and a print to output file function
-            
-            
-            
-            
-            
+            // print to file function
             
             
             
@@ -352,66 +311,6 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
 
  
 
-// functions - inter-packet features
-void idfe_inter_frame_events_counter(int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y],
-                                          int inter_frame_events[MAXFRAME_X][MAXFRAME_Y])
-{
-        
-        // Creating bools/literals
-        for(int i = 0; i < MAXFRAME_X; i++)
-        {
-            
-            for(int j = 0; j < MAXFRAME_Y; j++)
-            {
-                
-                if (OutputEventFrameBoolsALL[i][j] == 1)
-                {
-                    inter_frame_events[i][j]++;
-                }
-
-
-            }
-            
-        }
-        
-        
-}
 
 
 
-
-void idfe_print_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y])
-{
-    
-        for (int i = 0; i < MAXFRAME_X; i++)
-        {
-    
-            for (int j = 0; j < MAXFRAME_Y; j++)
-            {
-    
-                printf("%d\t", inter_frame_events[i][j]);
-              
-            }
-    
-            printf("\n");
-    
-        }
-    
-        printf("\n");
-        
-}
-
-
-void idfe_zero_inter_frame_events_counter(int inter_frame_events[MAXFRAME_X][MAXFRAME_Y])
-{
-    for (int i = 0; i < MAXFRAME_X; i++)
-    {
-
-        for (int j = 0; j < MAXFRAME_Y; j++)
-        {
-            inter_frame_events[i][j] = 0;
-        }
-
-    }
-
-}

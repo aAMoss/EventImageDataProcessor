@@ -381,16 +381,8 @@ void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int 
     for(int a = 0; a < B_FEATURES; a++)
     {
         
-       
-       
         sprintf(buf, "%d", pbfe_final_output[a]);
-        
- 
-        
         strcat(line,buf);
-        
-
-        
         memset(buf,0,sizeof(buf));
         
         
@@ -398,8 +390,7 @@ void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int 
         {
         strcat(line,space);
         }
-
-        
+ 
     }
 
     fprintf(Processed_Data_Output_File, "%s\n", line);
