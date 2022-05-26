@@ -101,7 +101,6 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             pbfe_binary_patch_variables(patch_o_px,patch_o_py, patch_o_nx, patch_o_ny,
                                     patch_m_px,patch_m_py, patch_m_nx, patch_m_ny);
             
-            puts("BINGO");
             
             // Run for N number of packets to extract all data
             for(int packet_no = 0; packet_no < packets_req; packet_no++)
@@ -155,55 +154,10 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             // Minimization 1 - reduces to a single set of literals for the sample
             pbfe_output_packet_literals_min1(pbfe_final_output, pbfe_output_packet_literals, &packets_min0_count);
                
-            // Prints the processed packet samples with literals
-            for(int i = 0; i < packets_min0_count; i++)
-            {
-                printf("Packet No %d\t", i);
-                for(int j = 0; j < B_FEATURES; j++)
-                {
-                    
-                    
-                    printf("%d", pbfe_output_packet_literals[i][j]);
-                    
-                    
-                }
-                printf("\n");
-                
-            
-            }
-           
-         
-            
-            printf("\nFinal Literals\t");
-            for(int j = 0; j < B_FEATURES; j++)
-            {
-                
-                
-                printf("%d", pbfe_final_output[j]);
-                
-                
-            }
-            printf("\n");
-         
-         
-         
-         
-         
-        
-         
-      
+
             // prints minimized literals
             pbfe_print_to_file_pbfe_min_literals(Processed_Data_Output_File, pbfe_final_output);
             
-            
-            
-            
-              
-            
-            
-  
-            
-    
             
             
             break;
