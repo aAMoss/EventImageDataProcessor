@@ -5,7 +5,7 @@
 #include <math.h>
 
 // 4, 16, 64, 256, 1024 features respectively
-#define S_FEATURES 16
+#define S_FEATURES 4
 #define THRESHOLD_DIV 3
 
 #define SEG_X (sqrt(S_FEATURES))
