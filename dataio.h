@@ -4,6 +4,7 @@
 #include "raw.h"
 
 
+
 // Definitions - Input directory paths for the N-MNIST data set (choose between the full set or a smaller test set)
 #define TEST_IN_DIR "./N-MNIST_test/Test/"
 #define TRAIN_IN_DIR "./N-MNIST_test/Train/"
@@ -103,3 +104,4 @@ void datio_set_secondary_event_packet_vars(long int sample_events, int packet_si
 void dataio_zero_event_packet_arrays(long int EventPacketX[],long int EventPacketY[],long int EventPacketP[],long int EventPacketT[]);
 void dataio_extract_event_packets(FILE *Sample_Input_File, int byte_no, int f_packet_size, int *packet_event_no,long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 void dataio_print_to_file_literals_raw(FILE *Processed_Data_Output_File, int literals_raw[RAW_BOOL_MAX][*p_f_packet_size], int *p_f_packet_size);
+

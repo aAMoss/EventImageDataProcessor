@@ -13,7 +13,7 @@
 #define PATCH_Y_MIN 0
 
 // must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024
-#define B_FEATURES 16
+#define B_FEATURES 256
 #define B_FEATURES_STRING (B_FEATURES + 1)
 #define B_FEATURES_CLASS (B_FEATURES + 4)
 
@@ -54,6 +54,10 @@ void pbfe_print_to_terminal(int output_binary_literals[], int packet_no);
 
 void pbfe_output_packet_literals_min0(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count);
 
+void pbfe_correct_zero_packet_literals(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count);
+
 void pbfe_output_packet_literals_min1(int pbfe_final_output[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count);
 
 
+void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int pbfe_final_output[]);
+void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int output_binary_literals[]);

@@ -74,8 +74,9 @@ int main(void)
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT, fe_mode, features_number);
                 
-                fclose(Sample_Input_File);
+                
                 fclose(Processed_Data_Output_File);
+                fclose(Sample_Input_File);
                 
             } // close if
         
@@ -127,8 +128,9 @@ int main(void)
                 process_event_data(sample_events, packet_size, packet_overlap, packets_req, last_packet_size, c,
                                    EventPacketX, EventPacketY, EventPacketP, EventPacketT, fe_mode, features_number);
                 
-                fclose(Sample_Input_File);
+                
                 fclose(Processed_Data_Output_File);
+                fclose(Sample_Input_File);
                 
             } // close if
         

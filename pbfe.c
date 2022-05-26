@@ -271,6 +271,31 @@ void pbfe_output_packet_literals_min0(int output_binary_literals[], int pbfe_out
     }
     
     
+
+    
+    
+    
+}
+
+void pbfe_correct_zero_packet_literals(int output_binary_literals[], int pbfe_output_packet_literals[packets_req][B_FEATURES], int *packets_min0_count)
+{
+    
+    if(*packets_min0_count == 0)
+    {
+        
+        
+        for(int i = 0; i < B_FEATURES; i++)
+        {
+            pbfe_output_packet_literals[0][i] = output_binary_literals[i];
+        }
+        
+        *packets_min0_count = 1;
+    }
+    
+    
+    
+    
+    
 }
 
 
@@ -340,3 +365,78 @@ void pbfe_output_packet_literals_min1(int pbfe_final_output[], int pbfe_output_p
     
     
 }
+
+
+
+
+void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int pbfe_final_output[])
+{
+
+    char buf[2] = "";
+    char *space = " ";
+    char line[(2 * B_FEATURES) + 1];
+    
+    memset(line,0,sizeof((2 * B_FEATURES) + 1));
+
+    for(int a = 0; a < B_FEATURES; a++)
+    {
+        
+       
+       
+        sprintf(buf, "%d", pbfe_final_output[a]);
+        
+ 
+        
+        strcat(line,buf);
+        
+
+        
+        memset(buf,0,sizeof(buf));
+        
+        
+        if( a < (B_FEATURES - 1) )
+        {
+        strcat(line,space);
+        }
+
+        
+    }
+
+    fprintf(Processed_Data_Output_File, "%s\n", line);
+    memset(line,0,sizeof(line));
+
+
+}
+
+
+void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int output_binary_literals[])
+{
+
+    char buf[2] = "";
+    char *space = " ";
+    char line[(2 * B_FEATURES) + 1];
+
+    
+    for(int a = 0; a < B_FEATURES; a++)
+    {
+        
+        sprintf(buf, "%d", output_binary_literals[a]);
+        strcat(line,buf);
+        memset(buf,0,sizeof(buf));
+        
+        
+        if( a < (B_FEATURES - 1) )
+        {
+        strcat(line,space);
+        }
+        
+        
+    }
+
+    fprintf(Processed_Data_Output_File, "%s\n", line);
+    memset(line,0,sizeof(line));
+
+
+
+}
+
