@@ -15,7 +15,7 @@
 // Program Specific Headers
 #include "process.h"
 
-void idfe_print_to_file_idfe_literals(FILE *Processed_Data_Output_File, int  idfe_output_literals[S_FEATURES][S_FEATURES]);
+
 
 void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
                         long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
@@ -264,71 +264,12 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             
     }
     
-    // Other
-    //       // Print to terminal for checking output and debug
-    //       for(int a = 0; a < f_packet_size; a++)
-    //       {
-    //
-    //            printf("Packet Event No --> %d \t%lu\t%lu", a, EventPacketX[a],EventPacketY[a]);
-    //            printf("\t%lu\t%lu\t",EventPacketP[a],EventPacketT[a]);
-    //            for(int b = 0; b < RAW_BOOL_MAX; b++)
-    //            {
-    //
-    //                printf("%d", literals_raw[b][a]);
-    //
-    //            }
-    //
-    //            printf("\n");
-    //        }
+
     
 }
 
 
  
 
-
-
-
-
-void idfe_print_to_file_idfe_literals(FILE *Processed_Data_Output_File, int  idfe_output_literals[S_FEATURES][S_FEATURES])
-{
-
-    char buf[2] = "";
-    char *space = " ";
-    char line[(2 * S_FEATURES) + 1];
-
-    
-    memset(line,0,sizeof((2 * S_FEATURES) + 1));
-    
-    for(int i = 0; i < SEG_X; i++)
-    {
-        
-        for(int j = 0; j < SEG_Y; j++)
-        {
-            
-            sprintf(buf, "%d", idfe_output_literals[i][j]);
-            strcat(line,buf);
-            memset(buf,0,sizeof(buf));
-            if( j < (S_FEATURES - 1) )
-            {
-            strcat(line,space);
-            }
-            
-            
-        }
-        
-       
-    }
-    
-    fprintf(Processed_Data_Output_File, "%s\n", line);
-    memset(line,0,sizeof(line));
-    
-    
-
-
-
-
-
-}
 
 

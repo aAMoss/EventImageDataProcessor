@@ -90,3 +90,5 @@ void idfe_zero_seg_iframe_events( int seg_iframe_events[S_FEATURES][S_FEATURES])
 void idfe_print_inter_frame_events_per_segment(int seg_iframe_events[S_FEATURES][S_FEATURES]);
 
 void idfe_threshold_create_literals(int seg_iframe_events[S_FEATURES][S_FEATURES], int idfe_output_literals[S_FEATURES][S_FEATURES]);
+
+void idfe_print_to_file_idfe_literals(FILE *Processed_Data_Output_File, int  idfe_output_literals[S_FEATURES][S_FEATURES]);

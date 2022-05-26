@@ -434,3 +434,47 @@ void idfe_threshold_create_literals(int seg_iframe_events[S_FEATURES][S_FEATURES
 
 
 
+
+
+void idfe_print_to_file_idfe_literals(FILE *Processed_Data_Output_File, int  idfe_output_literals[S_FEATURES][S_FEATURES])
+{
+
+    char buf[2] = "";
+    char *space = " ";
+    char line[(2 * S_FEATURES) + 1];
+
+    
+    memset(line,0,sizeof((2 * S_FEATURES) + 1));
+    
+    for(int i = 0; i < SEG_X; i++)
+    {
+        
+        for(int j = 0; j < SEG_Y; j++)
+        {
+            
+            sprintf(buf, "%d", idfe_output_literals[i][j]);
+            strcat(line,buf);
+            memset(buf,0,sizeof(buf));
+            if( j < (S_FEATURES - 1) )
+            {
+            strcat(line,space);
+            }
+            
+            
+        }
+        
+       
+    }
+    
+    fprintf(Processed_Data_Output_File, "%s\n", line);
+    memset(line,0,sizeof(line));
+    
+    
+
+
+
+
+
+}
+
+
