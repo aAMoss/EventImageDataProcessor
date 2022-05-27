@@ -6,10 +6,10 @@
 
 
 // Definitions - Input directory paths for the N-MNIST data set (choose between the full set or a smaller test set)
-#define TEST_IN_DIR "./N-MNIST_test/Test/"
-#define TRAIN_IN_DIR "./N-MNIST_test/Train/"
-//#define TEST_IN_DIR "./N-MNIST/Test/"
-//#define TRAIN_IN_DIR "./N-MNIST/Train/"
+//#define TEST_IN_DIR "./N-MNIST_test/Test/"
+//#define TRAIN_IN_DIR "./N-MNIST_test/Train/"
+#define TEST_IN_DIR "./N-MNIST/Test/"
+#define TRAIN_IN_DIR "./N-MNIST/Train/"
 
 // Definitions - Variables
 #define EVENTS_PER_SAMPLE_MAX 10000
