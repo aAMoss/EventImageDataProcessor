@@ -60,12 +60,12 @@
 #define PATCH_Y_MIN 0
 
 // must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024
-#define B_FEATURES 256
+#define B_FEATURES 64
 #define B_FEATURES_STRING (B_FEATURES + 1)
 #define B_FEATURES_CLASS (B_FEATURES + 4)
 
 // DEFINITIONS IDFE
-#define S_FEATURES 256	// 4, 16, 64, 256, 1024 features respectively
+#define S_FEATURES 64	// 4, 16, 64, 256, 1024 features respectively
 #define THRESHOLD_DIV 3
 #define SEG_X (sqrt(S_FEATURES))
 #define SEG_Y (sqrt(S_FEATURES))
