@@ -4,34 +4,8 @@
 #define PBFE_H
 
 // Program Specific Headers
+#include "eidp.h"
 #include "dataio.h"
-
-// patch D x D
-#define PATCH_D 7
-
-// max patch D origin 0,0 postion
-#define PATCH_X_MAX (MAXFRAME_X - PATCH_D)
-#define PATCH_Y_MAX (MAXFRAME_Y - PATCH_D)
-#define PATCH_X_MIN 0
-#define PATCH_Y_MIN 0
-
-// must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024
-#define B_FEATURES 256
-#define B_FEATURES_STRING (B_FEATURES + 1)
-#define B_FEATURES_CLASS (B_FEATURES + 4)
-
-int output_binary_literals[B_FEATURES];
-int binary_features_count[B_FEATURES];
-int patch_o_px[B_FEATURES];
-int patch_o_py[B_FEATURES];
-int patch_o_nx[B_FEATURES];
-int patch_o_ny[B_FEATURES];
-int patch_m_px[B_FEATURES];
-int patch_m_py[B_FEATURES];
-int patch_m_nx[B_FEATURES];
-int patch_m_ny[B_FEATURES];
-int pbfe_final_output[B_FEATURES];
-
 
 
 // Function Prototypes
@@ -66,4 +40,4 @@ void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int 
 void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int output_binary_literals[]);
 
 
-#endif //DATAIO_H
+#endif //PBFE_H

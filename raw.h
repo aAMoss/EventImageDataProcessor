@@ -3,14 +3,7 @@
 #ifndef RAW_H
 #define RAW_H
 
-// Defintions - features_literals_raw_dat
-#define RAW_XY_BOOL 6
-#define RAW_P_BOOL 1
-#define RAW_T_BOOL 24
-#define RAW_C_BOOL 4
-#define RAW_BOOL_MAX ((2*RAW_XY_BOOL) + RAW_P_BOOL + RAW_T_BOOL + RAW_C_BOOL) //41
-
-
+#include "eidp.h"
 
 
 // Function Prototypes - raw

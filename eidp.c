@@ -18,18 +18,9 @@
 #include "dataio.h"
 #include "process.h"
 #include "raw.h"
+#include "idfe.h"
+#include "pbfe.h"
 
-
-long int total_req_packets_test;
-long int count_test_samples;
-long int total_bytes_test;
-long int total_events_test;
-
-
-long int total_req_packets_train;
-long int count_train_samples;
-long int total_bytes_train;
-long int total_events_train;
 
 
 
