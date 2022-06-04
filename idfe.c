@@ -15,7 +15,14 @@
 #include "idfe.h"
 
 
+int inter_frame_events[MAXFRAME_X][MAXFRAME_Y];
+int seg_iframe_events[S_FEATURES][S_FEATURES];
+int idfe_output_literals[S_FEATURES][S_FEATURES];
 
+int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
+int PrevEventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
+int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y];
+int MiniEventFrameBoolsALL[MIN_FRAME_X][MIN_FRAME_Y];
 
 // functions - zeroing
 void idfe_zero_event_frames(int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y])

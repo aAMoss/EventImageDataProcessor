@@ -17,6 +17,53 @@
 #include "dataio.h"
 
 
+// Directory Objects and Structures
+DIR *Data_Input_Dir;
+struct dirent *Data_Input_Dir_Entry;
+DIR *Data_Output_Dir;
+struct dirent *Data_Output_Dir_Entry;
+
+// File Objects
+FILE *Sample_Input_File;
+FILE *Processed_Data_Output_File;
+FILE *EIDP_LOG_FILE_TEST;
+FILE *EIDP_LOG_FILE_TRAIN;
+
+// Packet Variables - User specified
+int packet_size;
+int packet_overlap;
+
+// Feature Extraction Mode
+int fe_mode;
+int features_number;
+
+// Number of Features
+
+// Packet Variables II - Determined by input sample file
+long int sample_bytes;
+long int sample_events;
+
+// Packet Variables III - Calculated using I and II above
+int packets_req;
+int packet_events_overshoot;
+int last_packet_zeros;
+int last_packet_size;
+
+// Event Packet Varaibles - 1 array each for the co-ordinates, polarity, and timestamp (in us) of each event
+long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
+long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
+long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
+long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
+
+// Directory label names - User specified, names the output directory
+char output_dir_label[(DATA_OUT_NAME_MAX /2)];
+char output_dir_name[DATA_OUT_NAME_MAX];
+
+// Pointer for dataio_print_to_file_literals_raw
+int *p_f_packet_size;
+
+
+
 
 // Allows the user to set the name of the output data (data that has been processed and booleanized)
 void dataio_get_out_dir_label(char *output_dir_label)
@@ -122,6 +169,7 @@ void dataio_set_features_mode(int *fe_mode)
     
 }
 
+/*
 // set number of features of output data: 4, 16, 64, 256, 1024
 void dataio_set_features_number(int *features_number)
 {
@@ -136,7 +184,7 @@ void dataio_set_features_number(int *features_number)
         
         int inum = 0;
         float fnum = 0;
-        fnum = sqrt((double)num);
+        fnum = sqrt( (double)num );
         inum = fnum;
               
         if(fnum < FEATURES_MIN || fnum > PACKET_MAX)
@@ -159,7 +207,7 @@ void dataio_set_features_number(int *features_number)
 
     
 }
-
+*/
 
 
 // Function to create the new output directories

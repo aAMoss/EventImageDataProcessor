@@ -17,6 +17,20 @@
 
 
 
+int output_binary_literals[B_FEATURES];
+int binary_features_count[B_FEATURES];
+int patch_o_px[B_FEATURES];
+int patch_o_py[B_FEATURES];
+int patch_o_nx[B_FEATURES];
+int patch_o_ny[B_FEATURES];
+int patch_m_px[B_FEATURES];
+int patch_m_py[B_FEATURES];
+int patch_m_nx[B_FEATURES];
+int patch_m_ny[B_FEATURES];
+int pbfe_final_output[B_FEATURES];
+
+
+
 void pbfe_zero_binary_variables(int output_binary_literals[], int binary_features_count[])
 {
     //Zero them first

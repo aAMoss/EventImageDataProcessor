@@ -82,65 +82,65 @@
 
 
 // VARIABLES EIDP
-long int total_req_packets_test;
-long int count_test_samples;
-long int total_bytes_test;
-long int total_events_test;
+extern long int total_req_packets_test;
+extern long int count_test_samples;
+extern long int total_bytes_test;
+extern long int total_events_test;
 
 
-long int total_req_packets_train;
-long int count_train_samples;
-long int total_bytes_train;
-long int total_events_train;
+extern long int total_req_packets_train;
+extern long int count_train_samples;
+extern long int total_bytes_train;
+extern long int total_events_train;
 
 
 
 // VARIABLES DATAIO
 
 // Directory Objects and Structures
-DIR *Data_Input_Dir;
-struct dirent *Data_Input_Dir_Entry;
-DIR *Data_Output_Dir;
-struct dirent *Data_Output_Dir_Entry;
+extern DIR *Data_Input_Dir;
+extern struct dirent *Data_Input_Dir_Entry;
+extern DIR *Data_Output_Dir;
+extern struct dirent *Data_Output_Dir_Entry;
 
 // File Objects
-FILE *Sample_Input_File;
-FILE *Processed_Data_Output_File;
-FILE *EIDP_LOG_FILE_TEST;
-FILE *EIDP_LOG_FILE_TRAIN;
+extern FILE *Sample_Input_File;
+extern FILE *Processed_Data_Output_File;
+extern FILE *EIDP_LOG_FILE_TEST;
+extern FILE *EIDP_LOG_FILE_TRAIN;
 
 // Packet Variables - User specified
-int packet_size;
-int packet_overlap;
+extern int packet_size;
+extern int packet_overlap;
 
 // Feature Extraction Mode
-int fe_mode;
-int features_number;
+extern int fe_mode;
+extern int features_number;
 
 // Number of Features
 
 // Packet Variables II - Determined by input sample file
-long int sample_bytes;
-long int sample_events;
+extern long int sample_bytes;
+extern long int sample_events;
 
 // Packet Variables III - Calculated using I and II above
-int packets_req;
-int packet_events_overshoot;
-int last_packet_zeros;
-int last_packet_size;
+extern int packets_req;
+extern int packet_events_overshoot;
+extern int last_packet_zeros;
+extern int last_packet_size;
 
 // Event Packet Varaibles - 1 array each for the co-ordinates, polarity, and timestamp (in us) of each event
-long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
-long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
-long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
-long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
+extern long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
+extern long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
+extern long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
+extern long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
 
 // Directory label names - User specified, names the output directory
-char output_dir_label[(DATA_OUT_NAME_MAX /2)];
-char output_dir_name[DATA_OUT_NAME_MAX];
+extern char output_dir_label[(DATA_OUT_NAME_MAX /2)];
+extern char output_dir_name[DATA_OUT_NAME_MAX];
 
 // Pointer for dataio_print_to_file_literals_raw
-int *p_f_packet_size;
+extern int *p_f_packet_size;
 
 
 
@@ -152,29 +152,29 @@ int *p_f_packet_size;
 
 
 // VARIABLES PBFE
-int output_binary_literals[B_FEATURES];
-int binary_features_count[B_FEATURES];
-int patch_o_px[B_FEATURES];
-int patch_o_py[B_FEATURES];
-int patch_o_nx[B_FEATURES];
-int patch_o_ny[B_FEATURES];
-int patch_m_px[B_FEATURES];
-int patch_m_py[B_FEATURES];
-int patch_m_nx[B_FEATURES];
-int patch_m_ny[B_FEATURES];
-int pbfe_final_output[B_FEATURES];
+extern int output_binary_literals[B_FEATURES];
+extern int binary_features_count[B_FEATURES];
+extern int patch_o_px[B_FEATURES];
+extern int patch_o_py[B_FEATURES];
+extern int patch_o_nx[B_FEATURES];
+extern int patch_o_ny[B_FEATURES];
+extern int patch_m_px[B_FEATURES];
+extern int patch_m_py[B_FEATURES];
+extern int patch_m_nx[B_FEATURES];
+extern int patch_m_ny[B_FEATURES];
+extern int pbfe_final_output[B_FEATURES];
 
 
 // VARIABLES IDFE
 
-int inter_frame_events[MAXFRAME_X][MAXFRAME_Y];
-int seg_iframe_events[S_FEATURES][S_FEATURES];
-int idfe_output_literals[S_FEATURES][S_FEATURES];
+extern int inter_frame_events[MAXFRAME_X][MAXFRAME_Y];
+extern int seg_iframe_events[S_FEATURES][S_FEATURES];
+extern int idfe_output_literals[S_FEATURES][S_FEATURES];
 
-int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
-int PrevEventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
-int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y];
-int MiniEventFrameBoolsALL[MIN_FRAME_X][MIN_FRAME_Y];
+extern int EventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
+extern int PrevEventFrameCountALL[MAXFRAME_X][MAXFRAME_Y];
+extern int OutputEventFrameBoolsALL[MAXFRAME_X][MAXFRAME_Y];
+extern int MiniEventFrameBoolsALL[MIN_FRAME_X][MIN_FRAME_Y];
 
 
 #endif //EIDP_H
