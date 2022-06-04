@@ -1,5 +1,8 @@
 // procdataio.h
 
+#ifndef PROCDATAIO_H
+#define PROCDATAIO_H
+
 // Standard Headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -102,3 +105,5 @@ void tmda_print_log_file_2(FILE *TMDA_LOG_FILE, int test_class_sample_count[CLAS
 
 void tmda_print_log_file_x(FILE *TMDA_LOG_FILE, int count_test_class_samples[CLASSES], int count_train_class_samples[CLASSES]);
 
+
+#endif //PROCDATAIO_H

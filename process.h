@@ -1,5 +1,8 @@
 // process.h
 
+#ifndef PROCESS_H
+#define PROCESS_H
+
 // Program Specific Headers
 #include "dataio.h"
 #include "raw.h"
@@ -12,4 +15,4 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                         int fe_mode, int type);
 
 
-
+#endif // PROCESS_H

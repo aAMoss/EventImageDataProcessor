@@ -1,9 +1,9 @@
 // eidp.h
 
-// Program Specific Headers
-#include "dataio.h"
-#include "process.h"
-#include "raw.h"
+#ifndef EIDP_H
+#define EIDP_H
 
 
 
+
+#endif //EIDP_H

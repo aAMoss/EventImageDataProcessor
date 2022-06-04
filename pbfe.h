@@ -1,5 +1,8 @@
 // pbfe.h - packet binary feature extractor
 
+#ifndef PBFE_H
+#define PBFE_H
+
 // Program Specific Headers
 #include "dataio.h"
 
@@ -61,3 +64,6 @@ void pbfe_output_packet_literals_min1(int pbfe_final_output[], int pbfe_output_p
 
 void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int pbfe_final_output[]);
 void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int output_binary_literals[]);
+
+
+#endif //DATAIO_H

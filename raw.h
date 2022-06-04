@@ -1,4 +1,7 @@
-// features.h
+// raw.h
+
+#ifndef RAW_H
+#define RAW_H
 
 // Defintions - features_literals_raw_dat
 #define RAW_XY_BOOL 6
@@ -13,3 +16,7 @@
 // Function Prototypes - raw
 void raw_literals_data(long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
                              int f_packet_size, int c, int literals_raw[RAW_BOOL_MAX][f_packet_size]);
+                             
+                             
+                             
+#endif //RAW_H

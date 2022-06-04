@@ -1,5 +1,8 @@
 // idfe.h - inter (packet) dynamics feature extraction
 
+#ifndef IDFE_H
+#define IDFE_H
+
 // Program Specific Headers
 #include "dataio.h"
 #include <math.h>
@@ -52,7 +55,7 @@ void idfe_event_frame_density(int f_packet_size, int *packet_event_no, float Eve
                                   long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[]);
 
 
-
+#endif //IDFE_H
 
 
 // Function Prototypes - inter-packet features
