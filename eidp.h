@@ -75,13 +75,7 @@
 
 
 
-
-
-
-
-
-
-// VARIABLES EIDP
+// EXTERN VARIABLES EIDP
 extern long int total_req_packets_test;
 extern long int count_test_samples;
 extern long int total_bytes_test;
@@ -95,7 +89,7 @@ extern long int total_events_train;
 
 
 
-// VARIABLES DATAIO
+// EXTERN VARIABLES DATAIO
 
 // Directory Objects and Structures
 extern DIR *Data_Input_Dir;
@@ -144,14 +138,14 @@ extern int *p_f_packet_size;
 
 
 
-// VARIABLES PROCESS - NONE
+// EXTERN VARIABLES PROCESS - NONE
 
 
 
-// VARIABLES RAW
+// EXTERN VARIABLES RAW
 
 
-// VARIABLES PBFE
+// EXTERN VARIABLES PBFE
 extern int output_binary_literals[B_FEATURES];
 extern int binary_features_count[B_FEATURES];
 extern int patch_o_px[B_FEATURES];
@@ -165,7 +159,7 @@ extern int patch_m_ny[B_FEATURES];
 extern int pbfe_final_output[B_FEATURES];
 
 
-// VARIABLES IDFE
+// EXTERN VARIABLES IDFE
 
 extern int inter_frame_events[MAXFRAME_X][MAXFRAME_Y];
 extern int seg_iframe_events[S_FEATURES][S_FEATURES];
