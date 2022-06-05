@@ -16,7 +16,7 @@
 
 
 
-
+// VARIABLES 
 int output_binary_literals[B_FEATURES];
 int binary_features_count[B_FEATURES];
 int patch_o_px[B_FEATURES];

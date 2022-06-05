@@ -151,18 +151,18 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             
                 
                 // Debug
-                //pbfe_print_to_terminal(output_binary_literals, packet_no);
+                pbfe_print_to_terminal(output_binary_literals, packet_no);
                 
                 
                 
             } // packet loop ends
             
             // Minimization 1 - reduces to a single set of literals for the sample
-            pbfe_output_packet_literals_min1(pbfe_final_output, pbfe_output_packet_literals, &packets_min0_count);
+            //pbfe_output_packet_literals_min1(pbfe_final_output, pbfe_output_packet_literals, &packets_min0_count);
                
 
             // prints minimized literals
-            pbfe_print_to_file_pbfe_min_literals(Processed_Data_Output_File, pbfe_final_output);
+            //pbfe_print_to_file_pbfe_min_literals(Processed_Data_Output_File, pbfe_final_output);
             
             
             
