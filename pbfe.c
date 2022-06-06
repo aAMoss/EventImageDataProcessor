@@ -1,5 +1,5 @@
 // pbfe.c - packet binary feature extractor
-//comment in eclipse
+
 // Standard Headers
 #include <stdio.h>
 #include <stdlib.h>
