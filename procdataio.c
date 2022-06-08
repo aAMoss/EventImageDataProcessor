@@ -135,23 +135,12 @@ DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_
     char input_dir_name[200] = "";
     
     sprintf(class_num, "%d", c);
-    printf("%s\n", class_num);
-
     strcat(input_dir_name, s0);
-    printf("%s\n", input_dir_name);
-
     strcat(input_dir_name, dataset_dir_label);
-    printf("%s\n", input_dir_name);
-
     strcat(input_dir_name, s1);
-    printf("%s\n", input_dir_name);
-    
     strcat(input_dir_name, class_num);
-    printf("%s\n", input_dir_name);
-
     strcat(input_dir_name, s2);
-    printf("%s\n", input_dir_name);
-    
+
     DATASET_INPUT_DIR = opendir(input_dir_name);
     
     if(DATASET_INPUT_DIR == NULL)
