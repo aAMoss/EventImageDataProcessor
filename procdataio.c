@@ -129,18 +129,28 @@ void tmda_get_data_sample_per_class(long int test_samples, long int train_sample
 DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
 {
     char *s0 = "./";
-    char *s1 = "/test/";
+    char *s1 = "/Test/";
     char *s2 = "/";
     char class_num[2] = "";
     char input_dir_name[200] = "";
     
     sprintf(class_num, "%d", c);
+    printf("%s\n", class_num);
+
     strcat(input_dir_name, s0);
+    printf("%s\n", input_dir_name);
+
     strcat(input_dir_name, dataset_dir_label);
+    printf("%s\n", input_dir_name);
+
     strcat(input_dir_name, s1);
+    printf("%s\n", input_dir_name);
     
     strcat(input_dir_name, class_num);
+    printf("%s\n", input_dir_name);
+
     strcat(input_dir_name, s2);
+    printf("%s\n", input_dir_name);
     
     DATASET_INPUT_DIR = opendir(input_dir_name);
     
@@ -158,7 +168,7 @@ DIR *tmda_open_dataset_input_dir_test(DIR *DATASET_INPUT_DIR, char *dataset_dir_
 DIR *tmda_open_dataset_input_dir_train(DIR *DATASET_INPUT_DIR, char *dataset_dir_label, int c)
 {
     char *s0 = "./";
-    char *s1 = "/train/";
+    char *s1 = "/Train/";
     char *s2 = "/";
     char class_num[2] = "";
     char input_dir_name[200] = "";
@@ -252,7 +262,7 @@ FILE *tmda_open_data_output_file_traindata(FILE *TRAIN_DATA_OUTPUT, char *datase
 FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE,char *dataset_dir_label, int c )
 {
     char *s0 = "./";
-    char *s1 = "/test/";
+    char *s1 = "/Test/";
     char *s2 = "/";
     char class_num[2] = "";
     char input_file_path[300] = "";
@@ -285,7 +295,7 @@ FILE *tmda_open_data_input_file_test(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_S
 FILE *tmda_open_data_input_file_train(DIR *DATASET_INPUT_DIR, FILE *NMNIST_DATA_SAMPLE, char *dataset_dir_label, int c )
 {
     char *s0 = "./";
-    char *s1 = "/train/";
+    char *s1 = "/Train/";
     char *s2 = "/";
     char class_num[2] = "";
     char input_file_path[300] = "";
