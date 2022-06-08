@@ -49,15 +49,12 @@ FILE *TMDA_LOG_FILE;
 
 void tmda_get_dataset_dir_label(char *dataset_dir_label)
 {
-    char user_input[TEST_DATA_NAME_MAX];
-
-    
+    char user_input[TEST_DATA_NAME_MAX] ="";
     puts("Please enter the name of the data test data directory.");
-
     fgets(user_input, (TEST_DATA_NAME_MAX), stdin);
     user_input[strcspn(user_input, "\n")] = '\0'; // removes the return key
     strcat(dataset_dir_label, user_input);
-}
+ }
 
 
 
