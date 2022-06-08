@@ -15,66 +15,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-
-// Definitions
-#define TEST_DATA_NAME_MAX 200
-#define NMNIST_TEST_SAMPLES 10000
-#define NMNIST_TRAIN_SAMPLES 60000
-#define CLASSES 10
-
-#define MAX_TEST_SAMPLES 10000
-#define MAX_TRAIN_SAMPLES 60000
-#define MAX_SAMPLES_STATUS 10000 // needs to be larger than the maximum number of samples in a class
-#define TOTAL_SAMPLES (MAX_TEST_SAMPLES + MAX_TRAIN_SAMPLES)
-
-#define MIN_CLASS 0
-#define MAX_CLASS 9
-#define MIN_POS 0
-#define SAMPLE_STAT 1
-#define MAX_LINE 82
-
-
-// Variables
-int d_flag;
-int l_flag;
-long int test_samples;
-long int train_samples;
-long int class_test_samples;
-long int class_train_samples;
-long int total_test_samples;
-long int total_train_samples;
-long int total_nmnist_samples;
-
-char dataset_dir_label[(TEST_DATA_NAME_MAX /2)];
-
-int test_class_sample_count[CLASSES];
-int train_class_sample_count[CLASSES];
-
-int random_class;
-long int random_class_sample_count;
-long int random_dir_pos;
-long int tell_random_dir;
-long int seek_random_dir;
-
-
-int copied_test_samples;
-int count_test_class_samples[CLASSES];
-int copied_train_samples;
-int count_train_class_samples[CLASSES];
-
-
-
-
-// Directory Objects and Structures
-DIR *DATASET_INPUT_DIR;
-struct dirent *Dataset_Input_Dir_Entry;
-
-// File Objects
-FILE *NMNIST_DATA_SAMPLE;
-FILE *TEST_DATA_OUTPUT;
-FILE *TRAIN_DATA_OUTPUT;
-FILE *TMDA_LOG_FILE;
-
+// Program Specific Headers
+#include "tmda.h"
 
 
 // Function Prototypes

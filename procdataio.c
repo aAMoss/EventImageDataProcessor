@@ -4,6 +4,49 @@
 #include "procdataio.h"
 
 
+// Variables
+int d_flag;
+int l_flag;
+long int test_samples;
+long int train_samples;
+long int class_test_samples;
+long int class_train_samples;
+long int total_test_samples;
+long int total_train_samples;
+long int total_nmnist_samples;
+
+char dataset_dir_label[(TEST_DATA_NAME_MAX /2)];
+
+int test_class_sample_count[CLASSES];
+int train_class_sample_count[CLASSES];
+
+int random_class;
+long int random_class_sample_count;
+long int random_dir_pos;
+long int tell_random_dir;
+long int seek_random_dir;
+
+
+int copied_test_samples;
+int count_test_class_samples[CLASSES];
+int copied_train_samples;
+int count_train_class_samples[CLASSES];
+
+
+
+
+// Directory Objects and Structures
+DIR *DATASET_INPUT_DIR;
+struct dirent *Dataset_Input_Dir_Entry;
+
+// File Objects
+FILE *NMNIST_DATA_SAMPLE;
+FILE *TEST_DATA_OUTPUT;
+FILE *TRAIN_DATA_OUTPUT;
+FILE *TMDA_LOG_FILE;
+
+
+
 void tmda_get_dataset_dir_label(char *dataset_dir_label)
 {
     char user_input[TEST_DATA_NAME_MAX];
