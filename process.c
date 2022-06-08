@@ -139,30 +139,31 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 // Process - creates literals for each sample packet of events using binary patch feature extraction
                 pbfe_binary_patches_output(output_binary_literals, binary_features_count, f_packet_size, EventPacketX, EventPacketY, EventPacketP,EventPacketT);
                 
+
                 // Print - for when printing the literals of every packet
                 //pbfe_print_to_file_pbfe_literals(Processed_Data_Output_File, output_binary_literals);
                 
                 // Minimization 0 - rejects processed sample packets that produced zero literals,
                 pbfe_output_packet_literals_min0(output_binary_literals, pbfe_output_packet_literals, &packets_min0_count);
                 
-                // For when going for a single set of output literals, comment out if printing the literals of every packet
+               // For when going for a single set of output literals, comment out if printing the literals of every packet
                 pbfe_correct_zero_packet_literals(output_binary_literals, pbfe_output_packet_literals,  &packets_min0_count);
 
             
                 
                 // Debug
-                pbfe_print_to_terminal(output_binary_literals, packet_no);
+                //pbfe_print_to_terminal(output_binary_literals, packet_no);
                 
                 
                 
             } // packet loop ends
             
             // Minimization 1 - reduces to a single set of literals for the sample
-            //pbfe_output_packet_literals_min1(pbfe_final_output, pbfe_output_packet_literals, &packets_min0_count);
+            pbfe_output_packet_literals_min1(pbfe_final_output, pbfe_output_packet_literals, &packets_min0_count);
                
 
             // prints minimized literals
-            //pbfe_print_to_file_pbfe_min_literals(Processed_Data_Output_File, pbfe_final_output);
+            pbfe_print_to_file_pbfe_min_literals(Processed_Data_Output_File, pbfe_final_output);
             
             
             

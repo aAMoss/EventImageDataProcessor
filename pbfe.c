@@ -390,7 +390,7 @@ void pbfe_print_to_file_pbfe_min_literals(FILE *Processed_Data_Output_File, int 
     char *space = " ";
     char line[(2 * B_FEATURES) + 1];
     
-    memset(line,0,sizeof((2 * B_FEATURES) + 1));
+    memset(line,0,sizeof(line));
 
     for(int a = 0; a < B_FEATURES; a++)
     {
@@ -421,10 +421,11 @@ void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int outp
     char *space = " ";
     char line[(2 * B_FEATURES) + 1];
 
+    memset(line,0,sizeof(line));
     
     for(int a = 0; a < B_FEATURES; a++)
     {
-        
+
         sprintf(buf, "%d", output_binary_literals[a]);
         strcat(line,buf);
         memset(buf,0,sizeof(buf));
@@ -435,12 +436,10 @@ void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int outp
         strcat(line,space);
         }
         
-        
     }
 
     fprintf(Processed_Data_Output_File, "%s\n", line);
     memset(line,0,sizeof(line));
-
 
 
 }
