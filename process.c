@@ -75,9 +75,9 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 // Arrays to store int version of the literals/booleans, has to be called after f_packet)size is set
                 int literals_raw[RAW_BOOL_MAX][f_packet_size];
                 
-                //printf("packet_no %d\t", packet_no);
-                //printf("byte_no %d\t", byte_no);
-                //printf("f_packet_size %d\n", f_packet_size);
+                printf("packet_no %d\t", packet_no);
+                printf("byte_no %d\t", byte_no);
+                printf("f_packet_size %d\n", f_packet_size);
                 
                 // Extract
                 dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
@@ -152,7 +152,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
             
                 
                 // Debug
-                //pbfe_print_to_terminal(output_binary_literals, packet_no);
+                pbfe_print_to_terminal(output_binary_literals, packet_no);
                 
                 
                 
@@ -234,7 +234,7 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
                 //idfe_print_event_frame_count(f_packet_size, &packet_event_no, EventFrameCountALL,
                 //                          EventPacketX, EventPacketY, EventPacketP, EventPacketT);
 
-                //idfe_print_inter_frame_events(OutputEventFrameBoolsALL);
+                idfe_print_inter_frame_events(OutputEventFrameBoolsALL);
 
                 
                 

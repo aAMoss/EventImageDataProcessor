@@ -473,6 +473,7 @@ void idfe_print_to_file_idfe_literals(FILE *Processed_Data_Output_File, int  idf
        
     }
     
+    printf("Output Literals: %s\n\n", line);
     fprintf(Processed_Data_Output_File, "%s\n", line);
     memset(line,0,sizeof(line));
     
