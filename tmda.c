@@ -83,7 +83,7 @@ int main(void)
     while(copied_test_samples < test_samples)
     {
         
-    	printf("%d\n", copied_test_samples);
+
         // Selects a random class, 0 to 9
         random_class = ( rand() % (MAX_CLASS - MIN_CLASS + 1) ) + MIN_CLASS;
         
@@ -130,12 +130,10 @@ int main(void)
                     while (feof(NMNIST_DATA_SAMPLE) != 1)
                     {
                         fgets(ch_buf, sizeof(ch_buf),NMNIST_DATA_SAMPLE);
-                        printf("string: %s\n",ch_buf);
 
                         if ( cflag == 0)
                         {
 
-                        	printf("string printed: %s\n",ch_buf);
                         	//fputs(ch_buf, TEST_DATA_OUTPUT);
                         	fprintf(TEST_DATA_OUTPUT, "%s\n", ch_buf);
 
@@ -220,12 +218,12 @@ int main(void)
                     while (feof(NMNIST_DATA_SAMPLE) != 1)
                     {
                     	fgets(ch_buf, sizeof(ch_buf),NMNIST_DATA_SAMPLE);
-                    	printf("string: %s\n",ch_buf);
+
 
                     	if ( cflag == 0)
                     	{
 
-                    		printf("string printed: %s\n",ch_buf);
+
                     		//fputs(ch_buf, TEST_DATA_OUTPUT);
                     		fprintf(TEST_DATA_OUTPUT, "%s\n", ch_buf);
 							cflag++;
