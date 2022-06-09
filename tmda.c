@@ -135,6 +135,7 @@ int main(void)
                         {
 
                         	//fputs(ch_buf, TEST_DATA_OUTPUT);
+                        	printf("%s\n", ch_buf);
                         	fprintf(TEST_DATA_OUTPUT, "%s\n", ch_buf);
 
                         	cflag++;
@@ -148,7 +149,7 @@ int main(void)
                     count_test_class_samples[random_class]++;
                     copied_test_samples++;
 
-                    printf("Test Samples Copied: %d\n", copied_test_samples);
+                    printf("Test Samples Copied: %d\n\n", copied_test_samples);
 
                 }
 
@@ -225,6 +226,7 @@ int main(void)
 
 
                     		//fputs(ch_buf, TEST_DATA_OUTPUT);
+                    		printf("%s\n", ch_buf);
                     		fprintf(TEST_DATA_OUTPUT, "%s\n", ch_buf);
 							cflag++;
                     	}
@@ -238,7 +240,7 @@ int main(void)
                     count_train_class_samples[random_class]++;
                     copied_train_samples++;
                     
-                    printf("Train Samples Copied: %d\n", copied_train_samples);
+                    printf("Train Samples Copied: %d\n\n", copied_train_samples);
                     
                 }
                 
