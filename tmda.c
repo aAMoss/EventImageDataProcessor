@@ -137,7 +137,7 @@ int main(void)
 
                         	printf("string printed: %s\n",ch_buf);
                         	fputs(ch_buf, TEST_DATA_OUTPUT);
-                        	fprintf
+
                         	cflag++;
                         }
 
@@ -226,7 +226,7 @@ int main(void)
 
                     		printf("string printed: %s\n",ch_buf);
                     		fputs(ch_buf, TEST_DATA_OUTPUT);
-                    		fprintf
+
 							cflag++;
                     	}
 
