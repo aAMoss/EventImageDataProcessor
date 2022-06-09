@@ -421,7 +421,7 @@ void pbfe_print_to_file_pbfe_literals(FILE *Processed_Data_Output_File, int outp
     char *space = " ";
     char line[(2 * B_FEATURES) + 1];
 
-    memset(line,0,sizeof(line));
+    memset(line,0,sizeof((2 * B_FEATURES) + 1));
     
     for(int a = 0; a < B_FEATURES; a++)
     {

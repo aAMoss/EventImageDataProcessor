@@ -22,9 +22,10 @@
 
 #define MIN_CLASS 0
 #define MAX_CLASS 9
+#define FEATURES 64
 #define MIN_POS 0
 #define SAMPLE_STAT 1
-#define MAX_LINE 82
+#define MAX_LINE (FEATURES * 2)
 
 
 //EXTERN VARIABLES TMDA
@@ -53,7 +54,8 @@ extern long int random_class_sample_count;
 extern long int random_dir_pos;
 extern long int tell_random_dir;
 extern long int seek_random_dir;
-
+extern int rflag;
+extern int pos_count;
 
 extern int copied_test_samples;
 extern int count_test_class_samples[CLASSES];
@@ -64,6 +66,7 @@ extern int count_train_class_samples[CLASSES];
 // Directory Objects and Structures
 extern DIR *DATASET_INPUT_DIR;
 extern struct dirent *Dataset_Input_Dir_Entry;
+extern struct stat Dir_Entry_Statbuf;
 
 // File Objects
 extern FILE *NMNIST_DATA_SAMPLE;

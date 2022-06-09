@@ -25,7 +25,8 @@ long int random_class_sample_count;
 long int random_dir_pos;
 long int tell_random_dir;
 long int seek_random_dir;
-
+int rflag;
+int pos_count;
 
 int copied_test_samples;
 int count_test_class_samples[CLASSES];
@@ -38,6 +39,7 @@ int count_train_class_samples[CLASSES];
 // Directory Objects and Structures
 DIR *DATASET_INPUT_DIR;
 struct dirent *Dataset_Input_Dir_Entry;
+struct stat Dir_Entry_Statbuf;
 
 // File Objects
 FILE *NMNIST_DATA_SAMPLE;
