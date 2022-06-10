@@ -1,5 +1,6 @@
 # Event Image Data Processor
 
+## Overview 
 
 The purpose of this program is to pre-process the N-MNIST dataset (an event-image dataset, AER) for classification with a
 Multiclass Tsetlin Machine.
@@ -10,7 +11,15 @@ Please be nice, this is my first attempt at coding a larger program.
 
 There's a lot to improve and debug, I make no guarantees for the program compiling or working on your system.
 
-The Makefile specifies gcc, although I have been compiling and test the program so far via the MacOS Terminal, 
-I believe it actually uses the Apple Verion of CLang, so your experience may vary.
+## Instructions
 
-Will be posting some more indepth instructions on how to sue the program soon.
+Clone the respository.
+
+Ensure that you have a copy of the N-MNIST dataset in the top-level directory. 
+
+The dataset and its accompanying paper are available [here](https://www.garrickorchard.com/datasets/n-mnist) and [here](https://www.frontiersin.org/articles/10.3389/fnins.2015.00437/full).
+
+
+Ensure the dataset is located here: EventImageDataProcessor/N-MNIST/
+
+Ensure that its sub-directories are labelled: Test and Train.
