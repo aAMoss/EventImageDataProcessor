@@ -1,5 +1,4 @@
 # Event Image Data Processor
-<br>    
 
 ## Overview   
 The purpose of this program is to pre-process the N-MNIST dataset (an event-image dataset, AER) for classification with a
@@ -11,12 +10,13 @@ Please be nice, this is my first attempt at coding a larger program.
 
 There's a lot to improve and debug, I make no guarantees for the program compiling or working on your system.
 <br>
-## EIDP
+### EIDP
 *Coming soon*
 <br>  
-## TMDA
+### TMDA
 *Coming soon*
 <br>  
+
 # Instructions  
 Clone the respository.
 
@@ -27,6 +27,7 @@ The dataset and its accompanying paper are available [here](https://www.garricko
 Ensure the dataset is located here: EventImageDataProcessor/N-MNIST/
 
 Ensure that its sub-directories are labelled: Test and Train.
+<br>
 <br>
 # To Do List 
 These are to listed in no particular order.
