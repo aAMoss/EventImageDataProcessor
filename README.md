@@ -1,8 +1,10 @@
 # Event Image Data Processor
-
-
+  
+  
+    
 ## Overview 
-
+  
+  
 The purpose of this program is to pre-process the N-MNIST dataset (an event-image dataset, AER) for classification with a
 Multiclass Tsetlin Machine.
 
@@ -12,9 +14,12 @@ Please be nice, this is my first attempt at coding a larger program.
 
 There's a lot to improve and debug, I make no guarantees for the program compiling or working on your system.
 
-
+  
+  
+    
 ## Instructions
-
+  
+  
 Clone the respository.
 
 Ensure that you have a copy of the N-MNIST dataset in the top-level directory. 
