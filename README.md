@@ -1,5 +1,4 @@
 # Event Image Data Processor
-<br>
 
 ## Overview   
 The purpose of this program is to pre-process the N-MNIST dataset (an event-image dataset, AER) for classification with a
@@ -23,7 +22,6 @@ There's a lot to improve and debug, I make no guarantees for the program compili
 
 
 # Instructions  
-<br>
 
 ## Set-up
 Clone the respository.
@@ -47,8 +45,6 @@ Ensure that its sub-directories are labelled: Test and Train.
 
 
 # To Do List 
-These will be completed in no particular order.
-<br>
 
 ## EIDP
 
