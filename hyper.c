@@ -10,20 +10,24 @@
 
 // number of features - feature extraction method dependent
 
-
 #include 'hyper.h'
 
-// Generic Variable Types
+
+
+
+
+
+// GENERIC VARIABLE TYPES
 typedef long int generic_event_var;
 typedef long int generic_packet_var;
 
-// Specific Event Data Variable Types
+// EVENT DATA VARIABLE TYPES
 typedef unsigned int event_var_x;
 typedef unsigned int event_var_y;
 typedef unsigned char event_var_p;
 typedef unsigned long int event_var_t;
 
-// Specific Event Packet Variable Types
+// SPECIFIC EVENT PACKET VARIABLE TYPES
 typedef long int packet_var;
 
 
