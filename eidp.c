@@ -56,21 +56,23 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
                                 double cpu_time_used);
 
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
 
+	//Need 3 command line arguments: feature method, features, packet size, packet overlap
 
+	//hang on, why the eff does there need to be an output data name, it's already time-stamped, just make the name out of the chosen h-parameters
 	   printf("Program name %s\n", argv[0]);
 
-	   if( argc == 2 ) {
-	      printf("The argument supplied is %s\n", argv[1]);
+	   if( argc == 5 ) {
+	      printf("The arguments supplied: %s %s %s %s\n", argv[1], argv[2], argv[3], argv[4] );
 	   }
-	   else if( argc > 2 ) {
+	   else if( argc > 5 ) {
 	      printf("Too many arguments supplied. Program terminating.\n");
 	      exit(EXIT_FAILURE);
 	   }
 	   else {
-	      printf("One argument expected. Program terminating.\n");
+	      printf("Four arguments expected. Program terminating.\n");
 	      exit(EXIT_FAILURE);
 	   }
 
