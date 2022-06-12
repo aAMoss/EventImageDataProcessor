@@ -14,30 +14,40 @@
 
 
 
+packet_var_s PacketSize;
+packet_var_o PacketOverlap;
+int Features;
+int CmdFlag = 0;
+int FeatureMode = 0;
+// both functions will need to be able to account for the inclusion or absence of commandline arguments
+void  hyper_set_PacketSize(packet_var_s *PacketSize)
+{
 
 
 
-// GENERIC VARIABLE TYPES
-typedef long int generic_event_var;
-typedef long int generic_packet_var;
-
-// EVENT DATA VARIABLE TYPES
-typedef unsigned int event_var_x;
-typedef unsigned int event_var_y;
-typedef unsigned char event_var_p;
-typedef unsigned long int event_var_t;
-
-// SPECIFIC EVENT PACKET VARIABLE TYPES
-typedef long int packet_var;
 
 
-event_var_x x[];
-event_var_y y[];
-event_var_p p[];
-event_var_t t[];
 
-packet_var packet_size;
-packet_var packet_overlap;
+}
+
+void hyper_set_PacketOverlap(packet_var_o *PacketOverlap)
+{
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
 
 
 

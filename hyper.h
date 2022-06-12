@@ -3,6 +3,8 @@
 #ifndef HYPER_H
 #define HYPER_H
 
+#include "config.h"
+
 
 
 
