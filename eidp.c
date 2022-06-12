@@ -55,23 +55,25 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
                                long int total_events_train,
                                 double cpu_time_used);
 
-
-
-void parse_command_args(int argc, char *argv[], int *fe_mode, int *features, int *packet_size, int *packet_overlap, char *output_dir_label)
+void parse_command_args(int argc, char *argv[])
 {
-
 	// Check number of arguments
-	if( argc == 5 ) {
-			printf("The arguments supplied: %s %s %s %s %s\n", argv[0], argv[1], argv[2], argv[3], argv[4]);
-		}
-		else if( argc > 5 ) {
+	if( argc == 5 )
+	{
+		printf("The arguments supplied: %s %s %s %s %s\n", argv[0], argv[1], argv[2], argv[3], argv[4]);
+	}
+	else if( argc > 5 ) {
 			printf("Too many arguments supplied. Program terminating.\n");
 			exit(EXIT_FAILURE);
-		}
-		else {
+	}
+	else {
 			printf("Too few arguments, five expected. Program terminating.\n");
 			exit(EXIT_FAILURE);
 		}
+}
+
+void parse_command_args_method(int argc, char *argv[], int *fe_mode)
+{
 
 
 	// Parse argv[1] the feature extraction method
@@ -96,31 +98,28 @@ void parse_command_args(int argc, char *argv[], int *fe_mode, int *features, int
 	}
 
 
-	// sections to ensure features number matches feature method
+	int f = 0;
 
-	// section to ensure packet size  is within limits
+	f = atoi(argv[2]);
 
-	// section to ensure packet overlap is within limits
-
-
-	//maybe generate the label name last
-	char user_input[(DATA_OUT_NAME_MAX/4)];
-	char time_string[100] = "";
-
-	time_t t = time(NULL);
-	strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
-	strcat(output_dir_label, time_string);
-
+	printf("Number of features: %d\n", f);
 
 
 }
 
 
+
+
+
 int main(int argc, char *argv[])
 {
 
-	parse_command_args(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
-
+	parse_command_args(argc, argv);
+	parse_command_args_method(argc, argv, &fe_mode);
+//	parse_command_args_features(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
+//	parse_command_args_packet_size(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
+//	parse_command_args_packet_overlap(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
+//	parse_command_args_out_dir_label(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
 
     clock_t start, end;
     double cpu_time_used;
