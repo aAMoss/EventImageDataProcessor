@@ -55,7 +55,7 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
                                long int total_events_train,
                                 double cpu_time_used);
 
-void parse_command_args(int argc, char *argv[])
+void parse_cmd_args(int argc, char *argv[])
 {
 	// Check number of arguments
 	if( argc == 5 )
@@ -69,13 +69,11 @@ void parse_command_args(int argc, char *argv[])
 	else {
 			printf("Too few arguments, five expected. Program terminating.\n");
 			exit(EXIT_FAILURE);
-		}
+	}
 }
 
-void parse_command_args_method(int argc, char *argv[], int *fe_mode)
+void parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 {
-
-
 	// Parse argv[1] the feature extraction method
 	if(strcmp(argv[1], "raw") == 0)
 	{
@@ -96,17 +94,80 @@ void parse_command_args_method(int argc, char *argv[], int *fe_mode)
 		printf("Feature extraction method selection error. Program terminating.\n");
 		exit(EXIT_FAILURE);
 	}
+}
 
-
+void parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
+{
+	// Parse argv[2] the number of features (a.k.a inputs for the Tsetlin Machine)
 	int f = 0;
+	int flag = 0;
 
 	f = atoi(argv[2]);
 
-	printf("Number of features: %d\n", f);
+	switch(fe_mode)
+	{
 
+	case 0:
+		printf("For RAW, number of features is overridden and set to %d\n", RAW_BOOL_MAX);
+		*features = RAW_BOOL_MAX;
+		break;
+
+	case 1:
+		if(f > 0)
+		{
+			*features = f;
+		} else
+		{
+			while(flag < 1)
+			{
+				printf("ERROR: enter a number of features that is greater than 0.\n");
+
+				scanf("%d", &f);
+
+				if(f < 1)
+				{
+					printf("\nERROR: number of features must be greater than 0!\n");
+				}
+				else
+				{
+					*features = f;
+					flag++;
+				}
+			} //end while
+		} // end if
+		break;
+
+	case 2: // need to ensure features = 4 16 64 256 1024
+		if(f == 4 || f == 16 || f == 64 || f == 256 || f == 1024)
+		{
+			*features = f;
+		} else
+		{
+			while(flag < 1)
+			{
+				printf("ERROR: Please enter a number of features that is: 4, 16, 64, 256, 1024.\n");
+
+				scanf("%d", &f);
+
+				if(f == 4 || f == 16 || f == 64 || f == 256 || f == 1024)
+				{
+					*features = f;
+					flag++;
+				}
+				else
+				{
+					printf("\nERROR: number of features for IDFE must be: 4, 16, 64, 256, 1024!\n");
+				}
+			} //end while
+		} // end if
+		break;
+
+	}
+
+
+	printf("Features %d\n", *features);
 
 }
-
 
 
 
@@ -114,12 +175,12 @@ void parse_command_args_method(int argc, char *argv[], int *fe_mode)
 int main(int argc, char *argv[])
 {
 
-	parse_command_args(argc, argv);
-	parse_command_args_method(argc, argv, &fe_mode);
-//	parse_command_args_features(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
-//	parse_command_args_packet_size(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
-//	parse_command_args_packet_overlap(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
-//	parse_command_args_out_dir_label(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
+	parse_cmd_args(argc, argv);
+	parse_cmd_args_method(argc, argv, &fe_mode);
+	parse_cmd_args_features(argc, argv, fe_mode, &features);
+//	parse_cmd_args_packet_size(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
+//	parse_cmd_args_packet_overlap(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
+//	parse_cmd_args_out_dir_label(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
 
     clock_t start, end;
     double cpu_time_used;
