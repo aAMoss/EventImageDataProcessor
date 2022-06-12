@@ -31,7 +31,7 @@ long int total_req_packets_train;
 long int count_train_samples;
 long int total_bytes_train;
 long int total_events_train;
-
+int features;
 
 // log file stuff
 FILE *eidp_open_log_file_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label);
@@ -56,28 +56,70 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
                                 double cpu_time_used);
 
 
-int main(int argc, char **argv)
+
+void parse_command_args(int argc, char *argv[], int *fe_mode, int *features, int *packet_size, int *packet_overlap, char *output_dir_label)
 {
 
-	//Need 3 command line arguments: feature method, features, packet size, packet overlap
-
-	//hang on, why the eff does there need to be an output data name, it's already time-stamped, just make the name out of the chosen h-parameters
-	   printf("Program name %s\n", argv[0]);
-
-	   if( argc == 5 ) {
-	      printf("The arguments supplied: %s %s %s %s\n", argv[1], argv[2], argv[3], argv[4] );
-	   }
-	   else if( argc > 5 ) {
-	      printf("Too many arguments supplied. Program terminating.\n");
-	      exit(EXIT_FAILURE);
-	   }
-	   else {
-	      printf("Four arguments expected. Program terminating.\n");
-	      exit(EXIT_FAILURE);
-	   }
+	// Check number of arguments
+	if( argc == 5 ) {
+			printf("The arguments supplied: %s %s %s %s %s\n", argv[0], argv[1], argv[2], argv[3], argv[4]);
+		}
+		else if( argc > 5 ) {
+			printf("Too many arguments supplied. Program terminating.\n");
+			exit(EXIT_FAILURE);
+		}
+		else {
+			printf("Too few arguments, five expected. Program terminating.\n");
+			exit(EXIT_FAILURE);
+		}
 
 
+	// Parse argv[1] the feature extraction method
+	if(strcmp(argv[1], "raw") == 0)
+	{
+		*fe_mode = 0;
+		printf("Feature Extraction Method: RAW\n");
+	} else
+	if(strcmp(argv[1], "pbfe") == 0)
+	{
+		*fe_mode = 1;
+		printf("Feature Extraction Method: PBFE\n");
+	} else
+	if(strcmp(argv[1], "idfe") == 0)
+	{
+		*fe_mode = 2;
+		printf("Feature Extraction Method: IDFE\n");
+	} else
+	{
+		printf("Feature extraction method selection error. Program terminating.\n");
+		exit(EXIT_FAILURE);
+	}
 
+
+	// sections to ensure features number matches feature method
+
+	// section to ensure packet size  is within limits
+
+	// section to ensure packet overlap is within limits
+
+
+	//maybe generate the label name last
+	char user_input[(DATA_OUT_NAME_MAX/4)];
+	char time_string[100] = "";
+
+	time_t t = time(NULL);
+	strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
+	strcat(output_dir_label, time_string);
+
+
+
+}
+
+
+int main(int argc, char *argv[])
+{
+
+	parse_command_args(argc, argv, &fe_mode, &features, &packet_size, &packet_overlap, output_dir_label);
 
 
     clock_t start, end;
