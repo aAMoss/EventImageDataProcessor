@@ -56,8 +56,27 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
                                 double cpu_time_used);
 
 
-int main(void)
+int main(int argc, char *argv[])
 {
+
+
+	   printf("Program name %s\n", argv[0]);
+
+	   if( argc == 2 ) {
+	      printf("The argument supplied is %s\n", argv[1]);
+	   }
+	   else if( argc > 2 ) {
+	      printf("Too many arguments supplied. Program terminating.\n");
+	      exit(EXIT_FAILURE);
+	   }
+	   else {
+	      printf("One argument expected. Program terminating.\n");
+	      exit(EXIT_FAILURE);
+	   }
+
+
+
+
 
     clock_t start, end;
     double cpu_time_used;
