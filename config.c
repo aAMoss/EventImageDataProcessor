@@ -35,6 +35,7 @@ void config_parse_cmd_args(int argc, char *argv[])
 	}
 }
 
+
 void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 {
 	// Parse argv[1] the feature extraction method
@@ -58,6 +59,7 @@ void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 		exit(EXIT_FAILURE);
 	}
 }
+
 
 void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
 {
@@ -127,6 +129,7 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 
 	}
 }
+
 
 void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 {
