@@ -57,6 +57,17 @@ To run the program:
 ./eidp $MODE $FEATURES $SIZE $OVERLAP
 ```
 
+For example:
+
+```
+./eidp pbfe 20 1000 100
+```
+The above example selects:
+- the patch-based feature extraction method, pbfe
+- 20 features
+- 1000 events per event-packet (event frame) 
+- 100 events overlap, each event-packet overlaps by 100 events- the last 100 events of the previously processed event-packet, are the first 100 in the next.
+
 ### $MODE: 	
 
 The feature extraction method, choose: 
