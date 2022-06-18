@@ -47,9 +47,9 @@ Run make to generate the two tools: eidp and tmda.
 
 To run the program:
 
-./eidp $MODE $FEATURES $SIZE $OVERLAP
+./eidp $MODE   $FEATURES   $SIZE   $OVERLAP
 
-$MODE: 	
+###$MODE: 	
 
 The feature extraction method, choose: 
 
@@ -59,17 +59,17 @@ pbfe - 	a statistical patch-based feature extraction method, will be linking the
 idfe - 	an inter-packet feature extraction method, will be linking the relvant paper that inspired it.
 
 
-$FEATURES: 
+###$FEATURES: 
 
 The number of features. Determines the number of booleans for each data sample when generating the dataset for the Tsetlin Machine.
 
 Depending on the feature extraction method this may be overidden or prompt the user to select a different value.
 
-$SIZE:
+###$SIZE:
 
 Sets the number of events in each event packet. Default range is 100 to 1500 events, these limits can be altered prior to compiling the program. 
 
-$OVERLAP:
+###$OVERLAP:
 
 Sets the number of events by which the event packets overlap. The range is 0 to $SIZE-1. This ensures that the overlap is always less than the packet size.
 <br> 
