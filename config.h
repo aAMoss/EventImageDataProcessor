@@ -91,6 +91,14 @@ typedef unsigned long int event_var_t;
 // SPECIFIC EVENT PACKET VARIABLE TYPES
 typedef int packet_var_s;
 typedef int packet_var_o;
+{
+
+
+
+
+
+
+}
 
 
 

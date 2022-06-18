@@ -57,8 +57,6 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
 
 void parse_cmd_args(int argc, char *argv[])
 {
-
-
 	// Check number of arguments
 	if( argc == 5 )
 	{
@@ -72,14 +70,10 @@ void parse_cmd_args(int argc, char *argv[])
 			printf("Too few arguments, five expected. Program terminating.\n");
 			exit(EXIT_FAILURE);
 	}
-
-
 }
 
 void parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 {
-
-
 	// Parse argv[1] the feature extraction method
 	if(strcmp(argv[1], "raw") == 0)
 	{
@@ -100,14 +94,10 @@ void parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 		printf("Feature extraction method selection error. Program terminating.\n");
 		exit(EXIT_FAILURE);
 	}
-
-
 }
 
 void parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
 {
-
-
 	// Parse argv[2] the number of features (a.k.a inputs for the Tsetlin Machine)
 	int f = 0;
 	int flag = 0;
@@ -173,14 +163,10 @@ void parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
 		break;
 
 	}
-
-
 }
 
 void parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 {
-
-
 	int p = 0;
 	int flag = 0;
 
@@ -209,38 +195,99 @@ void parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 			}
 		} // end while
 	} // end if
-
-
 }
 
 void parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap)
 {
-	int p = 0;
+	int o = 0;
 	int flag = 0;
 
-	p = atoi(argv[4]);
+	o = atoi(argv[4]);
 
+	if(o > (packet_size - 1) || o < 0 )
+	{
+		while(flag < 1)
+		{
 
+			printf("\nERROR: Event Packet Overlap must be in the range 0 to %d. Please enter a new value.\n\n", (packet_size - 1) );
+
+			scanf("%d", &o);
+
+			if(o > (packet_size - 1) || o < 0 )
+			{
+				printf("\nERROR: Event Packet Overlap must be in the range 0 to %d!\n\n", (packet_size - 1) );
+			}
+			else
+			if (o >= 0 && o < packet_size)
+			{
+				*packet_overlap = o;
+				flag++;
+			}
+		} // end while
+	}else
+	{
+		*packet_overlap = o;
+		flag++;
+	}
 }
 
 
-void parse_cmd_args_out_dir_label(int argc, char *argv[], int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label)
+void parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label)
 {
+	//sets the name of the output data directory
+    char buf[5];
+    char time_string[20];
+    char *s = "_";
+    char *s0 = "raw_";
+	char *s1 = "pbfe_";
+	char *s2 = "idfe_";
 
+    memset(buf,0,sizeof(buf));
+    memset(time_string,0,sizeof(time_string));
+    memset(output_dir_label,0,sizeof(output_dir_label));
 
+    time_t t = time(NULL);
+    strftime(time_string, sizeof(time_string), "%Y%m%d_%H%M%S_", localtime(&t));
+    strcat(output_dir_label, time_string);
 
+    switch(fe_mode)
+    {
+    case 0: strcat(output_dir_label, s0); break;
+    case 1: strcat(output_dir_label, s1); break;
+    case 2: strcat(output_dir_label, s2); break;
+    default: break;
+    }
 
+    sprintf(buf, "%d", features);
+    strcat(output_dir_label,buf);
+    strcat(output_dir_label,s);
+    memset(buf,0,sizeof(buf));
+
+    sprintf(buf, "%d", packet_size);
+    strcat(output_dir_label,buf);
+    strcat(output_dir_label,s);
+    memset(buf,0,sizeof(buf));
+
+    sprintf(buf, "%d", packet_overlap);
+    strcat(output_dir_label,buf);
+    memset(buf,0,sizeof(buf));
 }
 
 int main(int argc, char *argv[])
 {
 
-	parse_cmd_args(argc, argv);
+    parse_cmd_args(argc, argv);
 	parse_cmd_args_method(argc, argv, &fe_mode);
 	parse_cmd_args_features(argc, argv, fe_mode, &features);
 	parse_cmd_args_packet_size(argc, argv, &packet_size);
 	parse_cmd_args_packet_overlap(argc, argv, packet_size, &packet_overlap);
-	parse_cmd_args_out_dir_label(argc, argv, fe_mode, features, packet_size, packet_overlap, output_dir_label);
+	parse_cmd_args_out_dir_label(fe_mode, features, packet_size, packet_overlap, output_dir_label);
+
+	printf("Mode\t%d\n", fe_mode);
+	printf("Features\t%d\n", features);
+	printf("Packet Size\t%d\n", packet_size);
+	printf("Packet Overlap\t%d\n", packet_overlap);
+	printf("%s\n", output_dir_label);
 
     clock_t start, end;
     double cpu_time_used;
@@ -249,15 +296,15 @@ int main(int argc, char *argv[])
     
     
     // Sets the name for the output data
-    dataio_get_out_dir_label(output_dir_label);
+    //dataio_get_out_dir_label(output_dir_label);
     
     // Creates the output data directories
     dataio_create_output_dir(output_dir_label, output_dir_name);
     
     // Sets the packet variables: size and overlap
-    dataio_set_event_packet_vars(&packet_size, &packet_overlap);
+   //dataio_set_event_packet_vars(&packet_size, &packet_overlap);
     
-    dataio_set_features_mode(&fe_mode);
+    //dataio_set_features_mode(&fe_mode);
     
     
     EIDP_LOG_FILE_TEST = eidp_open_log_file_test(EIDP_LOG_FILE_TEST, output_dir_label);
