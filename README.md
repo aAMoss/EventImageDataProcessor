@@ -15,6 +15,13 @@ future I will be making the necessary additions to ensure it can run on each of 
 
 <br>
 
+## Recent Updates
+
+Introduced commandline arguments, need to tidy up these functions and move them somewhere other than eidp.c.
+
+Will need to remove the superfluous functions for setting the program variables.. also please ignore the additional program files
+that seem to have little or nothing in them- currently in the process of refactoring and expanding the code.
+
 ### EIDP
 *Coming soon*
 <br>  
@@ -83,7 +90,7 @@ Sets the number of events by which the event packets overlap. The range is 0 to 
 
 - [ ] Improve that shambles of a makefile
 - [ ] Create hyper.c and hyper.h, all hyper parameters for the pipeline will be stored and modified from here
-- [ ] Commandline arguments, will require moving a lot of code from eidp.c into another source file
+- [x] Commandline arguments, will require moving a lot of code from eidp.c into another source file
 - [ ] Improve and expand on data logging functions, will all be moved to (and called from) log.c log.h
 - [ ] Improve terminal messages when program is in operation, possible another source file
 - [ ] Improve and refactor pbfe.c, need to decide whether to keep its write-to-file functions or move to dataio.c
