@@ -18,7 +18,7 @@
 #include "eidp.h"
 #include "config.h"
 
-void parse_cmd_args(int argc, char *argv[])
+void config_parse_cmd_args(int argc, char *argv[])
 {
 	// Check number of arguments
 	if( argc == 5 )
@@ -35,7 +35,7 @@ void parse_cmd_args(int argc, char *argv[])
 	}
 }
 
-void parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
+void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 {
 	// Parse argv[1] the feature extraction method
 	if(strcmp(argv[1], "raw") == 0)
@@ -59,7 +59,7 @@ void parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 	}
 }
 
-void parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
+void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
 {
 	// Parse argv[2] the number of features (a.k.a inputs for the Tsetlin Machine)
 	int f = 0;
@@ -128,7 +128,7 @@ void parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
 	}
 }
 
-void parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
+void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 {
 	int p = 0;
 	int flag = 0;
@@ -160,7 +160,7 @@ void parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 	} // end if
 }
 
-void parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap)
+void config_parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap)
 {
 	int o = 0;
 	int flag = 0;
@@ -195,7 +195,7 @@ void parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int 
 }
 
 
-void parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label)
+void config_parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label)
 {
 	//sets the name of the output data directory
     char buf[5];

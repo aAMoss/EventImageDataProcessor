@@ -9,12 +9,12 @@
 // POSIX HEADERS
 
 
-void parse_cmd_args(int argc, char *argv[]);
-void parse_cmd_args_method(int argc, char *argv[], int *fe_mode);
-void parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features);
-void parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size);
-void parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap);
-void parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label);
+void config_parse_cmd_args(int argc, char *argv[]);
+void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode);
+void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features);
+void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size);
+void config_parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap);
+void config_parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label);
 
 
 

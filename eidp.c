@@ -59,19 +59,14 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
 
 int main(int argc, char *argv[])
 {
+	// Command line Arguments
+	config_parse_cmd_args(argc, argv);
+	config_parse_cmd_args_method(argc, argv, &fe_mode);
+	config_parse_cmd_args_features(argc, argv, fe_mode, &features);
+	config_parse_cmd_args_packet_size(argc, argv, &packet_size);
+	config_parse_cmd_args_packet_overlap(argc, argv, packet_size, &packet_overlap);
+	config_parse_cmd_args_out_dir_label(fe_mode, features, packet_size, packet_overlap, output_dir_label);
 
-    parse_cmd_args(argc, argv);
-	parse_cmd_args_method(argc, argv, &fe_mode);
-	parse_cmd_args_features(argc, argv, fe_mode, &features);
-	parse_cmd_args_packet_size(argc, argv, &packet_size);
-	parse_cmd_args_packet_overlap(argc, argv, packet_size, &packet_overlap);
-	parse_cmd_args_out_dir_label(fe_mode, features, packet_size, packet_overlap, output_dir_label);
-
-	printf("Mode\t%d\n", fe_mode);
-	printf("Features\t%d\n", features);
-	printf("Packet Size\t%d\n", packet_size);
-	printf("Packet Overlap\t%d\n", packet_overlap);
-	printf("%s\n", output_dir_label);
 
     clock_t start, end;
     double cpu_time_used;
