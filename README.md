@@ -9,6 +9,10 @@ The program is still a work in progress, and was created for my 3rd year univers
 Please be nice, this is my first attempt at coding a larger program.
 
 There's a lot to improve and debug, I make no guarantees for the program compiling or working on your system.
+
+I currently run a Manjaro-based OS, in the past I have run the program on both MacOS and WIndows with a few alterations, in
+future I will be making the necessary additions to ensure it can run on each of these platforms without issue.
+
 <br>
 
 ### EIDP
@@ -34,11 +38,40 @@ Ensure the dataset is located here: EventImageDataProcessor/N-MNIST/
 
 Ensure that its sub-directories are labelled: Test and Train.
 
+Run make to generate the two tools: eidp and tmda.
+
 *WIP*
 <br> 
 
 ## To Run
-*Coming soon*
+
+To run the program:
+
+./eidp $MODE $FEATURES $SIZE $OVERLAP
+
+$MODE: 	
+
+The feature extraction method, choose: 
+
+raw	-	no processing of any kind, extracts the event data and converts to a boolean representation without any processing, feature extraction, 
+		or minimization.
+pbfe - 	a statistical patch-based feature extraction method, will be linking the relevant paper.
+idfe - 	an inter-packet feature extraction method, will be linking the relvant paper that inspired it.
+
+
+$FEATURES: 
+
+The number of features. Determines the number of booleans for each data sample when generating the dataset for the Tsetlin Machine.
+
+Depending on the feature extraction method this may be overidden or prompt the user to select a different value.
+
+$SIZE:
+
+Sets the number of events in each event packet. Default range is 100 to 1500 events, these limits can be altered prior to compiling the program. 
+
+$OVERLAP:
+
+Sets the number of events by which the event packets overlap. The range is 0 to $SIZE-1. This ensures that the overlap is always less than the packet size.
 <br> 
 
 
