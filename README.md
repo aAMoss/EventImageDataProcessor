@@ -60,10 +60,11 @@ To run the program:
 
 The feature extraction method, choose: 
 
-raw	-	no processing of any kind, extracts the event data and converts to a boolean representation without any processing, feature extraction, 
-		or minimization.
-pbfe - 	a statistical patch-based feature extraction method, will be linking the relevant paper.
-idfe - 	an inter-packet feature extraction method, will be linking the relvant paper that inspired it.
+**raw -**	no processing of any kind, extracts the event data and converts to a boolean representation without any processing, feature extraction, or minimization.
+		
+**pbfe -**	a statistical patch-based feature extraction method, will be linking the relevant paper.
+
+**idfe -**	an inter-packet feature extraction method, will be linking the relvant paper that inspired it.
 
 
 ### $FEATURES: 
