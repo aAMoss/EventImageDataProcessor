@@ -67,17 +67,13 @@ int main(int argc, char *argv[])
 	config_parse_cmd_args_packet_overlap(argc, argv, packet_size, &packet_overlap);
 	config_parse_cmd_args_out_dir_label(fe_mode, features, packet_size, packet_overlap, output_dir_label);
 
-
     clock_t start, end;
     double cpu_time_used;
     
-
     // Creates the output data directories
     dataio_create_output_dir(output_dir_label, output_dir_name);
     
-    
     EIDP_LOG_FILE_TEST = eidp_open_log_file_test(EIDP_LOG_FILE_TEST, output_dir_label);
-    
     
     eidp_print_log_file0_test(EIDP_LOG_FILE_TEST, output_dir_label, fe_mode);
  
