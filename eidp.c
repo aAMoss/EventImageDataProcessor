@@ -292,19 +292,9 @@ int main(int argc, char *argv[])
     clock_t start, end;
     double cpu_time_used;
     
-    
-    
-    
-    // Sets the name for the output data
-    //dataio_get_out_dir_label(output_dir_label);
-    
+
     // Creates the output data directories
     dataio_create_output_dir(output_dir_label, output_dir_name);
-    
-    // Sets the packet variables: size and overlap
-   //dataio_set_event_packet_vars(&packet_size, &packet_overlap);
-    
-    //dataio_set_features_mode(&fe_mode);
     
     
     EIDP_LOG_FILE_TEST = eidp_open_log_file_test(EIDP_LOG_FILE_TEST, output_dir_label);
