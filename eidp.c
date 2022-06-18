@@ -56,7 +56,6 @@ void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
                                long int total_events_train,
                                 double cpu_time_used);
 
-
 int main(int argc, char *argv[])
 {
 	// Command line Arguments
