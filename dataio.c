@@ -126,7 +126,7 @@ void dataio_set_event_packet_vars(int *packet_size, int *packet_overlap)
 
 
 
-// Select feature extraction mode
+// Select feature extraction mode - no longer in use
 void dataio_set_features_mode(int *fe_mode)
 {
     
@@ -158,46 +158,6 @@ void dataio_set_features_mode(int *fe_mode)
     }
     
 }
-
-/*
-// set number of features of output data: 4, 16, 64, 256, 1024
-void dataio_set_features_number(int *features_number)
-{
-    int num = 0;
-    int fn_flag = 0;
-    
-    while(fn_flag < 1)
-    {
-        printf("\nPlease enter the number of output features/literals.\n\nValue must be in the range %d to %d, and", FEATURES_MIN, FEATURES_MAX);
-        printf("be a perfect square number!\n\n");
-        scanf("%d", &num);
-        
-        int inum = 0;
-        float fnum = 0;
-        fnum = sqrt( (double)num );
-        inum = fnum;
-              
-        if(fnum < FEATURES_MIN || fnum > PACKET_MAX)
-        {
-            printf("\nERROR: Number of Features must be between %d and %d!\n\n", FEATURES_MIN, FEATURES_MAX);
-        }
-        else
-        if ( inum == fnum )
-        {
-            *features_number = num;
-            fn_flag++;
-        }
-        else
-        {
-            printf("\nERROR: You selected %d, the number of features must be a perfect square!\n\n", num);
-        }
-        
-        
-    }
-
-    
-}
-*/
 
 
 // Function to create the new output directories
