@@ -53,8 +53,9 @@ Run make to generate the two tools: eidp and tmda.
 ## To Run
 
 To run the program:
-
+'''
 ./eidp $MODE   $FEATURES   $SIZE   $OVERLAP
+'''
 
 ### $MODE: 	
 
