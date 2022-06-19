@@ -23,20 +23,27 @@ void config_parse_cmd_args(int argc, char *argv[])
 	// Check number of arguments
 	if( argc == 5 )
 	{
-		printf("The arguments supplied: %s %s %s %s %s\n", argv[0], argv[1], argv[2], argv[3], argv[4]);
+		printf("The arguments supplied: %s ", argv[0]);
+		printf("%s ", argv[1]);
+		printf("%s ", argv[2]);
+		printf("%s ", argv[3]);
+		printf("%s\n", argv[4]);
 	}
-	else if( argc > 5 ) {
-			printf("Too many arguments supplied. Program terminating.\n");
-			exit(EXIT_FAILURE);
+	else
+	if( argc > 5 )
+	{
+		printf("Too many arguments supplied. Program terminating.\n");
+		exit(EXIT_FAILURE);
 	}
-	else {
-			printf("Too few arguments, five expected. Program terminating.\n");
-			exit(EXIT_FAILURE);
+	else
+	{
+		printf("Too few arguments, five expected. Program terminating.\n");
+		exit(EXIT_FAILURE);
 	}
 }
 
 
-void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
+void config_parse_cmd_args1(int argc, char *argv[], int *fe_mode)
 {
 	// Parse argv[1] the feature extraction method
 	if(strcmp(argv[1], "raw") == 0)
@@ -55,15 +62,17 @@ void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode)
 		printf("Feature Extraction Method: IDFE\n");
 	} else
 	{
-		printf("Feature extraction method selection error. Program terminating.\n");
+		printf("Feature extraction method selection error. ");
+		printf("Program terminating.\n");
 		exit(EXIT_FAILURE);
 	}
 }
 
 
-void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features)
+void config_parse_cmd_args2(int argc, char *argv[], int fe_mode, int *features)
 {
-	// Parse argv[2] the number of features (a.k.a inputs for the Tsetlin Machine)
+	// Parse argv[2] the number of features
+	//(a.k.a inputs for the Tsetlin Machine)
 	int f = 0;
 	int flag = 0;
 
@@ -73,9 +82,10 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 	{
 
 	case 0:
-		printf("For RAW, number of features is overridden and set to %d\n", RAW_BOOL_MAX);
+		printf("For RAW, number of features is overridden ");
+		printf("and set to %d\n", RAW_BOOL_MAX);
 		*features = RAW_BOOL_MAX;
-		break;
+	break;
 
 	case 1:
 		if(f > 0)
@@ -85,13 +95,15 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 		{
 			while(flag < 1)
 			{
-				printf("ERROR: enter a number of features that is greater than 0.\n");
+				printf("ERROR: enter a number of features ");
+				printf("that is greater than 0.\n");
 
 				scanf("%d", &f);
 
 				if(f < 1)
 				{
-					printf("\nERROR: number of features must be greater than 0!\n");
+					printf("\nERROR: the number of features must ");
+					printf("be greater than 0!\n");
 				}
 				else
 				{
@@ -100,7 +112,7 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 				}
 			} //end while
 		} // end if
-		break;
+	break;
 
 	case 2: // need to ensure features = 4 16 64 256 1024
 		if(f == 4 || f == 16 || f == 64 || f == 256 || f == 1024)
@@ -110,7 +122,8 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 		{
 			while(flag < 1)
 			{
-				printf("ERROR: Please enter a number of features that is: 4, 16, 64, 256, 1024.\n");
+				printf("ERROR: Please enter a number of features ");
+				printf("that is: 4, 16, 64, 256, 1024.\n");
 
 				scanf("%d", &f);
 
@@ -121,7 +134,8 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 				}
 				else
 				{
-					printf("\nERROR: number of features for IDFE must be: 4, 16, 64, 256, 1024!\n");
+					printf("\nERROR: number of features for IDFE must be: ");
+					printf("4, 16, 64, 256, 1024!\n");
 				}
 			} //end while
 		} // end if
@@ -131,7 +145,7 @@ void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *fe
 }
 
 
-void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
+void config_parse_cmd_args3(int argc, char *argv[],int *packet_size)
 {
 	int p = 0;
 	int flag = 0;
@@ -145,13 +159,15 @@ void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 	{
 		while(flag < 1)
 		{
-			printf("\nEnter an Event Packet Size in the range %d to %d.\n\n", PACKET_MIN, PACKET_MAX);
+			printf("\nEnter an Event Packet Size in the range ");
+			printf("%d to %d.\n\n", PACKET_MIN, PACKET_MAX);
 
 			scanf("%d", &p);
 
 			if(p < PACKET_MIN || p > PACKET_MAX)
 			{
-				printf("\nERROR: Event Packet Size must be between %d and %d!\n\n", PACKET_MIN, PACKET_MAX);
+				printf("\nERROR: Event Packet Size must be between ");
+				printf("%d and %d!\n\n", PACKET_MIN, PACKET_MAX);
 			}
 			else
 			if(p >= PACKET_MIN && p <= PACKET_MAX)
@@ -163,7 +179,8 @@ void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size)
 	} // end if
 }
 
-void config_parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap)
+void config_parse_cmd_args4(int argc, char *argv[],
+							int packet_size, int *packet_overlap)
 {
 	int o = 0;
 	int flag = 0;
@@ -175,13 +192,15 @@ void config_parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_siz
 		while(flag < 1)
 		{
 
-			printf("\nERROR: Event Packet Overlap must be in the range 0 to %d. Please enter a new value.\n\n", (packet_size - 1) );
+			printf("\nERROR: Packet Overlap must be in the range 0 to ");
+			printf("%d. Please enter a new value.\n\n", (packet_size - 1) );
 
 			scanf("%d", &o);
 
 			if(o > (packet_size - 1) || o < 0 )
 			{
-				printf("\nERROR: Event Packet Overlap must be in the range 0 to %d!\n\n", (packet_size - 1) );
+				printf("\nERROR: Packet Overlap must be in the range ");
+				printf("0 to %d!\n\n", (packet_size - 1) );
 			}
 			else
 			if (o >= 0 && o < packet_size)
@@ -198,7 +217,9 @@ void config_parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_siz
 }
 
 
-void config_parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label)
+void config_set_out_dir_label(int fe_mode, int features,
+							  int packet_size, int packet_overlap,
+							  char *output_dir_label)
 {
 	//sets the name of the output data directory
     char buf[5];

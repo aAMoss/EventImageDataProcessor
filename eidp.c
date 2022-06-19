@@ -35,36 +35,51 @@ long int total_events_train;
 int features;
 
 // log file stuff
-FILE *eidp_open_log_file_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label);
-FILE *eidp_open_log_file_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label);
-
-void eidp_print_log_file0_test(FILE *EIDP_LOG_FILE_TEST, char *output_dir_label, int fe_mode);
-void eidp_print_log_file1_test(FILE *EIDP_LOG_FILE_TEST, int class,
-                               int packet_size, int packet_overlap,
+FILE *eidp_open_log_file_test(FILE *EIDP_LOG_FILE_TEST,
+							  char *output_dir_label);
+FILE *eidp_open_log_file_train(FILE *EIDP_LOG_FILE_TRAIN,
+							   char *output_dir_label);
+void eidp_print_log_file0_test(FILE *EIDP_LOG_FILE_TEST,
+							   char *output_dir_label,
+							   int fe_mode);
+void eidp_print_log_file1_test(FILE *EIDP_LOG_FILE_TEST,
+							   int class,
+							   int packet_size,
+							   int packet_overlap,
                                long int total_req_packets_test,
                                long int count_test_samples,
                                long int total_bytes_test,
                                long int total_events_test,
                                double cpu_time_used);
 
-void eidp_print_log_file0_train(FILE *EIDP_LOG_FILE_TRAIN, char *output_dir_label, int fe_mode);
-void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN, int class,
-                               int packet_size, int packet_overlap,
-                               long int total_req_packets_train,
-                               long int count_train_samples,
-                               long int total_bytes_train,
-                               long int total_events_train,
+void eidp_print_log_file0_train(FILE *EIDP_LOG_FILE_TRAIN,
+								char *output_dir_label,
+								int fe_mode);
+void eidp_print_log_file1_train(FILE *EIDP_LOG_FILE_TRAIN,
+								int class,
+								int packet_size,
+								int packet_overlap,
+								long int total_req_packets_train,
+								long int count_train_samples,
+								long int total_bytes_train,
+								long int total_events_train,
                                 double cpu_time_used);
 
 int main(int argc, char *argv[])
 {
 	// Command line Arguments
 	config_parse_cmd_args(argc, argv);
-	config_parse_cmd_args_method(argc, argv, &fe_mode);
-	config_parse_cmd_args_features(argc, argv, fe_mode, &features);
-	config_parse_cmd_args_packet_size(argc, argv, &packet_size);
-	config_parse_cmd_args_packet_overlap(argc, argv, packet_size, &packet_overlap);
-	config_parse_cmd_args_out_dir_label(fe_mode, features, packet_size, packet_overlap, output_dir_label);
+
+	config_parse_cmd_args1(argc, argv, &fe_mode);
+
+	config_parse_cmd_args2(argc, argv, fe_mode, &features);
+
+	config_parse_cmd_args3(argc, argv, &packet_size);
+
+	config_parse_cmd_args4(argc, argv, packet_size, &packet_overlap);
+
+	config_set_out_dir_label(fe_mode, features, packet_size, packet_overlap,
+							 output_dir_label);
 
     clock_t start, end;
     double cpu_time_used;
@@ -72,7 +87,8 @@ int main(int argc, char *argv[])
     // Creates the output data directories
     dataio_create_output_dir(output_dir_label, output_dir_name);
     
-    EIDP_LOG_FILE_TEST = eidp_open_log_file_test(EIDP_LOG_FILE_TEST, output_dir_label);
+    EIDP_LOG_FILE_TEST = eidp_open_log_file_test(EIDP_LOG_FILE_TEST,
+    											 output_dir_label);
     
     eidp_print_log_file0_test(EIDP_LOG_FILE_TEST, output_dir_label, fe_mode);
  
@@ -96,27 +112,29 @@ int main(int argc, char *argv[])
         Data_Input_Dir = dataio_open_data_input_dir_test(Data_Input_Dir, c);
      
         //Opens the output directory for the processed data
-        Data_Output_Dir = dataio_open_data_output_dir_test(Data_Output_Dir, output_dir_name, c);
+        Data_Output_Dir = dataio_open_data_output_dir_test(Data_Output_Dir,
+        												   output_dir_name, c);
         
         while(  (Data_Input_Dir_Entry = readdir(Data_Input_Dir)) )
         {
 
-            if(strcmp(Data_Input_Dir_Entry->d_name, ".") != 0 && strcmp(Data_Input_Dir_Entry->d_name, "..") != 0 &&
-               strcmp(Data_Input_Dir_Entry->d_name, ".DS_Store"))
+            if(strcmp(Data_Input_Dir_Entry->d_name, ".") != 0 &&
+               strcmp(Data_Input_Dir_Entry->d_name, "..") != 0 &&
+               strcmp(Data_Input_Dir_Entry->d_name, ".DS_Store") )
             {
         
                printf("%s\n",Data_Input_Dir_Entry->d_name);
                 
                 
-                Sample_Input_File = dataio_open_data_input_file_test(Data_Input_Dir, Sample_Input_File, c);
-                Processed_Data_Output_File = dataio_open_data_output_file_test(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
+               Sample_Input_File = dataio_open_data_input_file_test(Data_Input_Dir, Sample_Input_File, c);
+               Processed_Data_Output_File = dataio_open_data_output_file_test(Data_Output_Dir, output_dir_name, Processed_Data_Output_File, c);
                 
                
                puts("Input and output files opened!");
                 
-                dataio_get_input_sample_var(Sample_Input_File, &sample_bytes, &sample_events);
+               dataio_get_input_sample_var(Sample_Input_File, &sample_bytes, &sample_events);
                 
-                datio_set_secondary_event_packet_vars(sample_events, packet_size, packet_overlap, &packets_req,
+               datio_set_secondary_event_packet_vars(sample_events, packet_size, packet_overlap, &packets_req,
                                                       &packet_events_overshoot, &last_packet_zeros, &last_packet_size);
 
                 

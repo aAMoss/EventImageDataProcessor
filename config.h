@@ -10,11 +10,19 @@
 
 // FUNCTION PROTOTYPES
 void config_parse_cmd_args(int argc, char *argv[]);
-void config_parse_cmd_args_method(int argc, char *argv[], int *fe_mode);
-void config_parse_cmd_args_features(int argc, char *argv[], int fe_mode, int *features);
-void config_parse_cmd_args_packet_size(int argc, char *argv[], int *packet_size);
-void config_parse_cmd_args_packet_overlap(int argc, char *argv[], int packet_size, int *packet_overlap);
-void config_parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_size, int packet_overlap, char *output_dir_label);
+
+void config_parse_cmd_args1(int argc, char *argv[], int *fe_mode);
+
+void config_parse_cmd_args2(int argc, char *argv[], int fe_mode, int *features);
+
+void config_parse_cmd_args3(int argc, char *argv[], int *packet_size);
+
+void config_parse_cmd_args4(int argc, char *argv[], int packet_size,
+							int *packet_overlap);
+
+void config_set_out_dir_label(int fe_mode, int features,
+							  int packet_size, int packet_overlap,
+							  char *output_dir_label);
 
 
 //
@@ -62,9 +70,12 @@ void config_parse_cmd_args_out_dir_label(int fe_mode, int features, int packet_s
 //// PBFE DEFINITIONS
 //#define MAX_PBFE_FEATURES 1024
 //#define MIN_PBFE_FEATURES 4
-//#define PBFE_FEATURES 64	// must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024
+//#define PBFE_FEATURES 64
+// must be between 4 and 1024, a multiple of 4,
+//and a perfect square root: 4, 16, 64, 256, 1024
 //#define PATCH_SIZE 7 		//x*x
-//#define MAX_PATCH_POS_X (MAX_FRAME_X - PATCH_SIZE)	// max patch D origin 0,0 postion
+//#define MAX_PATCH_POS_X (MAX_FRAME_X - PATCH_SIZE)
+// max patch D origin 0,0 postion
 //#define MAX_PATCH_POS_Y (MAX_FRAME_Y - PATCH_SIZE)
 //#define MIN_PATCH_POS_X 0
 //#define MIN_PATCH_POS_Y 0

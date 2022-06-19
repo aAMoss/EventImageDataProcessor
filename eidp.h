@@ -10,7 +10,8 @@
 
 // DEFINITIONS DATAIO
 
-// Definitions - Input directory paths for the N-MNIST data set (choose between the full set or a smaller test set)
+// Definitions - Input directory paths for the N-MNIST data set
+//(choose between the full set or a smaller test set)
 //#define TEST_IN_DIR "./N-MNIST_test/Test/"
 //#define TRAIN_IN_DIR "./N-MNIST_test/Train/"
 #define TEST_IN_DIR "./N-MNIST/Test/"
@@ -45,7 +46,8 @@
 #define RAW_P_BOOL 1
 #define RAW_T_BOOL 24
 #define RAW_C_BOOL 4
-#define RAW_BOOL_MAX ((2*RAW_XY_BOOL) + RAW_P_BOOL + RAW_T_BOOL + RAW_C_BOOL) //41
+#define RAW_BOOL_MAX ((2*RAW_XY_BOOL) + RAW_P_BOOL + RAW_T_BOOL + RAW_C_BOOL)
+//41
 
 
 // DEFINITIONS PBFE
@@ -59,7 +61,8 @@
 #define PATCH_X_MIN 0
 #define PATCH_Y_MIN 0
 
-// must be between 4 and 1024, a multiple of 4, and a perfect square root: 4, 16, 64, 256, 1024
+// must be between 4 and 1024, a multiple of 4,
+//and a perfect square root: 4, 16, 64, 256, 1024
 #define B_FEATURES 64
 #define B_FEATURES_STRING (B_FEATURES + 1)
 #define B_FEATURES_CLASS (B_FEATURES + 4)
@@ -123,11 +126,12 @@ extern int packet_events_overshoot;
 extern int last_packet_zeros;
 extern int last_packet_size;
 
-// Event Packet Varaibles - 1 array each for the co-ordinates, polarity, and timestamp (in us) of each event
-extern long int EventPacketX[EVENTS_PER_SAMPLE_MAX]; // will store the event packet x values
-extern long int EventPacketY[EVENTS_PER_SAMPLE_MAX]; // will store the event packet y values
-extern long int EventPacketP[EVENTS_PER_SAMPLE_MAX]; // will store the event packet p values
-extern long int EventPacketT[EVENTS_PER_SAMPLE_MAX]; // will store the event packet t values
+// Event Packet Varaibles - 1 array each for the co-ordinates, polarity,
+//and timestamp (in us) of each event
+extern long int EventPacketX[EVENTS_PER_SAMPLE_MAX];
+extern long int EventPacketY[EVENTS_PER_SAMPLE_MAX];
+extern long int EventPacketP[EVENTS_PER_SAMPLE_MAX];
+extern long int EventPacketT[EVENTS_PER_SAMPLE_MAX];
 
 // Directory label names - User specified, names the output directory
 extern char output_dir_label[(DATA_OUT_NAME_MAX /2)];
