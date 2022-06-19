@@ -22,8 +22,11 @@
 
 
 
-void process_event_data(int sample_events,int packet_size, int packet_overlap, int packets_req, int last_packet_size, int c,
-                        long int EventPacketX[], long int EventPacketY[], long int EventPacketP[],long int EventPacketT[],
+void process_event_data(int sample_events, int packet_size,
+						int packet_overlap, int packets_req,
+						int last_packet_size, int c,
+                        long int EventPacketX[], long int EventPacketY[],
+						long int EventPacketP[], long int EventPacketT[],
                         int fe_mode, int type)
 {
     
@@ -41,58 +44,58 @@ void process_event_data(int sample_events,int packet_size, int packet_overlap, i
     
     switch(fe_mode) // Zeroing variables I
     {
-            
-            
-            
-            
-            
-        case 0: // RAW
-            
-            // Run for N number of packets to extract all data
-            for(int packet_no = 0; packet_no < packets_req; packet_no++)
-            {
-               
-                // Zero
-                dataio_zero_event_packet_arrays(EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-                 
-                // Select variables for first N-1 packets, and last Nth packet
-                if(packet_no < (packets_req - 1))
-                {
-                    byte_no = packet_no * (packet_size - packet_overlap) * EVENT_BUFF_SIZE;
-                    f_packet_size = packet_size;
-                    p_f_packet_size = &f_packet_size;
-                    packet_event_no = 0;
-                    
-                } else
-                if(packet_no == (packets_req - 1))
-                {
-                    byte_no = (sample_events - last_packet_size) * EVENT_BUFF_SIZE;
-                    f_packet_size = last_packet_size;
-                    p_f_packet_size = &f_packet_size;
-                    packet_event_no = 0;
-                }
-                
-                // Arrays to store int version of the literals/booleans, has to be called after f_packet)size is set
-                int literals_raw[RAW_BOOL_MAX][f_packet_size];
-                
-                printf("packet_no %d\t", packet_no);
-                printf("byte_no %d\t", byte_no);
-                printf("f_packet_size %d\n", f_packet_size);
-                
-                // Extract
-                dataio_extract_event_packets(Sample_Input_File, byte_no, f_packet_size, &packet_event_no, EventPacketX,EventPacketY, EventPacketP,EventPacketT);
-                
-                // Process
-                raw_literals_data(EventPacketX, EventPacketY, EventPacketP, EventPacketT,f_packet_size, c, literals_raw);
-                
-                // Print
-                dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
 
-             
-            }
+    case 0: // RAW
             
-            
-            break;
+    	// Run for N number of packets to extract all data
+    	for(int packet_no = 0; packet_no < packets_req; packet_no++)
+    	{
+
+    		// Zero
+    		dataio_zero_event_packet_arrays(EventPacketX,EventPacketY,
+    										EventPacketP,EventPacketT);
+
+    		// Select variables for first N-1 packets, and last Nth packet
+    		if(packet_no < (packets_req - 1))
+    		{
+    			byte_no = packet_no * (packet_size - packet_overlap) * EVENT_BUFF_SIZE;
+    			f_packet_size = packet_size;
+    			p_f_packet_size = &f_packet_size;
+    			packet_event_no = 0;
+
+    		} else
+    		if(packet_no == (packets_req - 1))
+    		{
+    			byte_no = (sample_events - last_packet_size) * EVENT_BUFF_SIZE;
+    			f_packet_size = last_packet_size;
+    			p_f_packet_size = &f_packet_size;
+    			packet_event_no = 0;
+    		}
+
+    		// Arrays to store int version of the literals/booleans, has to be called after f_packet)size is set
+    		int literals_raw[RAW_BOOL_MAX][f_packet_size];
+
+    		printf("packet_no %d\t", packet_no);
+    		printf("byte_no %d\t", byte_no);
+    		printf("f_packet_size %d\n", f_packet_size);
+
+    		// Extract
+    		dataio_extract_event_packets(Sample_Input_File,
+    									 byte_no, f_packet_size,
+										 &packet_event_no,
+										 EventPacketX,EventPacketY,
+										 EventPacketP,EventPacketT);
+
+    		// Process
+    		raw_literals_data(EventPacketX, EventPacketY,
+    						  EventPacketP, EventPacketT,
+							  f_packet_size, c,
+							  literals_raw);
+
+    		// Print
+    		dataio_print_to_file_literals_raw(Processed_Data_Output_File, literals_raw, p_f_packet_size);
+    	}
+    break;
         
             
         
