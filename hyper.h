@@ -63,16 +63,13 @@
 #define RAW_BOOL_MAX 41
 
 // DEFINITIONS PBFE
-
 // patch D x D
 #define PATCH_D 7
-
 // max patch D origin 0,0 postion
 #define PATCH_X_MAX (MAXFRAME_X - PATCH_D)
 #define PATCH_Y_MAX (MAXFRAME_Y - PATCH_D)
 #define PATCH_X_MIN 0
 #define PATCH_Y_MIN 0
-
 // must be between 4 and 1024, a multiple of 4,
 //and a perfect square root: 4, 16, 64, 256, 1024
 #define B_FEATURES 64
@@ -80,7 +77,8 @@
 #define B_FEATURES_CLASS (B_FEATURES + 4)
 
 // DEFINITIONS IDFE
-#define S_FEATURES 64	// 4, 16, 64, 256, 1024 features respectively
+#define S_FEATURES 64
+// 4, 16, 64, 256, 1024 features respectively
 #define THRESHOLD_DIV 3
 #define SEG_X (sqrt(S_FEATURES))
 #define SEG_Y (sqrt(S_FEATURES))
