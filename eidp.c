@@ -16,6 +16,7 @@
 // Program Specific Headers
 #include "eidp.h"
 #include "dataio.h"
+#include "hyper.h"
 #include "config.h"
 #include "process.h"
 #include "raw.h"

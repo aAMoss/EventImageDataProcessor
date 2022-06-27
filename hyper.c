@@ -10,7 +10,7 @@
 
 // number of features - feature extraction method dependent
 
-#include 'hyper.h'
+
 
 
 // Standard Headers
@@ -28,6 +28,7 @@
 
 // Program Specific Headers
 #include "eidp.h"
+#include 'hyper.h'
 
 
 void hyper_parse_cmd_args(int argc, char *argv[])
