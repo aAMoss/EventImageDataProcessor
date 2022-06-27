@@ -1,4 +1,8 @@
-// hyper.h - Hyper-parameters and configuration
+/*
+ *******************************************************************************
+ * hyper.h - Hyper-parameters and configuration
+ *******************************************************************************
+ */
 
 #ifndef HYPER_H
 #define HYPER_H

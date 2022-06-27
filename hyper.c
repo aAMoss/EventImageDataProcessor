@@ -1,15 +1,16 @@
-// hyper.c - Hyper-parameters and configuration
+/*
+ *******************************************************************************
+ * hyper.c - Hyper-parameters and configuration
+ *******************************************************************************
+ */
 
-
-// Standard Headers
-
-
-//Posix Headers
-
-
-// Program Specific Headers
 #include "hyper.h"
 
+/*
+ *******************************************************************************
+ * FUNCTIONS
+ *******************************************************************************
+ */
 
 void hyper_parse_cmd_args(int argc, char *argv[])
 {
