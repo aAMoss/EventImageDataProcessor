@@ -22,6 +22,14 @@ Introduced commandline arguments, need to tidy up these functions and move them 
 Will need to remove the superfluous functions for setting the program variables.. also please ignore the additional program files
 that seem to have little or nothing in them- currently in the process of refactoring and expanding the code.
 
+Commandline argument functions now in hyper.c, hyper.h hold the definitions
+
+Still a few variables to go, in addition to some general formatting.
+
+I've decided to not bother with a multi-threaded version of the program, it's not the fastest but it does the job.
+
+My plan is to continue refining and getting this program to a suitable end state while I plan and start on a more robust and expanded version 2 of the tool. More on that soon.
+
 ### EIDP
 *Coming soon*
 <br>  
@@ -106,17 +114,14 @@ Sets the number of events by which the event packets overlap. The range is 0 to 
 - [x] Commandline arguments, will require moving a lot of code from eidp.c into another source file
 - [ ] Improve and expand on data logging functions, will all be moved to (and called from) log.c log.h
 - [ ] Improve terminal messages when program is in operation, possible another source file
-- [ ] Improve and refactor pbfe.c, need to decide whether to keep its write-to-file functions or move to dataio.c
-- [ ] Improve and refactor idfe.c, need to decide whether to keep its write-to-file functions or move to dataio.c 
+- [ ] Improve and refactor pbfe.c and idfe.c, will eventually nix process.h
 - [ ] Improve and refactor... or nix completely... raw.c and raw.h
-- [ ] Add multi-threading, one way to increase the program's execution speed.
 <br>
 
 ## TMDA
 
 - [ ] Major refactor and improvement, this is vague I know
 - [ ] More logging, better logging
-- [ ] Multi-threading, it's fairly fast already but why not.
 - [ ] Better terminal messages
 - [ ] Commandline arguments, omg it's tedious to copy and paste the directory name you wish to process, I know I said no particular order but...
 <br>
