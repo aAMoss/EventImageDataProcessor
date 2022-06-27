@@ -6,75 +6,7 @@
 
 // DEFINITIONS EIDP
 
-
-
-// DEFINITIONS DATAIO
-
-// Definitions - Input directory paths for the N-MNIST data set
-//(choose between the full set or a smaller test set)
-//#define TEST_IN_DIR "./N-MNIST_test/Test/"
-//#define TRAIN_IN_DIR "./N-MNIST_test/Train/"
-#define TEST_IN_DIR "./N-MNIST/Test/"
-#define TRAIN_IN_DIR "./N-MNIST/Train/"
-
-#define EVENTS_PER_SAMPLE_MAX 10000
-#define DATA_IN_NAME_MAX 200
-#define FEATURES_MAX 1024
-#define FEATURES_MIN 4
-
-#define MAXFRAME_X 32
-#define MAXFRAME_Y 32
-#define F_DIV 2
-#define REG_X 8
-#define REG_Y 8
-#define MIN_FRAME_X (MAXFRAME_X / F_DIV)
-#define MIN_FRAME_Y (MAXFRAME_Y / F_DIV)
-
-#define PACKET_MAX 1500
-#define PACKET_MIN 100
-#define EVENT_BUFF_SIZE 5
-#define DATA_OUT_NAME_MAX 200
-#define CLASSES 10
-
-
-// DEFINITIONS PROCESS - NONE
-
-
-
-// DEFINITIONS RAW
-#define RAW_XY_BOOL 6
-#define RAW_P_BOOL 1
-#define RAW_T_BOOL 24
-#define RAW_C_BOOL 4
-#define RAW_BOOL_MAX ((2*RAW_XY_BOOL) + RAW_P_BOOL + RAW_T_BOOL + RAW_C_BOOL)
-//41
-
-
-// DEFINITIONS PBFE
-
-// patch D x D
-#define PATCH_D 7
-
-// max patch D origin 0,0 postion
-#define PATCH_X_MAX (MAXFRAME_X - PATCH_D)
-#define PATCH_Y_MAX (MAXFRAME_Y - PATCH_D)
-#define PATCH_X_MIN 0
-#define PATCH_Y_MIN 0
-
-// must be between 4 and 1024, a multiple of 4,
-//and a perfect square root: 4, 16, 64, 256, 1024
-#define B_FEATURES 64
-#define B_FEATURES_STRING (B_FEATURES + 1)
-#define B_FEATURES_CLASS (B_FEATURES + 4)
-
-// DEFINITIONS IDFE
-#define S_FEATURES 64	// 4, 16, 64, 256, 1024 features respectively
-#define THRESHOLD_DIV 3
-#define SEG_X (sqrt(S_FEATURES))
-#define SEG_Y (sqrt(S_FEATURES))
-#define SEG_A_X (MAXFRAME_X / SEG_X)
-#define SEG_A_Y (MAXFRAME_Y / SEG_Y)
-
+#include "hyper.h"
 
 
 
