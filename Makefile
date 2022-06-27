@@ -2,11 +2,11 @@
 .SUFFIXES:
 all: eidp tmda
 
-eidp:	eidp.c eidp.h config.c config.h dataio.c dataio.h process.c process.h raw.c raw.h pbfe.c pbfe.h idfe.c idfe.h
-	gcc -o eidp eidp.c config.c dataio.c process.c raw.c pbfe.c idfe.c
+#eidp:	eidp.c eidp.h config.c config.h dataio.c dataio.h process.c process.h raw.c raw.h pbfe.c pbfe.h idfe.c idfe.h
+#	gcc -o eidp eidp.c config.c dataio.c process.c raw.c pbfe.c idfe.c
 
-#eidp:	eidp.c eidp.h hyper.c hyper.h dataio.c dataio.h process.c process.h raw.c raw.h pbfe.c pbfe.h idfe.c idfe.h
-#	gcc -o eidp eidp.c hyper.c dataio.c process.c raw.c pbfe.c idfe.c
+eidp:	eidp.c eidp.h hyper.c hyper.h dataio.c dataio.h process.c process.h raw.c raw.h pbfe.c pbfe.h idfe.c idfe.h
+	gcc -o eidp eidp.c hyper.c dataio.c process.c raw.c pbfe.c idfe.c
 
 
 tmda:	tmda.c tmda.h procdataio.c procdataio.h

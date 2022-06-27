@@ -9,17 +9,19 @@
 
 
 
-hyper_parse_cmd_args(argc, argv);
+void hyper_parse_cmd_args(int argc, char *argv[]);
 
-hyper_parse_cmd_args1(argc, argv, &fe_mode);
+void hyper_parse_cmd_args1(int argc, char *argv[], int *fe_mode);
 
-hyper_parse_cmd_args2(argc, argv, fe_mode, &features);
+void hyper_parse_cmd_args2(int argc, char *argv[], int fe_mode, int *features);
 
-hyper_parse_cmd_args3(argc, argv, &packet_size);
+void hyper_parse_cmd_args3(int argc, char *argv[], int *packet_size);
 
-hyper_parse_cmd_args4(argc, argv, packet_size, &packet_overlap);
+void hyper_parse_cmd_args4(int argc, char *argv[], int packet_size,
+							int *packet_overlap);
 
-hyper_set_out_dir_label(fe_mode, features, packet_size, packet_overlap,
-						output_dir_label);
+void hyper_set_out_dir_label(int fe_mode, int features,
+							  int packet_size, int packet_overlap,
+							  char *output_dir_label);
 
 #endif //HYPER_H
