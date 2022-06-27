@@ -14,35 +14,6 @@
 
 
 
-packet_var_s PacketSize;
-packet_var_o PacketOverlap;
-int Features;
-int CmdFlag = 0;
-int FeatureMode = 0;
-// both functions will need to be able to account for the inclusion or absence of commandline arguments
-void  hyper_set_PacketSize(packet_var_s *PacketSize)
-{
-
-
-
-
-
-
-
-}
-
-void hyper_set_PacketOverlap(packet_var_o *PacketOverlap)
-{
-
-
-
-
-
-
-
-}
-
-
 
 
 
